@@ -1,13 +1,13 @@
 import pubsub from '../pubSub';
 
+const form = document.getElementById('form');
+form.addEventListener('submit', (ev) => {
+   ev.preventDefault();
+   taskForm.newTask(form);
+});
+
 const taskForm = {
-   listen: () => {
-      const form = document.getElementById('form');
-      form.addEventListener('submit', (ev) => {
-         ev.preventDefault();
-         taskForm.newTask(form);
-      });
-   },
+   listen: () => {},
 
    newTask: (form) => {
       const formData = {

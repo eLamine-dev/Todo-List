@@ -1,13 +1,13 @@
-import Task from './taskModal';
+import { Task } from './task';
 
 import pubsub from './pubSub';
 
 import taskForm from './views/taskForm';
 
-taskForm.listen();
+import { todoList } from './todoList';
 
-pubsub.subscribe('taskSubmitted', createNewTask);
+pubsub.subscribe('stateUpdate', newState);
 
-function createNewTask(formData) {
-   console.log(formData);
+function newState(state) {
+   console.log(state);
 }
