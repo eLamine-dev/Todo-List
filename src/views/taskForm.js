@@ -1,21 +1,22 @@
 import pubsub from '../pubSub';
 
-const form = document.getElementById('form');
-form.addEventListener('submit', (ev) => {
+const newTasForm = document.getElementById('new-task-form');
+newTasForm.addEventListener('submit', (ev) => {
    ev.preventDefault();
-   taskForm.newTask(form);
+   passData(newTasForm);
 });
 
-const taskForm = {
-   listen: () => {},
+const editTaskForm = document.getElementById('editing-form');
+editTaskForm.addEventListener('submit', (ev) => {
+   ev.preventDefault();
+   passData(editTaskForm);
+});
 
-   newTask: (form) => {
-      const formData = {
-         name: form.elements.title.value,
-         date: form.elements.date.value,
-      };
-      pubsub.publish('taskSubmitted', formData);
-   },
+const passData = (form) => {
+   const formData = {
+      id: Date.now(),
+      title: form.elements.title.value,
+      date: form.elements.date.value,
+   };
+   pubsub.publish('taskSubmitted', formData);
 };
-
-export default taskForm;
