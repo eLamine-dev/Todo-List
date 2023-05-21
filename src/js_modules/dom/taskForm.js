@@ -6,11 +6,11 @@ newTasForm.addEventListener('submit', (ev) => {
    passData(newTasForm);
 });
 
-const editTaskForm = document.getElementById('editing-form');
-editTaskForm.addEventListener('submit', (ev) => {
-   ev.preventDefault();
-   passData(editTaskForm);
-});
+// const editTaskForm = document.getElementById('editing-form');
+// editTaskForm.addEventListener('submit', (ev) => {
+//    ev.preventDefault();
+//    passData(editTaskForm);
+// });
 
 const passData = (form) => {
    const formData = {
@@ -20,3 +20,5 @@ const passData = (form) => {
    };
    pubsub.publish('taskSubmitted', formData);
 };
+
+export { passData, newTasForm };

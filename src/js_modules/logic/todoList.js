@@ -1,4 +1,4 @@
-import pubsub from './pubSub';
+import pubsub from '../pubSub';
 import { TaskBuilder } from './task';
 
 const state = [];
