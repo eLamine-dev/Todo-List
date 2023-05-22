@@ -1,11 +1,11 @@
 import './css/reset.css';
 import './css/style.css';
 
-import pubsub from './js_modules/pubSub';
+import pubsub from './utils/pubSub';
 
-import taskForm from './js_modules/dom/taskForm';
+import taskForm from './js_modules/views/taskForm';
 
-import { todoList } from './js_modules/logic/todoList';
+import { todoList } from './models/todoList';
 
 pubsub.subscribe('stateUpdate', newState);
 

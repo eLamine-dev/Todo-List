@@ -1,4 +1,4 @@
-import pubsub from '../pubSub';
+import pubsub from '../../utils/pubSub';
 
 const newTasForm = document.getElementById('new-task-form');
 newTasForm.addEventListener('submit', (ev) => {
