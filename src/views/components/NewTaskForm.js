@@ -14,7 +14,6 @@ newTasForm.addEventListener('submit', (ev) => {
 
 const passData = (form) => {
    const formData = {
-      id: Date.now(),
       title: form.elements.title.value,
       date: form.elements.date.value,
    };

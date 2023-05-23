@@ -7,7 +7,7 @@ class BaseModel {
 
    addItem(data) {
       const newItem = new ObjectBuilder(data);
-      this.push(newItem);
+      this.items.push(newItem);
    }
 
    getAllItems() {
@@ -20,7 +20,10 @@ class BaseModel {
    }
 
    delete(id) {
-      // Implement delete logic
+      const index = this.items.findIndex((item) => item.id === id);
+      if (index !== -1) {
+         this.items.splice(index, 1);
+      }
    }
 }
 

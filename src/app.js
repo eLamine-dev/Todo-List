@@ -1,14 +1,16 @@
-import './css/reset.css';
-import './css/style.css';
+import './assets/css/reset.css';
+import './assets/css/style.css';
 
 import pubsub from './utils/pubSub';
 
-import taskForm from './js_modules/views/taskForm';
+import { newTasForm } from './views/components/NewTaskForm';
 
-import { todoList } from './models/todoList';
+import TaskModel from './models/TaskModel';
 
-pubsub.subscribe('stateUpdate', newState);
+pubsub.subscribe('taskSubmitted', newState);
 
-function newState(state) {
-   console.log(state);
+function newState(data) {
+   const taskModel = new TaskModel();
+   taskModel.addItem(data);
+   console.log(taskModel.getAllItems());
 }

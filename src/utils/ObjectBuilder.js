@@ -1,3 +1,5 @@
+import createNewID from './idGenerator';
+
 class ObjectBuilder {
    constructor(data = {}) {
       this.validateTitle(data.title);
