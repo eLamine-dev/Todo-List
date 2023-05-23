@@ -1,23 +1,7 @@
 import pubsub from '../utils/pubSub';
-import { TaskBuilder } from './task';
+import Builder from '../utils/ObjectBuilder';
+import BaseModel from './BaseModel';
 
-const state = [];
-
-const todoList = {
-   addTask: (formData) => {
-      const newTask = TaskBuilder({}, formData);
-      state.push(newTask);
-      pubsub.publish('stateUpdate', state);
-   },
-
-   editTask: (id, formData) => {
-      const taskToEdit = state.find((task) => task.id === id);
-      const editedTask = TaskBuilder(taskToEdit, formData);
-
-      pubsub.publish('stateUpdate', state);
-   },
-};
-
-pubsub.subscribe('taskSubmitted', todoList.addTask);
+class TaskModel extends BaseModel {}
 
 export { todoList };
