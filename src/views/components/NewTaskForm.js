@@ -1,4 +1,4 @@
-import pubsub from '../../utils/pubSub';
+import pubsub from '../../utils/PubSub';
 
 const newTasForm = document.getElementById('new-task-form');
 newTasForm.addEventListener('submit', (ev) => {
@@ -17,7 +17,7 @@ const passData = (form) => {
       title: form.elements.title.value,
       date: form.elements.date.value,
    };
-   pubsub.publish('taskSubmitted', formData);
+   pubsub.publish('task:add', formData);
 };
 
 export { passData, newTasForm };

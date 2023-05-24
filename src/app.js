@@ -1,16 +1,14 @@
 import './assets/css/reset.css';
 import './assets/css/style.css';
 
-import pubsub from './utils/pubSub';
+import pubsub from './utils/PubSub';
 
 import { newTasForm } from './views/components/NewTaskForm';
+import TaskController from './controllers/TaskController';
 
-import TaskModel from './models/TaskModel';
+const taskController = new TaskController();
 
-pubsub.subscribe('taskSubmitted', newState);
-
-function newState(data) {
-   const taskModel = new TaskModel();
-   taskModel.addItem(data);
-   console.log(taskModel.getAllItems());
-}
+// function newState(data) {
+//    taskModel.addItem(data);
+//    console.log(taskModel.getAllItems());
+// }

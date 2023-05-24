@@ -1,4 +1,4 @@
-import createNewID from './idGenerator';
+import createNewID from './IdGenerator';
 
 class ObjectBuilder {
    constructor(data = {}) {
