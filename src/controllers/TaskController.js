@@ -15,14 +15,9 @@ class TaskController {
    handleAddTask(task) {
       this.model.addItem(task);
       this.view.addTask(task);
-
-      // const tasks = this.model.getAllItems();
-      // this.view.render(tasks);
    }
 
-   // handleRemoveTask(taskId) {
-
-   // }
+   handleRemoveTask(taskId) {}
 }
 
 export default TaskController;
