@@ -15,8 +15,8 @@ class TaskList extends BaseComponent {
    }
 
    addTask(task) {
-      const newCard = document.createElement('task-card');
-      newCard.innerText = task.title;
+      const newCard = new TaskCard(task);
+
       this.appendChild(newCard);
    }
 

@@ -19,8 +19,10 @@ class AddTaskForm extends HTMLFormElement {
          .setAttributes({
             type: 'date',
             name: 'date-input',
+            // min: '',
          })
          .build();
+      dateInput.valueAsDate = new Date();
 
       const submitBtn = createElement('button')
          .setAttributes({

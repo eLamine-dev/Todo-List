@@ -1,19 +1,22 @@
-import BaseComponent from './BaseComponent';
+import createElement from '../../utils/ElementBuilder';
 
-class TaskCard extends BaseComponent {
-   constructor() {
+class TaskCard extends HTMLElement {
+   constructor(data) {
       super();
+      this.createCard(data);
    }
 
    createCard(data) {
-      const card = document.createElement('div');
-      const title = document.createElement('h3');
-      title.innerText = data.title;
+      const card = createElement('div').build();
+      const title = createElement('h3').setContent(data.title).build();
+      const date = createElement('h3').setContent(data.date).build();
       card.appendChild(title);
-      return card;
+      card.appendChild(date);
+      this.appendChild(card);
+      return this;
    }
 
-   //    updateCard(data) {}
+   // updateCard(data) {}
 }
 
 customElements.define('task-card', TaskCard);
