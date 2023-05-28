@@ -14,7 +14,7 @@ class ObjectBuilder {
    }
 
    setProperties(data) {
-      Object.assign(this, data);
+      return Object.assign(this, data);
    }
 
    editProperties(data) {

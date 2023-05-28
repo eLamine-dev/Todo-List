@@ -14,6 +14,10 @@ class BaseModel {
       return this.items;
    }
 
+   getLastItem() {
+      return this.items.slice(-1)[0];
+   }
+
    update(id, data) {
       const itemToEdit = this.items.find((item) => item.id === id);
       itemToEdit.editProperties(data);

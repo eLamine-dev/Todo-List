@@ -1,22 +1,34 @@
 import createElement from '../../utils/ElementBuilder';
 
 class TaskCard extends HTMLElement {
-   constructor(data) {
+   constructor() {
       super();
-      this.createCard(data);
+      this.data = null;
+      // this.createCard();
+
+      this.attachShadow({ mode: 'open' });
    }
 
-   createCard(data) {
+   setData(data) {
+      this.data = data;
+   }
+
+   connectedCallback() {
+      this.createCard();
+   }
+
+   createCard() {
+      this.setAttribute('data-id', `${this.data.id}`);
       const card = createElement('div').build();
-      const title = createElement('h3').setContent(data.title).build();
-      const date = createElement('h3').setContent(data.date).build();
-      card.appendChild(title);
-      card.appendChild(date);
-      this.appendChild(card);
+      const title = createElement('h3').setContent(this.data.title).build();
+      const date = createElement('h3').setContent(this.data.date).build();
+      this.shadowRoot.appendChild(title);
+      this.shadowRoot.appendChild(date);
+      this.shadowRoot.appendChild(card);
       return this;
    }
 
-   // updateCard(data) {}
+   updateCard(data) {}
 }
 
 customElements.define('task-card', TaskCard);

@@ -1,10 +1,14 @@
 import { TaskCard } from './TaskCard';
-import BaseComponent from './BaseComponent';
+import createElement from '../../utils/ElementBuilder';
 
-class TaskList extends BaseComponent {
+class TaskList extends HTMLElement {
    constructor() {
       super();
       document.getElementById('task-list').appendChild(this);
+   }
+
+   connectedCallback() {
+      this.render();
    }
 
    render() {
@@ -15,7 +19,8 @@ class TaskList extends BaseComponent {
    }
 
    addTask(task) {
-      const newCard = new TaskCard(task);
+      const newCard = createElement('task-card').build();
+      newCard.setData(task);
 
       this.appendChild(newCard);
    }
@@ -24,7 +29,7 @@ class TaskList extends BaseComponent {
 
    MarkAsDone(taskId) {}
 
-   EditTask(taskId) {}
+   updateTask(taskId) {}
 }
 
 customElements.define('task-list', TaskList);

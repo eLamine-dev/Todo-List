@@ -14,10 +14,13 @@ class TaskController {
 
    handleAddTask(task) {
       this.model.addItem(task);
-      this.view.addTask(task);
+
+      this.view.addTask(this.model.getLastItem());
    }
 
    handleRemoveTask(taskId) {}
+
+   handleUpdateTask(taskId) {}
 }
 
 export default TaskController;
