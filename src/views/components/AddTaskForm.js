@@ -1,6 +1,5 @@
 import pubsub from '../../utils/PubSub';
 import createElement from '../../utils/ElementBuilder';
-import createNewID from '../../utils/IdGenerator';
 
 class AddTaskForm extends HTMLFormElement {
    connectedCallback() {

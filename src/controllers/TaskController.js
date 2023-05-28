@@ -12,10 +12,10 @@ class TaskController {
       // pubSub.subscribe('task:update', this.handleRemoveTask.bind(this));
    }
 
-   handleAddTask(task) {
-      this.model.addItem(task);
-
-      this.view.addTask(this.model.getLastItem());
+   handleAddTask(data) {
+      const newTask = TaskList.createItem(data);
+      this.model.addItem(newTask);
+      this.view.addTask(newTask);
    }
 
    handleRemoveTask(taskId) {}

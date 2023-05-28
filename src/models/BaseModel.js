@@ -5,8 +5,11 @@ class BaseModel {
       this.items = [];
    }
 
-   addItem(data) {
-      const newItem = new ObjectBuilder(data);
+   static createItem(data) {
+      return new ObjectBuilder(data);
+   }
+
+   addItem(newItem) {
       this.items.push(newItem);
    }
 

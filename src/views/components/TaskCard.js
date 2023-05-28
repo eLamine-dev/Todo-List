@@ -4,8 +4,6 @@ class TaskCard extends HTMLElement {
    constructor() {
       super();
       this.data = null;
-      // this.createCard();
-
       this.attachShadow({ mode: 'open' });
    }
 
