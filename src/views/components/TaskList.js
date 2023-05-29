@@ -19,9 +19,7 @@ class TaskList extends HTMLElement {
    }
 
    addTask(task) {
-      const newCard = createElement('task-card').build();
-      newCard.setData(task);
-
+      const newCard = createElement('task-card').setState(task).build();
       this.appendChild(newCard);
    }
 

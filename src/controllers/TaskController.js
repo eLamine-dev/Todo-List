@@ -8,17 +8,20 @@ class TaskController {
       this.view = new TaskList();
 
       pubSub.subscribe('task:add', this.handleAddTask.bind(this));
-      // pubSub.subscribe('task:remove', this.handleRemoveTask.bind(this));
+      pubSub.subscribe('task:remove', this.handleRemoveTask.bind(this));
       // pubSub.subscribe('task:update', this.handleRemoveTask.bind(this));
    }
 
    handleAddTask(data) {
-      const newTask = TaskList.createItem(data);
+      const newTask = TaskModel.createItem(data);
       this.model.addItem(newTask);
       this.view.addTask(newTask);
    }
 
-   handleRemoveTask(taskId) {}
+   handleRemoveTask(taskId) {
+      this.model.deleteItem(taskId);
+      // this.view.addTask(newTask);
+   }
 
    handleUpdateTask(taskId) {}
 }

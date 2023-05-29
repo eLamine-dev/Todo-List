@@ -11,6 +11,7 @@ class BaseModel {
 
    addItem(newItem) {
       this.items.push(newItem);
+      console.log(this.items);
    }
 
    getAllItems() {
@@ -26,11 +27,12 @@ class BaseModel {
       itemToEdit.editProperties(data);
    }
 
-   delete(id) {
+   deleteItem(id) {
       const index = this.items.findIndex((item) => item.id === id);
       if (index !== -1) {
          this.items.splice(index, 1);
       }
+      console.log(this.items);
    }
 }
 

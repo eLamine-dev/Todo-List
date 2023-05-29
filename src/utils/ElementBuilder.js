@@ -6,11 +6,16 @@ class ElementBuilder {
    setAttributes(attributes) {
       Object.entries(attributes).forEach(([key, value]) => {
          if (Array.isArray(value)) {
-            this.element[key] = value.join(' ');
+            this.element.setAttribute(key, value.join(' '));
          } else {
             this.element.setAttribute(key, value);
          }
       });
+      return this;
+   }
+
+   setState(state) {
+      this.element.state = state;
       return this;
    }
 

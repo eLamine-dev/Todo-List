@@ -1,5 +1,5 @@
 function createNewID() {
-   return Date.now();
+   return Date.now().toString();
 }
 
 export default createNewID;
