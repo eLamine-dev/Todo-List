@@ -4,13 +4,7 @@ import pubsub from '../../utils/PubSub';
 class TaskCard extends HTMLElement {
    constructor() {
       super();
-      // this.data = null;
-      // this.attachShadow({ mode: 'open' });
    }
-
-   // setData(data) {
-   //    this.data = data;
-   // }
 
    connectedCallback() {
       this.createCard();
@@ -25,15 +19,10 @@ class TaskCard extends HTMLElement {
          .setContent('delete')
          .setAttributes({ class: 'delete' })
          .build();
-      // const card = createElement('div')
-      //    .appendChildren([title, date, deleteBtn])
-      //    .build();
 
       [title, date, deleteBtn].forEach((child) => {
          this.appendChild(child);
       });
-      // this.appendChild(card);
-      return this;
    }
 
    addEventListeners() {
@@ -41,8 +30,9 @@ class TaskCard extends HTMLElement {
          ev.preventDefault();
          if (ev.target.classList.contains('delete')) {
             this.remove();
-            console.log(this.getAttribute('task-id'));
-            pubsub.publish('task:remove', this.getAttribute('task-id'));
+            pubsub.publish('task:remove', this.state.id);
+         } else {
+            pubsub.publish('task:select', this.state.id);
          }
       });
    }

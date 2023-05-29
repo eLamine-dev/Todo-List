@@ -22,7 +22,7 @@ class BaseModel {
       return this.items.slice(-1)[0];
    }
 
-   update(id, data) {
+   updateItem(id, data) {
       const itemToEdit = this.items.find((item) => item.id === id);
       itemToEdit.editProperties(data);
    }
@@ -32,7 +32,6 @@ class BaseModel {
       if (index !== -1) {
          this.items.splice(index, 1);
       }
-      console.log(this.items);
    }
 }
 
