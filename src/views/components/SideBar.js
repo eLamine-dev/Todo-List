@@ -3,6 +3,8 @@ class SideBar extends HTMLElement {
       this.render();
       this.addEventListeners();
    }
+
+   render() {}
 }
 
 customElements.define('side-bar', SideBar);

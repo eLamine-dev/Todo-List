@@ -32,9 +32,9 @@ class AddTaskForm extends HTMLFormElement {
          .build();
 
       this.id = 'new-task-form';
-      this.appendChild(titleInput);
-      this.appendChild(dateInput);
-      this.appendChild(submitBtn);
+      [titleInput, dateInput, submitBtn].forEach((child) => {
+         this.appendChild(child);
+      });
    }
 
    addEventListeners() {

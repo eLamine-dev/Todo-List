@@ -1,22 +1,30 @@
 import pubsub from '../../utils/PubSub';
 import createElement from '../../utils/ElementBuilder';
 
-class EditTaskForm extends HTMLFormElement {
+class TaskDetails extends HTMLElement {
    connectedCallback() {
       this.render();
       this.addEventListeners();
    }
 
    render() {
-      const titleInput = createElement('input')
+      const title = createElement('h2')
          .setAttributes({
             type: 'text',
             name: 'title-input',
-            value: `${this.state.title}`,
+            contenteditable: true,
+         })
+         .setContent(this.state.title)
+         .build();
+
+      const description = createElement('textarea')
+         .setAttributes({
+            name: 'description',
+            Placeholder: 'add task description...',
          })
          .build();
 
-      const dateInput = createElement('input')
+      const date = createElement('input')
          .setAttributes({
             type: 'date',
             name: 'date-input',
@@ -25,20 +33,14 @@ class EditTaskForm extends HTMLFormElement {
          })
          .build();
 
-      const submitBtn = createElement('button')
-         .setAttributes({
-            type: 'submit',
-         })
-         .setContent('save')
-         .build();
-
-      this.id = 'edit-task-form';
-      [titleInput, dateInput, submitBtn].forEach((child) => {
+      this.id = 'task-details';
+      [title, date, description].forEach((child) => {
          this.appendChild(child);
       });
    }
 
    addEventListeners() {
+      pubsub.subscribe('task:select', this.render.bind(this));
       this.addEventListener('submit', (ev) => {
          ev.preventDefault();
          this.passData();
@@ -50,8 +52,7 @@ class EditTaskForm extends HTMLFormElement {
          title: this.elements['title-input'].value,
          date: this.elements['date-input'].value,
       };
-      pubsub.publish('task:add', formData);
    }
 }
-customElements.define('Edit-task-form', EditTaskForm, { extends: 'form' });
-export default EditTaskForm;
+customElements.define('task-details', TaskDetails);
+export default TaskDetails;

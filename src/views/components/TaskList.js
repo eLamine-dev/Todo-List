@@ -1,4 +1,4 @@
-import { TaskCard } from './TaskCard';
+import TaskCard from './TaskCard';
 import createElement from '../../utils/ElementBuilder';
 
 class TaskList extends HTMLElement {

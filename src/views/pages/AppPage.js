@@ -4,6 +4,11 @@ import createElement from '../../utils/ElementBuilder';
 
 class AppPage extends HTMLElement {
    connectedCallback() {
+      this.render();
+      this.addEventListeners();
+   }
+
+   render() {
       this.sideBar = createElement('side-bar');
    }
 }
