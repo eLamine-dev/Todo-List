@@ -1,25 +1,31 @@
 import './assets/css/reset.css';
 import './assets/css/style.css';
 
-import TaskController from './controllers/TaskController';
 import createElement from './utils/ElementBuilder';
 import pubsub from './utils/PubSub';
 
 import AddTaskForm from './views/components/AddTaskForm';
 import TaskDetails from './views/components/TaskDetails';
+import AppPage from './views/pages/AppPage';
 
 document.addEventListener('DOMContentLoaded', () => {
-   let addTaskForm = new AddTaskForm();
+   const appPage = new AppPage();
 
-   document.getElementById('task-list').appendChild(addTaskForm);
-   const taskController = new TaskController();
+   document.getElementById('app-container').appendChild(appPage);
 });
 
-pubsub.subscribe('task:select', openTaskDetails);
+// document.addEventListener('DOMContentLoaded', () => {
+//    let addTaskForm = new AddTaskForm();
 
-function openTaskDetails(state) {
-   const taskDetails = createElement('task-details').setState(state).build();
-   const editBar = document.getElementById('edit-side-bar');
-   editBar.innerHTML = '';
-   editBar.appendChild(taskDetails);
-}
+//    document.getElementById('task-list').appendChild(addTaskForm);
+//    const taskController = new TaskController();
+// });
+
+// pubsub.subscribe('task:select', openTaskDetails);
+
+// function openTaskDetails(state) {
+//    const taskDetails = createElement('task-details').setState(state).build();
+//    const editBar = document.getElementById('edit-side-bar');
+//    editBar.innerHTML = '';
+//    editBar.appendChild(taskDetails);
+// }

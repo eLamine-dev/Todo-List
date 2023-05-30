@@ -1,16 +1,19 @@
-import pubSub from '../utils/PubSub';
+import pubsub from '../utils/PubSub';
 import TaskModel from '../models/TaskModel';
 import TaskList from '../views/components/TaskList';
-import EditTaskForm from '../views/components/TaskDetails';
+import TaskDetails from '../views/components/TaskDetails';
+import createElement from '../utils/ElementBuilder';
 
 class TaskController {
    constructor() {
       this.model = new TaskModel();
-      this.view = new TaskList();
+      this.view = createElement('task-list')
+         .setState(this.model.getAllItems())
+         .build();
 
-      pubSub.subscribe('task:add', this.handleAddTask.bind(this));
-      pubSub.subscribe('task:remove', this.handleRemoveTask.bind(this));
-      pubSub.subscribe('task:update', this.handleRemoveTask.bind(this));
+      pubsub.subscribe('task:add', this.handleAddTask.bind(this));
+      pubsub.subscribe('task:remove', this.handleRemoveTask.bind(this));
+      pubsub.subscribe('task:update', this.handleRemoveTask.bind(this));
    }
 
    handleAddTask(data) {

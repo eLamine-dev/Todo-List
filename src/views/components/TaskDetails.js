@@ -1,4 +1,3 @@
-import pubsub from '../../utils/PubSub';
 import createElement from '../../utils/ElementBuilder';
 
 class TaskDetails extends HTMLElement {
@@ -40,7 +39,6 @@ class TaskDetails extends HTMLElement {
    }
 
    addEventListeners() {
-      pubsub.subscribe('task:select', this.render.bind(this));
       this.addEventListener('submit', (ev) => {
          ev.preventDefault();
          this.passData();
@@ -54,5 +52,6 @@ class TaskDetails extends HTMLElement {
       };
    }
 }
+
 customElements.define('task-details', TaskDetails);
 export default TaskDetails;

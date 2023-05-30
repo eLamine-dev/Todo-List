@@ -1,21 +1,19 @@
 import TaskCard from './TaskCard';
 import createElement from '../../utils/ElementBuilder';
+import AddTaskForm from './AddTaskForm';
 
 class TaskList extends HTMLElement {
-   constructor() {
-      super();
-      document.getElementById('task-list').appendChild(this);
-   }
-
    connectedCallback() {
       this.render();
    }
 
    render() {
-      //   list.forEach((task) => {
-      //      console.log(task);
-      //      this.addTask(task);
-      //   });
+      const addTaskForm = new AddTaskForm();
+      this.appendChild(addTaskForm);
+      this.state.forEach((task) => {
+         console.log(task);
+         this.addTask(task);
+      });
    }
 
    addTask(task) {

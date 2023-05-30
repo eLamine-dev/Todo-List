@@ -1,10 +1,12 @@
 class SideBar extends HTMLElement {
    connectedCallback() {
       this.render();
-      this.addEventListeners();
+      // this.addEventListeners();
    }
 
-   render() {}
+   render() {
+      this.innerHTML = 'sidebar';
+   }
 }
 
 customElements.define('side-bar', SideBar);
