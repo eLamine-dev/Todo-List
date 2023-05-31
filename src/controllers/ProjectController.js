@@ -1,12 +1,24 @@
 import pubsub from '../utils/PubSub';
 import ProjectModel from '../models/ProjectModel';
-import TaskList from '../views/components/TaskList';
+import ProjectList from '../views/components/ProjectList';
 import createElement from '../utils/ElementBuilder';
 
 class ProjectController {
    constructor() {
       this.model = new ProjectModel();
-      this.view = createElement('').setState(this.model.getAllItems()).build();
+
+      [
+         { title: 'project01', id: '56565', categoryId: '01' },
+         { title: 'project02', id: '44444', categoryId: '02' },
+         { title: 'project03', id: '56566', categoryId: '01' },
+         { title: 'project04', id: '25568', categoryId: '02' },
+      ].forEach((project) => {
+         this.model.addItem(project);
+      });
+
+      this.view = createElement('project-list')
+         .setState(this.model.getState())
+         .build();
 
       pubsub.subscribe('project:add', this.handleAddProject.bind(this));
       pubsub.subscribe('project:remove', this.handleRemoveProject.bind(this));
@@ -23,8 +35,8 @@ class ProjectController {
       // this.view.addTask(newTask);
    }
 
-   handleUpdateTask(projectId, newDta) {
-      this.model.updateItem(projectId, newDta);
+   handleUpdateTask(projectId, newData) {
+      this.model.updateItem(projectId, newData);
    }
 }
 

@@ -1,7 +1,6 @@
 import pubsub from '../utils/PubSub';
 import TaskModel from '../models/TaskModel';
 import TaskList from '../views/components/TaskList';
-import TaskDetails from '../views/components/TaskDetails';
 import createElement from '../utils/ElementBuilder';
 
 class TaskController {
@@ -19,7 +18,7 @@ class TaskController {
    handleAddTask(data) {
       const newTask = TaskModel.createItem(data);
       this.model.addItem(newTask);
-      this.view.addTask(newTask);
+      this.view.renderTask(newTask);
    }
 
    handleRemoveTask(taskId) {

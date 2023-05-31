@@ -11,12 +11,11 @@ class TaskList extends HTMLElement {
       const addTaskForm = new AddTaskForm();
       this.appendChild(addTaskForm);
       this.state.forEach((task) => {
-         console.log(task);
-         this.addTask(task);
+         this.renderTask(task);
       });
    }
 
-   addTask(task) {
+   renderTask(task) {
       const newCard = createElement('task-card').setState(task).build();
       this.appendChild(newCard);
    }

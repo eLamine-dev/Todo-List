@@ -11,7 +11,6 @@ class BaseModel {
 
    addItem(newItem) {
       this.items.push(newItem);
-      console.log(this.items);
    }
 
    getAllItems() {

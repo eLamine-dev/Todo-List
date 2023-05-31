@@ -14,8 +14,9 @@ class AppPage extends HTMLElement {
    render() {
       this.id = 'app';
       const taskController = new TaskController();
-      const sideBar = new SideBar();
-      this.appendChild(sideBar);
+      const projectController = new ProjectController();
+      // const sideBar = new SideBar();
+      this.appendChild(projectController.view);
       this.appendChild(taskController.view);
    }
 

@@ -1,3 +1,6 @@
+import createElement from '../../utils/ElementBuilder';
+import ProjectList from './ProjectList';
+
 class SideBar extends HTMLElement {
    connectedCallback() {
       this.render();
@@ -5,7 +8,10 @@ class SideBar extends HTMLElement {
    }
 
    render() {
-      this.innerHTML = 'sidebar';
+      const projectList = createElement('project-list')
+         .setState(this.state)
+         .build();
+      this.appendChild(projectList);
    }
 }
 
