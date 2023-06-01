@@ -8,6 +8,14 @@ class SideBar extends HTMLElement {
    }
 
    render() {
+      const defaultFilters = ['All', 'Today', 'Up-coming'];
+      const defaultFiltersUl = createElement('ul').build();
+      defaultFilters.forEach((filter) => {
+         const filterLi = createElement('li').setContent(filter).build();
+         defaultFiltersUl.appendChild(filterLi);
+      });
+      this.appendChild(defaultFiltersUl);
+
       const projectList = createElement('project-list')
          .setState(this.state)
          .build();

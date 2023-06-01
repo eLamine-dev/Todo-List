@@ -1,27 +1,43 @@
 import pubsub from '../utils/PubSub';
 import ProjectModel from '../models/ProjectModel';
-import ProjectList from '../views/components/ProjectList';
+import CategoryModel from '../models/CategoryModel';
 import createElement from '../utils/ElementBuilder';
+import SideBar from '../views/components/SideBar';
 
 class ProjectController {
    constructor() {
-      this.model = new ProjectModel();
+      this.projectsModel = new ProjectModel();
+      this.categoriesModel = new CategoryModel();
 
       [
          { title: 'project01', id: '56565', categoryId: '01' },
          { title: 'project02', id: '44444', categoryId: '02' },
          { title: 'project03', id: '56566', categoryId: '01' },
          { title: 'project04', id: '25568', categoryId: '02' },
+         { title: 'project05', id: '25568', categoryId: '03' },
       ].forEach((project) => {
-         this.model.addItem(project);
+         this.projectsModel.addItem(project);
       });
 
-      this.view = createElement('project-list')
-         .setState(this.model.getState())
+      [
+         { title: 'personal', id: '01' },
+         { title: 'education', id: '02' },
+         { title: 'work', id: '03' },
+      ].forEach((category) => {
+         this.categoriesModel.addItem(category);
+      });
+
+      this.view = createElement('side-bar')
+         .setState(
+            this.projectsModel.getProjectsByCategory(
+               this.categoriesModel.getAllItems()
+            )
+         )
          .build();
 
       pubsub.subscribe('project:add', this.handleAddProject.bind(this));
       pubsub.subscribe('project:remove', this.handleRemoveProject.bind(this));
+      pubsub.subscribe('project:update', this.handleUpdateProject.bind(this));
    }
 
    handleAddProject(data) {
@@ -35,7 +51,7 @@ class ProjectController {
       // this.view.addTask(newTask);
    }
 
-   handleUpdateTask(projectId, newData) {
+   handleUpdateProject(projectId, newData) {
       this.model.updateItem(projectId, newData);
    }
 }

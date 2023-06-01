@@ -25,9 +25,14 @@ class ElementBuilder {
    }
 
    appendChildren(childElements) {
-      childElements.forEach((child) => {
-         this.element.appendChild(child);
-      });
+      if (Array.isArray(childElements)) {
+         childElements.forEach((child) => {
+            this.element.appendChild(child);
+         });
+      } else {
+         this.element.appendChild(childElements);
+      }
+
       return this;
    }
 

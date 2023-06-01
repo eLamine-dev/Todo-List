@@ -8,17 +8,19 @@ class ProjectList extends HTMLElement {
 
    render() {
       this.state.forEach((category) => {
-         console.log(category);
-         const categoryList = createElement('li')
-            .setContent(category.title)
-            .build();
-         this.appendChild(categoryList);
+         const categoryUl = createElement('ul').build();
          category.projects.forEach((project) => {
             const projectItem = createElement('li')
                .setContent(project.title)
                .build();
-            categoryList.appendChild(projectItem);
+            categoryUl.appendChild(projectItem);
          });
+
+         const categoryList = createElement('li')
+            .setContent(category.title)
+            .appendChildren(categoryUl)
+            .build();
+         this.appendChild(categoryList);
       });
    }
 }
