@@ -10,6 +10,14 @@ class TaskController {
          .setState(this.model.getAllItems())
          .build();
 
+      [
+         { id: '1685636158744', title: 'afgjsdf', date: '2023-06-01' },
+         { id: '1685636158744', title: 'asddfggf', date: '2023-06-01' },
+         { id: '1685636158744', title: 'asdj;l;f', date: '2023-06-01' },
+      ].forEach((task) => {
+         this.model.addItem(task);
+      });
+
       pubsub.subscribe('task:add', this.handleAddTask.bind(this));
       pubsub.subscribe('task:remove', this.handleRemoveTask.bind(this));
       pubsub.subscribe('task:update', this.handleRemoveTask.bind(this));
@@ -28,6 +36,13 @@ class TaskController {
 
    handleUpdateTask(taskId, newDta) {
       this.model.updateItem(taskId, newDta);
+   }
+
+   handleSelectTask(taskId) {
+      const taskDetails = createElement('task-details')
+         .setState(this.model.getItemById(taskId))
+         .build();
+      // to be continued
    }
 }
 

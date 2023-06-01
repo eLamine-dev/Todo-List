@@ -7,20 +7,25 @@ class ProjectList extends HTMLElement {
    }
 
    render() {
-      this.state.forEach((category) => {
-         const categoryUl = createElement('ul').build();
-         category.projects.forEach((project) => {
-            const projectItem = createElement('li')
-               .setContent(project.title)
-               .build();
-            categoryUl.appendChild(projectItem);
-         });
+      // this.state.forEach((category) => {
+      //    const categoryUl = createElement('ul').build();
+      //    category.projects.forEach((project) => {
+      //       const projectItem = createElement('li')
+      //          .setContent(project.title)
+      //          .build();
+      //       categoryUl.appendChild(projectItem);
+      //    });
 
-         const categoryList = createElement('li')
-            .setContent(category.title)
-            .appendChildren(categoryUl)
-            .build();
-         this.appendChild(categoryList);
+      //    const categoryList = createElement('li')
+      //       .setContent(category.title)
+      //       .appendChildren(categoryUl)
+      //       .build();
+      //    this.appendChild(categoryList);
+      // });
+
+      this.state.forEach((project) => {
+         const projectLI = createElement('li').setContent(project.title);
+         this.appendChild(projectLI);
       });
    }
 }

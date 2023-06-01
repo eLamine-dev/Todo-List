@@ -2,6 +2,9 @@ import pubsub from '../../utils/PubSub';
 import createElement from '../../utils/ElementBuilder';
 import TaskController from '../../controllers/TaskController';
 import ProjectController from '../../controllers/ProjectController';
+import TaskDetails from '../components/TaskDetails';
+import CategoryController from '../../controllers/CategoryController';
+import sideBar from '../components/SideBar';
 
 class AppPage extends HTMLElement {
    connectedCallback() {
@@ -13,7 +16,11 @@ class AppPage extends HTMLElement {
       this.id = 'app';
       const taskController = new TaskController();
       const projectController = new ProjectController();
-      this.appendChild(projectController.view);
+      const categoryController = new CategoryController();
+      const sideBar = createElement('side-bar')
+         .setState(categoryController.model.getAllItems())
+         .build();
+      this.appendChild(sideBar);
       this.appendChild(taskController.view);
    }
 

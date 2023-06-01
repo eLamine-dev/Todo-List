@@ -1,5 +1,5 @@
 import createElement from '../../utils/ElementBuilder';
-import ProjectList from './ProjectList';
+import categoryList from './CategoryList';
 
 class SideBar extends HTMLElement {
    connectedCallback() {
@@ -16,7 +16,7 @@ class SideBar extends HTMLElement {
       });
       this.appendChild(defaultFiltersUl);
 
-      const projectList = createElement('project-list')
+      const projectList = createElement('category-list')
          .setState(this.state)
          .build();
       this.appendChild(projectList);

@@ -33,6 +33,7 @@ class TaskDetails extends HTMLElement {
          .build();
 
       this.id = 'task-details';
+
       [title, date, description].forEach((child) => {
          this.appendChild(child);
       });
