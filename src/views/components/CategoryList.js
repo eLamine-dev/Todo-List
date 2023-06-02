@@ -1,4 +1,5 @@
 import createElement from '../../utils/ElementBuilder';
+import ProjectList from './ProjectList';
 
 class CategoryList extends HTMLElement {
    connectedCallback() {
@@ -8,9 +9,10 @@ class CategoryList extends HTMLElement {
 
    render() {
       this.state.forEach((category) => {
-         const categoryProjects = createElement('ul')
-            .setAttributes({ id: category.id })
+         const categoryProjects = createElement('project-list')
+            .setState(category.projects)
             .build();
+
          const categoryLi = createElement('li')
             .setContent(category.title)
             .appendChildren(categoryProjects)

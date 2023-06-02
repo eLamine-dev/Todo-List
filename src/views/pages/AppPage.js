@@ -17,14 +17,15 @@ class AppPage extends HTMLElement {
       const taskController = new TaskController();
       const projectController = new ProjectController();
       const categoryController = new CategoryController();
-      const sideBar = createElement('side-bar')
-         .setState(categoryController.model.getAllItems())
-         .build();
+      const sideBarState = projectController.model.getProjectsByCategory(
+         categoryController.model.getAllItems()
+      );
+      const sideBar = createElement('side-bar').setState(sideBarState).build();
       this.appendChild(sideBar);
       this.appendChild(taskController.view);
    }
 
-   openTaskDetails(task) {
+   showTaskDetails(task) {
       if (document.getElementById('task-details')) this.lastChild.remove();
       const taskDetails = createElement('task-details').setState(task).build();
       this.appendChild(taskDetails);

@@ -6,14 +6,14 @@ class ProjectModel extends BaseModel {
       super();
    }
 
-   // getProjectsByCategory(categories) {
-   //    categories.forEach((category) => {
-   //       category.projects = this.items.filter(
-   //          (project) => project.categoryId === category.id
-   //       );
-   //    });
-   //    return categories;
-   // }
+   getProjectsByCategory(categories) {
+      categories.forEach((category) => {
+         category.projects = this.items.filter(
+            (project) => project.categoryId === category.id
+         );
+      });
+      return categories;
+   }
 }
 
 export default ProjectModel;
