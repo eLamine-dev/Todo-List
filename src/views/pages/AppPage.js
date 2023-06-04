@@ -1,28 +1,24 @@
 import pubsub from '../../utils/PubSub';
 import createElement from '../../utils/ElementBuilder';
-import TaskController from '../../controllers/TaskController';
-import ProjectController from '../../controllers/ProjectController';
 import TaskDetails from '../components/TaskDetails';
-import CategoryController from '../../controllers/CategoryController';
 import sideBar from '../components/SideBar';
 
 class AppPage extends HTMLElement {
-   connectedCallback() {
-      this.render();
+   constructor(categoriesList, taskList) {
+      super();
+      this.render(categoriesList, taskList);
       pubsub.subscribe('task:select', this.openTaskDetails.bind(this));
    }
 
-   render() {
+   render(categoriesList, taskList) {
       this.id = 'app';
-      const taskController = new TaskController();
-      const projectController = new ProjectController();
-      const categoryController = new CategoryController();
-      const sideBarState = projectController.model.getProjectsByCategory(
-         categoryController.model.getAllItems()
-      );
-      const sideBar = createElement('side-bar').setState(sideBarState).build();
+
+      const sideBar = createElement('side-bar')
+         .appendChildren(categoriesList)
+         .build();
+
       this.appendChild(sideBar);
-      this.appendChild(taskController.view);
+      this.appendChild(taskList);
    }
 
    openTaskDetails(task) {

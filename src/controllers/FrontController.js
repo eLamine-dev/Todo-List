@@ -10,26 +10,30 @@ class FrontController {
       this.taskController = new TaskController();
       this.projectController = new ProjectController();
       this.categoryController = new CategoryController();
-      this.appPage = new AppPage(this.taskController, this.projectController);
+
+      // const sideBarState = this.projectController.model.getProjectsByCategory(
+      //    this.categoryController.model.getAllItems()
+      // );
+
+      this.view = new AppPage(
+         this.categoryController.view,
+         this.taskController.view
+      );
 
       this.initializeListeners();
    }
 
    initializeListeners() {
-      // Subscribe to pubsub events related to the overall page
       pubsub.subscribe('filter:change', this.handleFilterChange.bind(this));
       pubsub.subscribe('task:select', this.handleTaskSelect.bind(this));
-      // Add more event subscriptions as needed
    }
 
    handleFilterChange(filter) {
-      // Update the AppPage based on the filter change
-      this.appPage.updateFilter(filter);
+      this.view.updateFilter(filter);
    }
 
    handleTaskSelect(taskId) {
-      // Update the AppPage to show the details of the selected task
-      this.appPage.showTaskDetails(taskId);
+      this.view.showTaskDetails(taskId);
    }
 }
 

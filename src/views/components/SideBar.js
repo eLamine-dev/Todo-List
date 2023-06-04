@@ -16,10 +16,10 @@ class SideBar extends HTMLElement {
       });
       this.appendChild(defaultFiltersUl);
 
-      const projectList = createElement('category-list')
-         .setState(this.state)
-         .build();
-      this.appendChild(projectList);
+      // const projectList = createElement('category-list')
+      //    .setState(this.state)
+      //    .build();
+      // this.appendChild(projectList);
    }
 }
 
