@@ -11,9 +11,9 @@ class FrontController {
       this.projectController = new ProjectController();
       this.categoryController = new CategoryController();
 
-      // const sideBarState = this.projectController.model.getProjectsByCategory(
-      //    this.categoryController.model.getAllItems()
-      // );
+      const sideBarState = this.projectController.model.getProjectsByCategory(
+         this.categoryController.model.getAllItems()
+      );
 
       this.view = new AppPage(
          this.categoryController.view,
@@ -33,7 +33,7 @@ class FrontController {
    }
 
    handleTaskSelect(taskId) {
-      this.view.showTaskDetails(taskId);
+      this.view.openTaskDetails(taskId);
    }
 }
 

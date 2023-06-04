@@ -2,18 +2,35 @@ import pubsub from '../utils/PubSub';
 import TaskModel from '../models/TaskModel';
 import TaskList from '../views/components/TaskList';
 import createElement from '../utils/ElementBuilder';
+import Filter from '../strategies/Filter';
 
 class TaskController {
    constructor() {
+      this.filter = new Filter();
       this.model = new TaskModel();
       this.view = createElement('task-list')
          .setState(this.model.getAllItems())
          .build();
 
       [
-         { id: '1685636158744', title: 'afgjsdf', date: '2023-06-01' },
-         { id: '1685636158744', title: 'asddfggf', date: '2023-06-01' },
-         { id: '1685636158744', title: 'asdj;l;f', date: '2023-06-01' },
+         {
+            id: '1685636158744',
+            title: 'afgjsdf',
+            date: '2023-06-01',
+            projectId: '001',
+         },
+         {
+            id: '1685636158744',
+            title: 'asddfggf',
+            date: '2023-06-01',
+            projectId: '002',
+         },
+         {
+            id: '1685636158744',
+            title: 'asdj;l;f',
+            date: '2023-06-01',
+            projectId: '003',
+         },
       ].forEach((task) => {
          this.model.addItem(task);
       });
@@ -21,6 +38,7 @@ class TaskController {
       pubsub.subscribe('task:add', this.handleAddTask.bind(this));
       pubsub.subscribe('task:remove', this.handleRemoveTask.bind(this));
       pubsub.subscribe('task:update', this.handleRemoveTask.bind(this));
+      pubsub.subscribe('filter:changed', this.handleFilterChange.bind(this));
    }
 
    handleAddTask(data) {
@@ -43,6 +61,18 @@ class TaskController {
          .setState(this.model.getItemById(taskId))
          .build();
       // to be continued
+   }
+
+   handleFilterChange(data) {
+      const newList = this.filter.filterBy(
+         data.type,
+         this.model.tasks,
+         data.value
+      );
+      this.view.state = newList;
+      this.view.render();
+
+      // this.view.render();
    }
 }
 

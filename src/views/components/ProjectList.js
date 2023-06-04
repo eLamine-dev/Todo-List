@@ -24,7 +24,7 @@ class ProjectList extends HTMLElement {
          if (ev.target.getAttribute('data-type') === 'project') {
             pubsub.publish('filter:changed', {
                type: ev.target.getAttribute('data-type'),
-               id: ev.target.state.id,
+               value: ev.target.state.id,
             });
          }
       });

@@ -2,14 +2,14 @@ const filteringStrategies = [
    {
       type: 'date',
       filter: function filter(tasks, date) {
-         return tasks.Filter((task) => task.date === date);
+         return tasks.filter((task) => task.date === date);
       },
    },
 
    {
       type: 'project',
       filter: function filter(tasks, projectId) {
-         return tasks.Filter((task) => task.projectId === projectId);
+         return tasks.filter((task) => task.projectId === projectId);
       },
    },
 ];
@@ -22,14 +22,14 @@ class Filter {
 
    addStrategies(strategies) {
       strategies.forEach((strategy) => {
-         this.strategies.set(strategy.type, strategy.Filter);
+         this.strategies.set(strategy.type, strategy.filter);
       });
    }
 
    filterBy(type, tasks, filterValue) {
       const strategy = this.strategies.get(type);
       if (strategy) {
-         return strategy.filter(tasks, filterValue);
+         return strategy(tasks, filterValue);
       }
 
       return tasks;
