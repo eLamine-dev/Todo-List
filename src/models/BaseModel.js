@@ -1,8 +1,9 @@
 import ObjectBuilder from '../utils/ObjectBuilder';
 
 class BaseModel {
-   constructor() {
-      this.items = [];
+   constructor(collectionName) {
+      this.collectionName = collectionName;
+      this[collectionName] = [];
    }
 
    static createItem(data) {
@@ -10,28 +11,32 @@ class BaseModel {
    }
 
    addItem(newItem) {
-      this.items.push(newItem);
+      this[this.collectionName].push(newItem);
    }
 
    getAllItems() {
-      return this.items;
+      return this[this.collectionName];
    }
 
    getLastItem() {
-      return this.items.slice(-1)[0];
+      return this[this.collectionName].slice(-1)[0];
    }
 
    getItemById(id) {
-      this.items.find((item) => item.id === id);
+      this[this.collectionName].find((item) => item.id === id);
    }
 
    updateItem(id, data) {
-      const itemToEdit = this.items.find((item) => item.id === id);
+      const itemToEdit = this[this.collectionName].find(
+         (item) => item.id === id
+      );
       itemToEdit.editProperties(data);
    }
 
    deleteItem(id) {
-      const index = this.items.findIndex((item) => item.id === id);
+      const index = this[this.collectionName].findIndex(
+         (item) => item.id === id
+      );
       if (index !== -1) {
          this.items.splice(index, 1);
       }

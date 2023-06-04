@@ -25,7 +25,7 @@ class AppPage extends HTMLElement {
       this.appendChild(taskController.view);
    }
 
-   showTaskDetails(task) {
+   openTaskDetails(task) {
       if (document.getElementById('task-details')) this.lastChild.remove();
       const taskDetails = createElement('task-details').setState(task).build();
       this.appendChild(taskDetails);

@@ -3,12 +3,12 @@ import CategoryModel from './CategoryModel';
 
 class ProjectModel extends BaseModel {
    constructor() {
-      super();
+      super('projects');
    }
 
    getProjectsByCategory(categories) {
       categories.forEach((category) => {
-         category.projects = this.items.filter(
+         category.projects = this.projects.filter(
             (project) => project.categoryId === category.id
          );
       });

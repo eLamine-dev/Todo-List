@@ -2,7 +2,7 @@ import BaseModel from './BaseModel';
 
 class CategoryModel extends BaseModel {
    constructor() {
-      super();
+      super('categories');
    }
 }
 
