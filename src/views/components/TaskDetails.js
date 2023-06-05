@@ -13,8 +13,7 @@ class TaskDetails extends HTMLElement {
             name: 'title-input',
             contenteditable: true,
          })
-         .setContent(this.state.title)
-         .build();
+         .setContent(this.state.title);
 
       const description = createElement('textarea')
          .setAttributes({

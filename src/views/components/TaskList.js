@@ -8,7 +8,6 @@ class TaskList extends HTMLElement {
    }
 
    render() {
-      this.innerHTML = '';
       const addTaskForm = new AddTaskForm();
       this.appendChild(addTaskForm);
       this.state.forEach((task) => {

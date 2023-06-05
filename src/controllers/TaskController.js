@@ -69,8 +69,7 @@ class TaskController {
          this.model.tasks,
          data.value
       );
-      this.view.state = newList;
-      this.view.render();
+      this.view.clear().setState(newList).render();
    }
 }
 
