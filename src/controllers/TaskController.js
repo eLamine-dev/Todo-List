@@ -71,8 +71,6 @@ class TaskController {
       );
       this.view.state = newList;
       this.view.render();
-
-      // this.view.render();
    }
 }
 

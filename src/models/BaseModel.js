@@ -38,7 +38,7 @@ class BaseModel {
          (item) => item.id === id
       );
       if (index !== -1) {
-         this.items.splice(index, 1);
+         this[this.collectionName].splice(index, 1);
       }
    }
 }

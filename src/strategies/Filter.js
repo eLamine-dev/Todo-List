@@ -27,9 +27,9 @@ class Filter {
    }
 
    filterBy(type, tasks, filterValue) {
-      const strategy = this.strategies.get(type);
-      if (strategy) {
-         return strategy(tasks, filterValue);
+      const filter = this.strategies.get(type);
+      if (filter) {
+         return filter(tasks, filterValue);
       }
 
       return tasks;
