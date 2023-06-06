@@ -13,6 +13,7 @@ class CategoryController {
       ].forEach((category) => {
          this.model.addItem(category);
       });
+
       this.view = createElement('category-list')
          .setState(this.model.getAllItems())
          .build();

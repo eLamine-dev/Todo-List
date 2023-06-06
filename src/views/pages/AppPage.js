@@ -13,9 +13,8 @@ class AppPage extends HTMLElement {
    render(categoriesList, taskList) {
       this.id = 'app';
 
-      const sideBar = createElement('side-bar')
-         .appendChildren(categoriesList)
-         .build();
+      const sideBar = createElement('side-bar');
+      sideBar.appendChildren(categoriesList);
 
       this.appendChild(sideBar);
       this.appendChild(taskList);

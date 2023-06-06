@@ -11,9 +11,9 @@ class FrontController {
       this.projectController = new ProjectController();
       this.categoryController = new CategoryController();
 
-      const sideBarState = this.projectController.model.getProjectsByCategory(
-         this.categoryController.model.getAllItems()
-      );
+      // const sideBarState = this.projectController.model.getProjectsByCategory(
+      //    this.categoryController.model.getAllItems()
+      // );
 
       this.view = new AppPage(
          this.categoryController.view,
@@ -21,6 +21,11 @@ class FrontController {
       );
 
       this.initializeListeners();
+   }
+
+   setupSideBar() {
+      const categories = this.categoryController.model.getAllItems();
+      const projects = this.projectController.model.getAllItems();
    }
 
    initializeListeners() {

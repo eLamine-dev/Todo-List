@@ -8,15 +8,16 @@ class CategoryList extends HTMLElement {
    }
 
    render() {
+      this.setAttribute('slot', 'project-list');
       this.state.forEach((category) => {
-         const categoryProjects = createElement('project-list')
-            .setState(category.projects)
-            .build();
+         const categoryProjects = createElement('project-list').setState(
+            category.projects
+         );
 
          const categoryLi = createElement('li')
             .setContent(category.title)
-            .appendChildren(categoryProjects)
-            .build();
+            .appendChildren(categoryProjects);
+
          this.appendChild(categoryLi);
       });
    }

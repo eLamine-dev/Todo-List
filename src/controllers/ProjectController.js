@@ -16,9 +16,9 @@ class ProjectController {
          this.model.addItem(project);
       });
 
-      // this.view = createElement('project-list')
-      //    .setState(this.model.getProjectsByCategory())
-      //    .build();
+      this.view = createElement('project-list').setState(
+         this.model.getAllItems()
+      );
 
       pubsub.subscribe('project:add', this.handleAddProject.bind(this));
       pubsub.subscribe('project:remove', this.handleRemoveProject.bind(this));
