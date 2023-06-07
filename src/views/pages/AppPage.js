@@ -4,20 +4,20 @@ import TaskDetails from '../components/TaskDetails';
 import sideBar from '../components/SideBar';
 
 class AppPage extends HTMLElement {
-   constructor(categoriesList, taskList) {
-      super();
-      this.render(categoriesList, taskList);
+   connectedCallback() {
+      this.render();
       pubsub.subscribe('task:select', this.openTaskDetails.bind(this));
    }
 
-   render(categoriesList, taskList) {
-      this.id = 'app';
+   render() {
+      console.log('from apppage');
+      this.setAttribute('id', 'app');
 
-      const sideBar = createElement('side-bar');
-      sideBar.appendChildren(categoriesList);
+      // const sideBar = createElement('side-bar');
+      // sideBar.appendChildren(categoriesList);
 
-      this.appendChild(sideBar);
-      this.appendChild(taskList);
+      // this.appendChild(sideBar);
+      // this.appendChild(taskList);
    }
 
    openTaskDetails(task) {

@@ -3,7 +3,7 @@ import createElement from '../utils/ElementBuilder';
 import TaskController from './TaskController';
 import ProjectController from './ProjectController';
 import CategoryController from './CategoryController';
-import AppPage from '../views/pages/AppPage';
+import sideBar from '../views/components/SideBar';
 
 class FrontController {
    constructor() {
@@ -11,22 +11,36 @@ class FrontController {
       this.projectController = new ProjectController();
       this.categoryController = new CategoryController();
 
-      // const sideBarState = this.projectController.model.getProjectsByCategory(
-      //    this.categoryController.model.getAllItems()
-      // );
+      this.sideBar = this.createSideBar();
 
-      this.view = new AppPage(
-         this.categoryController.view,
-         this.taskController.view
-      );
-
+      this.view = createElement('app-page')
+         .setAttributes({ id: 'app' })
+         .appendChildren([this.sideBar, this.taskController.view]);
       this.initializeListeners();
    }
 
-   setupSideBar() {
-      const categories = this.categoryController.model.getAllItems();
-      const projects = this.projectController.model.getAllItems();
+   createSideBar() {
+      this.projectController.createListForCategories(
+         this.categoryController.model.getAllItems()
+      );
+
+      const categoryList = Array.from(this.categoryController.view.children);
+
+      console.log(this.categoryController.view);
+
+      const sideBarElm = createElement('side-bar').appendChildren([
+         ...this.projectController.view.values(),
+      ]);
+
+      return sideBarElm;
    }
+
+   // setupProjectLists() {
+   //    const categories = this.categoryController.model.getAllItems();
+   //    categories.forEach((category) => {
+   //       this.projectController.createListForCategories(category);
+   //    });
+   // }
 
    initializeListeners() {
       pubsub.subscribe('filter:change', this.handleFilterChange.bind(this));

@@ -8,19 +8,20 @@ class SideBar extends HTMLElement {
    }
 
    render() {
+      console.log('from sidebar');
       const defaultFilters = ['All', 'Today', 'Up-coming'];
       const defaultFiltersUl = createElement('ul');
       defaultFilters.forEach((filter) => {
          const filterLi = createElement('li').setContent(filter);
          defaultFiltersUl.appendChild(filterLi);
       });
-      this.appendChild(defaultFiltersUl);
+      this.prepend(defaultFiltersUl);
 
-      const projectList = createElement('slot').setAttributes({
-         name: 'project-list',
-      });
+      // const projectList = createElement('slot').setAttributes({
+      //    name: 'project-list',
+      // });
 
-      this.appendChild(projectList);
+      // this.appendChild(projectList);
    }
 }
 

@@ -16,13 +16,31 @@ class ProjectController {
          this.model.addItem(project);
       });
 
-      this.view = createElement('project-list').setState(
-         this.model.getAllItems()
-      );
+      this.view = new Map();
 
       pubsub.subscribe('project:add', this.handleAddProject.bind(this));
       pubsub.subscribe('project:remove', this.handleRemoveProject.bind(this));
       pubsub.subscribe('project:update', this.handleUpdateProject.bind(this));
+   }
+
+   getCategoryProjects(category) {
+      const categoryProjects = this.model
+         .getAllItems()
+         .filter((project) => project.categoryId === category.id);
+
+      return categoryProjects;
+   }
+
+   createListForCategories(categories) {
+      categories.forEach((category) => {
+         const categoryProjects = this.getCategoryProjects(category);
+         this.view.set(
+            category.title,
+            createElement('project-list')
+               .setContent(category.title)
+               .setState(categoryProjects)
+         );
+      });
    }
 
    handleAddProject(data) {

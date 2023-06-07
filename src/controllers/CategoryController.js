@@ -14,9 +14,9 @@ class CategoryController {
          this.model.addItem(category);
       });
 
-      this.view = createElement('category-list')
-         .setState(this.model.getAllItems())
-         .build();
+      this.view = createElement('category-list').setState(
+         this.model.getAllItems()
+      );
 
       pubsub.subscribe('Category:add', this.handleAddCategory.bind(this));
       pubsub.subscribe('Category:remove', this.handleRemoveCategory.bind(this));
