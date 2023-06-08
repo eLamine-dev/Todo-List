@@ -15,6 +15,10 @@ const elementMixin = {
       return this;
    },
 
+   getState() {
+      return this.state;
+   },
+
    setContent(content) {
       this.textContent = content;
       return this;

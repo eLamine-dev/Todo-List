@@ -31,16 +31,12 @@ class ProjectController {
       return categoryProjects;
    }
 
-   createListForCategories(categories) {
-      categories.forEach((category) => {
-         const categoryProjects = this.getCategoryProjects(category);
-         this.view.set(
-            category.title,
-            createElement('project-list')
-               .setContent(category.title)
-               .setState(categoryProjects)
-         );
-      });
+   createListForCategory(category) {
+      const categoryProjects = this.getCategoryProjects(category);
+      this.view.set(
+         category.title,
+         createElement('project-list').setState(categoryProjects)
+      );
    }
 
    handleAddProject(data) {

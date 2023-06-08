@@ -20,16 +20,12 @@ class FrontController {
    }
 
    createSideBar() {
-      this.projectController.createListForCategories(
-         this.categoryController.model.getAllItems()
-      );
-
       const categoryList = Array.from(this.categoryController.view.children);
 
       console.log(this.categoryController.view);
 
       const sideBarElm = createElement('side-bar').appendChildren([
-         ...this.projectController.view.values(),
+         this.categoryController.view,
       ]);
 
       return sideBarElm;
@@ -45,6 +41,15 @@ class FrontController {
    initializeListeners() {
       pubsub.subscribe('filter:change', this.handleFilterChange.bind(this));
       pubsub.subscribe('task:select', this.handleTaskSelect.bind(this));
+      pubsub.subscribe('category:load', this.LoadCategoryProjects.bind(this));
+   }
+
+   LoadCategoryProjects(categoryElement) {
+      this.projectController.createListForCategory(categoryElement.getState());
+      const categoryProjectsList = this.projectController.view.get(
+         categoryElement.getState().title
+      );
+      categoryElement.appendChildren(categoryProjectsList);
    }
 
    handleFilterChange(filter) {

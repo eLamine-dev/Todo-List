@@ -1,25 +1,33 @@
 import createElement from '../../utils/ElementBuilder';
+import pubsub from '../../utils/PubSub';
 import ProjectList from './ProjectList';
 
 class CategoryList extends HTMLElement {
    connectedCallback() {
       this.render();
-      // this.addEventListeners();
+      this.addEventListeners();
    }
 
    render() {
-      console.log('from categorylist');
       this.state.forEach((category) => {
-         const projectsListSlot = createElement('slot').setAttributes({
-            name: 'projects',
-         });
-
          const categoryLi = createElement('li')
             .setState(category)
-            .setContent(category.title)
-            .appendChildren(projectsListSlot);
+            .setContent(category.title);
 
          this.appendChild(categoryLi);
+      });
+   }
+
+   addEventListeners() {
+      this.childNodes.forEach((categoryLi) => {
+         categoryLi.addEventListener(
+            'click',
+            (event) => {
+               event.preventDefault();
+               pubsub.publish('category:load', categoryLi);
+            },
+            { once: true }
+         );
       });
    }
 }
