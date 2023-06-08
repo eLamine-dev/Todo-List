@@ -4,6 +4,7 @@ import TaskController from './TaskController';
 import ProjectController from './ProjectController';
 import CategoryController from './CategoryController';
 import sideBar from '../views/components/SideBar';
+import AppPage from '../views/pages/AppPage';
 
 class FrontController {
    constructor() {
@@ -11,32 +12,20 @@ class FrontController {
       this.projectController = new ProjectController();
       this.categoryController = new CategoryController();
 
-      this.sideBar = this.createSideBar();
-
-      this.view = createElement('app-page')
-         .setAttributes({ id: 'app' })
-         .appendChildren([this.sideBar, this.taskController.view]);
+      this.view = createElement('app-page').appendChildren([
+         this.createSideBar(),
+         this.taskController.view,
+      ]);
       this.initializeListeners();
    }
 
    createSideBar() {
-      const categoryList = Array.from(this.categoryController.view.children);
-
-      console.log(this.categoryController.view);
-
       const sideBarElm = createElement('side-bar').appendChildren([
          this.categoryController.view,
       ]);
 
       return sideBarElm;
    }
-
-   // setupProjectLists() {
-   //    const categories = this.categoryController.model.getAllItems();
-   //    categories.forEach((category) => {
-   //       this.projectController.createListForCategories(category);
-   //    });
-   // }
 
    initializeListeners() {
       pubsub.subscribe('filter:change', this.handleFilterChange.bind(this));

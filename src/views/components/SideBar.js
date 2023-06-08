@@ -8,7 +8,6 @@ class SideBar extends HTMLElement {
    }
 
    render() {
-      console.log('from sidebar');
       const defaultFilters = ['All', 'Today', 'Up-coming'];
       const defaultFiltersUl = createElement('ul');
       defaultFilters.forEach((filter) => {

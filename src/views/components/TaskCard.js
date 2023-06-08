@@ -32,7 +32,7 @@ class TaskCard extends HTMLElement {
             this.remove();
             pubsub.publish('task:remove', this.state.id);
          } else {
-            pubsub.publish('task:select', this.state);
+            pubsub.publish('task:select', this.getState());
          }
       });
    }

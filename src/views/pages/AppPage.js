@@ -1,7 +1,6 @@
 import pubsub from '../../utils/PubSub';
 import createElement from '../../utils/ElementBuilder';
 import TaskDetails from '../components/TaskDetails';
-import sideBar from '../components/SideBar';
 
 class AppPage extends HTMLElement {
    connectedCallback() {
@@ -10,14 +9,7 @@ class AppPage extends HTMLElement {
    }
 
    render() {
-      console.log('from apppage');
       this.setAttribute('id', 'app');
-
-      // const sideBar = createElement('side-bar');
-      // sideBar.appendChildren(categoriesList);
-
-      // this.appendChild(sideBar);
-      // this.appendChild(taskList);
    }
 
    openTaskDetails(task) {
