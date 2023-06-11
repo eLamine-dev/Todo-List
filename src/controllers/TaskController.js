@@ -8,9 +8,7 @@ class TaskController {
    constructor() {
       this.filter = new Filter();
       this.model = new TaskModel();
-      this.view = createElement('task-list')
-         .setState(this.model.getAllItems())
-         .build();
+      this.view = createElement('task-list').setState(this.model.getAllItems());
 
       [
          {

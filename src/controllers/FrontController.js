@@ -19,6 +19,10 @@ class FrontController {
       this.initializeListeners();
    }
 
+   start() {
+      document.getElementById('body').appendChild(this.view);
+   }
+
    createSideBar() {
       const sideBarElm = createElement('side-bar').appendChildren([
          this.categoryController.view,
