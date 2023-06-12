@@ -1,7 +1,4 @@
 import pubsub from '../utils/PubSub';
-import createElement from '../utils/ElementBuilder';
-import CategoryModel from '../models/CategoryModel';
-import CategoryList from '../views/components/CategoryList';
 
 class CategoryController {
    constructor(categoryModel, CategoryView) {

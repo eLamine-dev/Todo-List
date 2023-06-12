@@ -1,8 +1,8 @@
 import './assets/css/reset.css';
 import './assets/css/style.css';
-import FrontController from './controllers/FrontController';
+import initializeApp from './dependenciesContainer';
 
 document.addEventListener('DOMContentLoaded', () => {
-   const frontController = new FrontController();
+   const frontController = initializeApp();
    frontController.start();
 });

@@ -4,15 +4,14 @@ import TaskController from './TaskController';
 import ProjectController from './ProjectController';
 import CategoryController from './CategoryController';
 import sideBar from '../views/components/SideBar';
-import AppPage from '../views/pages/AppPage';
 
 class FrontController {
-   constructor() {
-      this.taskController = new TaskController();
-      this.projectController = new ProjectController();
-      this.categoryController = new CategoryController();
+   constructor(taskController, projectController, categoryController, appPage) {
+      this.taskController = taskController;
+      this.projectController = projectController;
+      this.categoryController = categoryController;
 
-      this.view = createElement('app-page').appendChildren([
+      this.view = appPage.appendChildren([
          this.createSideBar(),
          this.taskController.view,
       ]);

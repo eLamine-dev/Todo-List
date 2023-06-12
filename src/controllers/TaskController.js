@@ -1,14 +1,12 @@
 import pubsub from '../utils/PubSub';
 import TaskModel from '../models/TaskModel';
-import TaskList from '../views/components/TaskList';
-import createElement from '../utils/ElementBuilder';
 import Filter from '../strategies/Filter';
 
 class TaskController {
-   constructor() {
+   constructor(taskModel, taskView) {
       this.filter = new Filter();
-      this.model = new TaskModel();
-      this.view = createElement('task-list').setState(this.model.getAllItems());
+      this.model = taskModel;
+      this.view = taskView;
 
       [
          {

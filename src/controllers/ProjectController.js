@@ -1,11 +1,10 @@
 import pubsub from '../utils/PubSub';
 import ProjectModel from '../models/ProjectModel';
 import createElement from '../utils/ElementBuilder';
-import ProjectList from '../views/components/ProjectList';
 
 class ProjectController {
-   constructor() {
-      this.model = new ProjectModel();
+   constructor(projectModel) {
+      this.model = projectModel;
       [
          { title: 'project01', id: '001', categoryId: '01' },
          { title: 'project02', id: '002', categoryId: '02' },
