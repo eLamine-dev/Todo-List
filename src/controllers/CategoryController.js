@@ -4,8 +4,8 @@ import CategoryModel from '../models/CategoryModel';
 import CategoryList from '../views/components/CategoryList';
 
 class CategoryController {
-   constructor() {
-      this.model = new CategoryModel();
+   constructor(categoryModel, CategoryView) {
+      this.model = categoryModel;
       [
          { title: 'personal', id: '01' },
          { title: 'education', id: '02' },
@@ -14,9 +14,7 @@ class CategoryController {
          this.model.addItem(category);
       });
 
-      this.view = createElement('category-list').setState(
-         this.model.getAllItems()
-      );
+      this.view = CategoryView;
 
       pubsub.subscribe('Category:add', this.handleAddCategory.bind(this));
       pubsub.subscribe('Category:remove', this.handleRemoveCategory.bind(this));
