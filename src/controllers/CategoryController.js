@@ -30,7 +30,6 @@ class CategoryController {
 
    handleRemoveCategory(CategoryId) {
       this.model.deleteItem(CategoryId);
-      // this.view.addTask(newTask);
    }
 
    handleUpdateCategory(CategoryId, newData) {
