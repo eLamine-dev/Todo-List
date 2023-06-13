@@ -2,25 +2,22 @@ import createElement from '../../utils/ElementBuilder';
 import pubsub from '../../utils/PubSub';
 
 class TaskCard extends HTMLElement {
-   constructor() {
-      super();
-   }
-
    connectedCallback() {
-      this.createCard();
+      this.render();
       this.addEventListeners();
    }
 
-   createCard() {
+   render() {
       this.setAttribute('task-id', `${this.state.id}`);
-      const title = createElement('h3').setContent(this.state.title).build();
-      const date = createElement('h3').setContent(this.state.date).build();
+      const title = createElement('h3').setContent(this.state.title);
+      const date = createElement('h3').setContent(this.state.date);
       const deleteBtn = createElement('button')
          .setContent('delete')
-         .setAttributes({ class: 'delete' })
-         .build();
-
-      [title, date, deleteBtn].forEach((child) => {
+         .setAttributes({ class: 'delete' });
+      const completedButton = createElement('button')
+         .setContent('done!')
+         .setAttributes({ class: 'completed' });
+      [title, date, deleteBtn, completedButton].forEach((child) => {
          this.appendChild(child);
       });
    }

@@ -10,15 +10,16 @@ class FrontController {
       this.taskController = taskController;
       this.projectController = projectController;
       this.categoryController = categoryController;
+      this.view = appPage;
 
-      this.view = appPage.appendChildren([
-         this.createSideBar(),
-         this.taskController.view,
-      ]);
       this.initializeListeners();
    }
 
    start() {
+      this.view.appendChildren([
+         this.createSideBar(),
+         this.taskController.view,
+      ]);
       document.getElementById('body').appendChild(this.view);
    }
 

@@ -13,24 +13,23 @@ import FrontController from './controllers/FrontController';
 
 export default function initializeApp() {
    const taskModel = new TaskModel();
+   const projectModel = new ProjectModel();
+   const categoryModel = new CategoryModel();
+
    const taskList = createElement('task-list').setState(
       taskModel.getAllItems()
    );
-   const taskController = new TaskController(taskModel, taskList);
-
-   const projectModel = new ProjectModel();
-   const projectController = new ProjectController(projectModel);
-
-   const categoryModel = new CategoryModel();
    const categoryList = createElement('category-list').setState(
       categoryModel.getAllItems()
    );
+   const appPage = createElement('app-page');
+
+   const taskController = new TaskController(taskModel, taskList);
+   const projectController = new ProjectController(projectModel);
    const categoryController = new CategoryController(
       categoryModel,
       categoryList
    );
-
-   const appPage = createElement('app-page');
 
    const frontController = new FrontController(
       taskController,

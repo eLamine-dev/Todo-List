@@ -32,3 +32,10 @@
    justify-items: stretch;
    justify-content: space-between;
 }
+
+task-card {
+   display: block;
+   padding: 1rem;
+   border: #0f172a 1px solid;
+   border-radius: 1rem;
+}
