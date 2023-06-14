@@ -40,8 +40,8 @@ const elementMixin = {
       return this;
    },
 
-   build() {
-      return this;
+   appendTo(parent) {
+      parent.appendChild(this);
    },
 };
 

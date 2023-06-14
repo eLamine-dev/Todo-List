@@ -9,6 +9,7 @@ class CategoryList extends HTMLElement {
    }
 
    render() {
+      createElement('h3').setContent('Projects').appendTo(this);
       this.state.forEach((category) => {
          const categoryLi = createElement('li')
             .setState(category)

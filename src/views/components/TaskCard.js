@@ -9,22 +9,23 @@ class TaskCard extends HTMLElement {
 
    render() {
       this.setAttribute('task-id', `${this.state.id}`);
+      const taskCheckbox = createElement('input').setAttributes({
+         type: 'checkbox',
+      });
       const title = createElement('h3').setContent(this.state.title);
       const date = createElement('h3').setContent(this.state.date);
       const deleteBtn = createElement('button')
          .setContent('delete')
          .setAttributes({ class: 'delete' });
-      const completedButton = createElement('button')
-         .setContent('done!')
-         .setAttributes({ class: 'completed' });
-      [title, date, deleteBtn, completedButton].forEach((child) => {
+
+      [taskCheckbox, title, date, deleteBtn].forEach((child) => {
          this.appendChild(child);
       });
    }
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
-         ev.preventDefault();
+         // ev.preventDefault();
          if (ev.target.classList.contains('delete')) {
             this.remove();
             pubsub.publish('task:remove', this.state.id);

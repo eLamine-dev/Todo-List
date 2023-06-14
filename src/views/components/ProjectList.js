@@ -12,8 +12,7 @@ class ProjectList extends HTMLElement {
          const projectLI = createElement('li')
             .setAttributes({ 'data-type': 'project' })
             .setState(project)
-            .setContent(project.title)
-            .build();
+            .setContent(project.title);
          this.appendChild(projectLI);
       });
    }

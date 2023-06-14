@@ -14,28 +14,45 @@
    --green: #0d9488;
 }
 
-#header {
-   height: max(70px, 10vh);
-   position: sticky;
-   top: 0;
-   color: white;
-   background-color: var(--darker);
-   display: flex;
-   align-items: center;
-   padding: 0 2vw;
-}
-
-#app {
+app-page {
    height: 90vh;
    display: grid;
-   grid-template-columns: 1fr 7fr 2fr;
+   grid-template-columns: 2fr 7fr 2fr;
    justify-items: stretch;
    justify-content: space-between;
 }
 
+task-list {
+   display: grid;
+}
+
 task-card {
-   display: block;
+   display: grid;
+   height: 10rem;
    padding: 1rem;
    border: #0f172a 1px solid;
    border-radius: 1rem;
+}
+
+add-task-form {
+   display: grid;
+}
+
+side-bar {
+   padding: 1.5rem;
+   display: grid;
+   grid-template-rows: 1fr 7fr;
+   gap: 3rem;
+}
+
+project-list {
+   display: grid;
+   gap: 0.2rem;
+   padding-left: 1rem;
+}
+
+category-list {
+   display: grid;
+   align-content: start;
+   gap: 0.3rem;
 }

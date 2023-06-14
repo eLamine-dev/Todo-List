@@ -15,22 +15,16 @@ class TaskDetails extends HTMLElement {
          })
          .setContent(this.state.title);
 
-      const description = createElement('textarea')
-         .setAttributes({
-            name: 'description',
-            Placeholder: 'add task description...',
-         })
-         .build();
-
-      const date = createElement('input')
-         .setAttributes({
-            type: 'date',
-            name: 'date-input',
-            value: `${this.state.date}`,
-            // min: '',
-         })
-         .build();
-
+      const description = createElement('textarea').setAttributes({
+         name: 'description',
+         Placeholder: 'add task description...',
+      });
+      const date = createElement('input').setAttributes({
+         type: 'date',
+         name: 'date-input',
+         value: `${this.state.date}`,
+         // min: '',
+      });
       this.id = 'task-details';
 
       [title, date, description].forEach((child) => {

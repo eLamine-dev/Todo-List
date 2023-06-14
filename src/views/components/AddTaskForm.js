@@ -8,29 +8,22 @@ class AddTaskForm extends HTMLFormElement {
    }
 
    render() {
-      const titleInput = createElement('input')
-         .setAttributes({
-            type: 'text',
-            name: 'title-input',
-         })
-         .build();
-
-      const dateInput = createElement('input')
-         .setAttributes({
-            type: 'date',
-            name: 'date-input',
-            // min: '',
-         })
-         .build();
+      const titleInput = createElement('input').setAttributes({
+         type: 'text',
+         name: 'title-input',
+      });
+      const dateInput = createElement('input').setAttributes({
+         type: 'date',
+         name: 'date-input',
+         // min: '',
+      });
       dateInput.valueAsDate = new Date();
 
       const submitBtn = createElement('button')
          .setAttributes({
             type: 'submit',
          })
-         .setContent('save')
-         .build();
-
+         .setContent('save');
       this.id = 'new-task-form';
       [titleInput, dateInput, submitBtn].forEach((child) => {
          this.appendChild(child);
