@@ -38,9 +38,8 @@ class ProjectController {
    }
 
    handleAddProject(data) {
-      const newProject = ProjectModel.createItem(data);
-      this.model.addItem(newProject);
-      this.view.addProject(newProject);
+      this.model.addItem(data);
+      this.view.addProject(data);
    }
 
    handleRemoveProject(projectId) {

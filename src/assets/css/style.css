@@ -56,3 +56,20 @@ category-list {
    align-content: start;
    gap: 0.3rem;
 }
+
+.category {
+   cursor: pointer;
+   position: relative;
+   border: #0f172a solid 1px;
+}
+
+.addProjectBtn {
+   display: none;
+   position: absolute;
+   left: 100%;
+   top: 0%;
+}
+
+.category:hover .addProjectBtn {
+   display: block;
+}
