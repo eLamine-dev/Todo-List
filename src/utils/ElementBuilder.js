@@ -42,6 +42,7 @@ const elementMixin = {
 
    appendTo(parent) {
       parent.appendChild(this);
+      return this;
    },
 };
 
