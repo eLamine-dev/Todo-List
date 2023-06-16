@@ -16,11 +16,13 @@ class SideBar extends HTMLElement {
       });
       this.prepend(defaultFiltersUl);
 
-      // const projectList = createElement('slot').setAttributes({
-      //    name: 'project-list',
-      // });
+      const projectList = createElement('ul')
+         .setAttributes({
+            id: 'projects-lists',
+         })
+         .setContent('projects');
 
-      // this.appendChild(projectList);
+      this.appendChild(projectList);
    }
 }
 

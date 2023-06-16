@@ -24,9 +24,14 @@ class FrontController {
    }
 
    createSideBar() {
-      const sideBarElm = createElement('side-bar').appendChildren([
-         this.categoryController.view,
-      ]);
+      const sideBarElm = createElement('side-bar');
+
+      const categories = this.categoryController.model.getAllItems();
+
+      categories.forEach((category) => {
+         this.projectController.createListForCategory(category);
+         sideBarElm.appendChild(this.projectController.view.get(category.id));
+      });
 
       return sideBarElm;
    }

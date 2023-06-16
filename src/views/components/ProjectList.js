@@ -1,5 +1,6 @@
 import createElement from '../../utils/ElementBuilder';
 import pubsub from '../../utils/PubSub';
+import ProjectCard from './ProjectCard';
 
 class ProjectList extends HTMLElement {
    connectedCallback() {
@@ -9,12 +10,17 @@ class ProjectList extends HTMLElement {
 
    render() {
       this.state.forEach((project) => {
-         const projectLI = createElement('li')
+         const projectLI = createElement('project-card')
             .setAttributes({ 'data-type': 'project' })
-            .setState(project)
-            .setContent(project.title);
+            .setState(project);
+
          this.appendChild(projectLI);
       });
+
+      const addProjectToCategory = createElement('button')
+         .setContent('+')
+         .setAttributes({ class: 'addProjectBtn' })
+         .appendTo(this);
    }
 
    addEventListeners() {

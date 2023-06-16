@@ -22,6 +22,7 @@ class AddTaskForm extends HTMLFormElement {
       const submitBtn = createElement('button')
          .setAttributes({
             type: 'submit',
+            name: 'save-task',
          })
          .setContent('save');
       this.id = 'new-task-form';

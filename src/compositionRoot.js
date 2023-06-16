@@ -22,6 +22,7 @@ export default function initializeApp() {
    const categoryList = createElement('category-list').setState(
       categoryModel.getAllItems()
    );
+
    const appPage = createElement('app-page');
 
    const taskController = new TaskController(taskModel, taskList);

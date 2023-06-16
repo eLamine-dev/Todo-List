@@ -32,8 +32,10 @@ class ProjectController {
    createListForCategory(category) {
       const categoryProjects = this.getCategoryProjects(category);
       this.view.set(
-         category.title,
-         createElement('project-list').setState(categoryProjects)
+         category.id,
+         createElement('project-list')
+            .setState(categoryProjects)
+            .setContent(category.title)
       );
    }
 
@@ -41,7 +43,6 @@ class ProjectController {
       const newProject = ProjectController.createItem(data);
       this.model.addItem(newProject);
       this.view.addProject(data);
-      console.log(this.model.getAllItems());
    }
 
    handleRemoveProject(projectId) {
