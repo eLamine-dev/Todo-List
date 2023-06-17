@@ -9,13 +9,15 @@ class ProjectList extends HTMLElement {
    }
 
    render() {
+      const projectList = createElement('ul');
       this.state.forEach((project) => {
          const projectLI = createElement('project-card')
             .setAttributes({ 'data-type': 'project' })
             .setState(project);
 
-         this.appendChild(projectLI);
+         projectList.appendChild(projectLI);
       });
+      this.appendChild(projectList);
 
       const addProjectToCategory = createElement('button')
          .setContent('+')

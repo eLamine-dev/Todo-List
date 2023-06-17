@@ -16,20 +16,27 @@ class FrontController {
    }
 
    start() {
-      this.view.appendChildren([
-         this.createSideBar(),
-         this.taskController.view,
-      ]);
+      this.view.appendChildren([this.BuildSideBar(), this.taskController.view]);
       document.getElementById('body').appendChild(this.view);
    }
 
-   createSideBar() {
+   BuildSideBar() {
       const sideBarElm = createElement('side-bar');
+      // .appendChildren(
+      //    this.categoryController.view,
+      //    this.categoryController.view
+      // );
 
       const categories = this.categoryController.model.getAllItems();
 
       categories.forEach((category) => {
+         this.categoryController.view[category.id] = createElement(
+            'h4'
+         ).setContent(category.title);
          this.projectController.createListForCategory(category);
+         this.projectController.view
+            .get(category.id)
+            .appendChild(this.categoryController.view[category.id]);
          sideBarElm.appendChild(this.projectController.view.get(category.id));
       });
 
@@ -45,7 +52,7 @@ class FrontController {
    LoadCategoryProjects(categoryElement) {
       this.projectController.createListForCategory(categoryElement.getState());
       const categoryProjectsList = this.projectController.view.get(
-         categoryElement.getState().title
+         categoryElement.getState().id
       );
       categoryElement.appendChildren(categoryProjectsList);
    }

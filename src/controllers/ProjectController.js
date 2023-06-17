@@ -33,9 +33,7 @@ class ProjectController {
       const categoryProjects = this.getCategoryProjects(category);
       this.view.set(
          category.id,
-         createElement('project-list')
-            .setState(categoryProjects)
-            .setContent(category.title)
+         createElement('project-list').setState(categoryProjects)
       );
    }
 
