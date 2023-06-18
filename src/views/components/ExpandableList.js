@@ -9,16 +9,25 @@ class ProjectList extends HTMLElement {
    }
 
    render() {
-      // const projectList = createElement('ul');
-      this.state.forEach((project) => {
-         const projectLI = createElement('editable-li')
-            .setAttributes({ 'data-type': 'project' })
-            .setContent(project.title)
-            .setState(project);
+      const listHeader = createElement('h3')
+         .setAttributes({
+            class: 'header',
+         })
+         .appendTo(this);
 
-         this.appendChild(projectLI);
+      this.state.forEach((item) => {
+         const itemLI = createElement('editable-li')
+            .setAttributes({ 'data-type': 'project' })
+            .setState(item);
+
+         this.appendChild(itemLI);
       });
-      // this.appendChild(projectList);
+
+      const addItemBtn = createElement('button')
+         .setAttributes({
+            class: 'add-item',
+         })
+         .appendTo(this);
    }
 
    addEventListeners() {

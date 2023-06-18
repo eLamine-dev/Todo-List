@@ -23,7 +23,7 @@ class ProjectCard extends HTMLElement {
          title: this.elements['title-input'].value,
       };
       console.log(formData);
-      //   pubsub.publish('project:add', formData);
+      pubsub.publish('project:add', formData);
    }
 }
 customElements.define('project-card', ProjectCard);

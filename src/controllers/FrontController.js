@@ -22,6 +22,7 @@ class FrontController {
 
    BuildSideBar() {
       const sideBarElm = createElement('side-bar');
+      const projectsSection = createElement('ul').appendTo(sideBarElm);
       // .appendChildren(
       //    this.categoryController.view,
       //    this.categoryController.view
@@ -37,7 +38,9 @@ class FrontController {
          this.projectController.view
             .get(category.id)
             .appendChild(this.categoryController.view[category.id]);
-         sideBarElm.appendChild(this.projectController.view.get(category.id));
+         projectsSection.appendChild(
+            this.projectController.view.get(category.id)
+         );
       });
 
       return sideBarElm;

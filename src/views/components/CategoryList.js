@@ -17,6 +17,11 @@ class CategoryList extends HTMLElement {
             .setContent(category.title);
 
          this.appendChild(categoryLi);
+
+         const addProjectToCategory = createElement('button')
+            .setContent('+')
+            .setAttributes({ class: 'addProjectBtn' })
+            .appendTo(categoryLi);
       });
 
       createElement('button')

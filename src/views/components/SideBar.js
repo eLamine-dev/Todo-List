@@ -15,14 +15,6 @@ class SideBar extends HTMLElement {
          defaultFiltersUl.appendChild(filterLi);
       });
       this.prepend(defaultFiltersUl);
-
-      const projectList = createElement('ul')
-         .setAttributes({
-            id: 'projects-lists',
-         })
-         .setContent('projects');
-
-      this.appendChild(projectList);
    }
 }
 

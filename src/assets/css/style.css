@@ -46,7 +46,6 @@ side-bar {
 }
 
 project-list {
-   position: relative;
    display: grid;
    align-content: start;
    gap: 0.2rem;
@@ -60,6 +59,7 @@ category-list {
 }
 
 .category {
+   position: relative;
    cursor: pointer;
    border: #0f172a solid 1px;
 }
@@ -70,6 +70,6 @@ category-list {
    left: 100%;
 }
 
-project-list:hover .addProjectBtn {
+category-list:hover .addProjectBtn {
    display: block;
 }
