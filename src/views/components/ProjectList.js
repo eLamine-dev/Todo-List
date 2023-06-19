@@ -10,7 +10,7 @@ class ProjectList extends HTMLElement {
 
    render() {
       const header = createElement('h3').setContent('Projects');
-      this.append(header);
+      this.prepend(header);
    }
 
    addEventListeners() {

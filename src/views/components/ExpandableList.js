@@ -13,21 +13,27 @@ class ExpandableList extends HTMLElement {
          .setAttributes({
             class: 'header',
          })
-         .setContent(this.state.title)
+         .setContent(this.state.header)
          .appendTo(this);
+
+      const listUl = createElement('ul');
 
       this.state.items.forEach((item) => {
          const itemLI = createElement('editable-li')
             .setAttributes({ 'data-type': 'project' })
+            .setContent(item.title)
             .setState(item);
 
-         this.appendChild(itemLI);
+         listUl.appendChild(itemLI);
       });
+
+      this.appendChild(listUl);
 
       const addItemBtn = createElement('button')
          .setAttributes({
             class: 'add-item',
          })
+         .setContent('+')
          .appendTo(listHeader);
    }
 

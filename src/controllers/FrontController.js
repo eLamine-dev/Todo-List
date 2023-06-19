@@ -3,7 +3,7 @@ import createElement from '../utils/ElementBuilder';
 import TaskController from './TaskController';
 import ProjectController from './ProjectController';
 import CategoryController from './CategoryController';
-import sideBar from '../views/components/SideBar';
+import sideBarComponent from '../views/components/SideBar';
 
 class FrontController {
    constructor(taskController, projectController, categoryController, appPage) {
@@ -16,16 +16,18 @@ class FrontController {
    }
 
    start() {
-      this.view.appendChildren([this.BuildSideBar(), this.taskController.view]);
+      this.setupFirstLoad();
       document.getElementById('body').appendChild(this.view);
    }
 
    setupFirstLoad() {
-      const categories = this.categoryController.getAllItems();
+      const categories = this.categoryController.model.getAllItems();
+      const projects = this.taskController.model.getAllItems();
+
+      this.taskController.view.setState(projects);
 
       categories.forEach((category) => {
-         const categoryProjects =
-            this.projectController.createProjectsList(category);
+         this.projectController.createProjectsList(category);
       });
 
       const sideBar = createElement('side-bar').appendChildren(
@@ -38,15 +40,6 @@ class FrontController {
    initializeListeners() {
       pubsub.subscribe('filter:change', this.handleFilterChange.bind(this));
       pubsub.subscribe('task:select', this.handleTaskSelect.bind(this));
-      pubsub.subscribe('category:load', this.LoadCategoryProjects.bind(this));
-   }
-
-   LoadCategoryProjects(categoryElement) {
-      this.projectController.createListForCategory(categoryElement.getState());
-      const categoryProjectsList = this.projectController.view.get(
-         categoryElement.getState().id
-      );
-      categoryElement.appendChildren(categoryProjectsList);
    }
 
    handleFilterChange(filter) {

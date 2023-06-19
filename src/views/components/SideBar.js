@@ -1,5 +1,4 @@
 import createElement from '../../utils/ElementBuilder';
-import categoryList from './CategoryList';
 
 class SideBar extends HTMLElement {
    connectedCallback() {
