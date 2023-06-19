@@ -2,7 +2,7 @@ import pubsub from '../utils/PubSub';
 import createElement from '../utils/ElementBuilder';
 
 class ProjectController {
-   constructor(projectModel) {
+   constructor(projectModel, projectView) {
       this.model = projectModel;
       [
          { title: 'project01', id: '001', categoryId: '01' },
@@ -14,7 +14,7 @@ class ProjectController {
          this.model.addItem(project);
       });
 
-      this.view = new Map();
+      this.view = projectView;
 
       pubsub.subscribe('project:add', this.handleAddProject.bind(this));
       pubsub.subscribe('project:remove', this.handleRemoveProject.bind(this));
@@ -25,16 +25,16 @@ class ProjectController {
       const categoryProjects = this.model
          .getAllItems()
          .filter((project) => project.categoryId === category.id);
-
       return categoryProjects;
    }
 
-   createListForCategory(category) {
+   createProjectsList(category) {
       const categoryProjects = this.getCategoryProjects(category);
-      this.view.set(
-         category.id,
-         createElement('project-list').setState(categoryProjects)
-      );
+      const categoryProjectsList = createElement('exp-list').setState({
+         header: category.title,
+         items: categoryProjects,
+      });
+      this.view.appendChild(categoryProjectsList);
    }
 
    handleAddProject(data) {

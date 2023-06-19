@@ -11,16 +11,13 @@ class CategoryController {
          this.model.addItem(category);
       });
 
-      this.view = CategoryView;
-
       pubsub.subscribe('Category:add', this.handleAddCategory.bind(this));
       pubsub.subscribe('Category:remove', this.handleRemoveCategory.bind(this));
    }
 
    handleAddCategory(data) {
-      const newCategory = CategoryModel.createItem(data);
+      const newCategory = this.categoryModel.createItem(data);
       this.model.addItem(newCategory);
-      this.view.addCategory(newCategory);
    }
 
    handleRemoveCategory(CategoryId) {

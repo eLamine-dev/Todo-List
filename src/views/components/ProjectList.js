@@ -1,6 +1,6 @@
 import createElement from '../../utils/ElementBuilder';
 import pubsub from '../../utils/PubSub';
-import ListItem from './EditableListItem';
+import ExpandableList from './ExpandableList';
 
 class ProjectList extends HTMLElement {
    connectedCallback() {
@@ -9,16 +9,8 @@ class ProjectList extends HTMLElement {
    }
 
    render() {
-      // const projectList = createElement('ul');
-      this.state.forEach((project) => {
-         const projectLI = createElement('editable-li')
-            .setAttributes({ 'data-type': 'project' })
-            .setContent(project.title)
-            .setState(project);
-
-         this.appendChild(projectLI);
-      });
-      // this.appendChild(projectList);
+      const header = createElement('h3').setContent('Projects');
+      this.append(header);
    }
 
    addEventListeners() {

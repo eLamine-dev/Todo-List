@@ -20,30 +20,19 @@ class FrontController {
       document.getElementById('body').appendChild(this.view);
    }
 
-   BuildSideBar() {
-      const sideBarElm = createElement('side-bar');
-      const projectsSection = createElement('ul').appendTo(sideBarElm);
-      // .appendChildren(
-      //    this.categoryController.view,
-      //    this.categoryController.view
-      // );
-
-      const categories = this.categoryController.model.getAllItems();
+   setupFirstLoad() {
+      const categories = this.categoryController.getAllItems();
 
       categories.forEach((category) => {
-         this.categoryController.view[category.id] = createElement(
-            'h4'
-         ).setContent(category.title);
-         this.projectController.createListForCategory(category);
-         this.projectController.view
-            .get(category.id)
-            .appendChild(this.categoryController.view[category.id]);
-         projectsSection.appendChild(
-            this.projectController.view.get(category.id)
-         );
+         const categoryProjects =
+            this.projectController.createProjectsList(category);
       });
 
-      return sideBarElm;
+      const sideBar = createElement('side-bar').appendChildren(
+         this.projectController.view
+      );
+
+      this.view.appendChildren([sideBar, this.taskController.view]);
    }
 
    initializeListeners() {
