@@ -40,6 +40,7 @@ class AddTaskForm extends HTMLFormElement {
 
    passData() {
       const formData = {
+         dataType: 'task',
          title: this.elements['title-input'].value,
          date: this.elements['date-input'].value,
       };

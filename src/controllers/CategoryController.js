@@ -4,9 +4,9 @@ class CategoryController {
    constructor(categoryModel, CategoryView) {
       this.model = categoryModel;
       [
-         { title: 'personal', id: '01' },
-         { title: 'education', id: '02' },
-         { title: 'work', id: '03' },
+         { dataType: 'category', title: 'personal', id: '01' },
+         { dataType: 'category', title: 'education', id: '02' },
+         { dataType: 'category', title: 'work', id: '03' },
       ].forEach((category) => {
          this.model.addItem(category);
       });

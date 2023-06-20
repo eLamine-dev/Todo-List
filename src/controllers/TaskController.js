@@ -10,18 +10,21 @@ class TaskController {
 
       [
          {
+            dataType: 'task',
             id: '1685636158744',
             title: 'afgjsdf',
             date: '2023-06-01',
             projectId: '001',
          },
          {
+            dataType: 'task',
             id: '1685636158744',
             title: 'asddfggf',
             date: '2023-06-01',
             projectId: '002',
          },
          {
+            dataType: 'task',
             id: '1685636158744',
             title: 'asdj;l;f',
             date: '2023-06-01',

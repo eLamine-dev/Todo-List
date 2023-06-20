@@ -9,24 +9,27 @@ class ExpandableList extends HTMLElement {
    }
 
    render() {
-      const listHeader = createElement('editable-li')
-         .setAttributes({
-            class: 'header',
-         })
-         .setContent(this.state.header)
-         .appendTo(this);
+      const listHeader = createElement('editable-li').setState(
+         this.state.header
+      );
+      //  .setAttributes({
+      //     class: 'header',
+      //  })
+      //  .setAttributes({ 'data-type': this.state.dataType })
+      //  .setContent(this.state.header.title)
+      //  .appendTo(this);
 
       const listUl = createElement('ul');
 
       this.state.items.forEach((item) => {
-         const itemLI = createElement('editable-li')
-            .setAttributes({ 'data-type': 'project' })
-            .setContent(item.title)
-            .setState(item);
+         const itemLI = createElement('editable-li').setState(item);
+         // .setContent(item.title)
+         // .setAttributes({ 'data-type': this.state.dataType })
+         // .setState(item);
 
          listUl.appendChild(itemLI);
       });
-
+      this.appendChild(listHeader);
       this.appendChild(listUl);
 
       const addItemBtn = createElement('button')
@@ -48,6 +51,7 @@ class ExpandableList extends HTMLElement {
 
    addItem() {
       const newItem = createElement('editable-li');
+
       this.appendChild(newItem);
       newItem.focus();
    }

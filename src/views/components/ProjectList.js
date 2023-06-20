@@ -11,6 +11,10 @@ class ProjectList extends HTMLElement {
    render() {
       const header = createElement('h3').setContent('Projects');
       this.prepend(header);
+
+      const addCategory = createElement('button')
+         .setContent('Add category')
+         .appendTo(this);
    }
 
    addEventListeners() {

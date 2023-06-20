@@ -5,11 +5,36 @@ class ProjectController {
    constructor(projectModel, projectView) {
       this.model = projectModel;
       [
-         { title: 'project01', id: '001', categoryId: '01' },
-         { title: 'project02', id: '002', categoryId: '02' },
-         { title: 'project03', id: '003', categoryId: '01' },
-         { title: 'project04', id: '004', categoryId: '02' },
-         { title: 'project05', id: '005', categoryId: '03' },
+         {
+            dataType: 'project',
+            title: 'project01',
+            id: '001',
+            categoryId: '01',
+         },
+         {
+            dataType: 'project',
+            title: 'project02',
+            id: '002',
+            categoryId: '02',
+         },
+         {
+            dataType: 'project',
+            title: 'project03',
+            id: '003',
+            categoryId: '01',
+         },
+         {
+            dataType: 'project',
+            title: 'project04',
+            id: '004',
+            categoryId: '02',
+         },
+         {
+            dataType: 'project',
+            title: 'project05',
+            id: '005',
+            categoryId: '03',
+         },
       ].forEach((project) => {
          this.model.addItem(project);
       });
@@ -31,9 +56,10 @@ class ProjectController {
    createProjectsList(category) {
       const categoryProjects = this.getCategoryProjects(category);
       const categoryProjectsList = createElement('exp-list').setState({
-         header: category.title,
+         header: category,
          items: categoryProjects,
       });
+
       this.view.appendChild(categoryProjectsList);
    }
 

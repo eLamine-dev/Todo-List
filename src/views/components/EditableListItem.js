@@ -8,6 +8,9 @@ class ListItem extends HTMLElement {
    }
 
    render() {
+      this.innerText = this.state.title;
+      this.setAttribute('data-type', this.state.dataType);
+      this.setAttribute('id', this.state.id);
       const editBtn = createElement('button')
          .setContent('edit')
          .setAttributes({ class: 'edit' })
@@ -43,7 +46,7 @@ class ListItem extends HTMLElement {
    deleteItem() {
       this.remove();
       pubsub.publish(
-         `${this.getAttribute('data-type')}:add`,
+         `${this.getAttribute('data-type')}:delete`,
          this.getAttribute('id')
       );
    }
