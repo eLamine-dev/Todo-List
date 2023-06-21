@@ -12,19 +12,27 @@ class ProjectList extends HTMLElement {
       const header = createElement('h3').setContent('Projects');
       this.prepend(header);
 
-      const addCategory = createElement('button')
-         .setContent('Add category')
-         .appendTo(this);
+      const addCategoryBtn = createElement('button')
+         .setAttributes({ class: 'add-category-btn' })
+         .setContent('Add category');
+
+      this.append(addCategoryBtn);
+   }
+
+   addProjectsList() {
+      const categoryProjectsList = createElement('exp-list').setState({
+         header: { type: 'category', data: this.state.category },
+         items: { type: 'project', data: this.state.categoryProjects },
+      });
+
+      this.append(categoryProjectsList);
    }
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
          ev.preventDefault();
-         if (ev.target.getAttribute('data-type') === 'project') {
-            pubsub.publish('filter:changed', {
-               type: ev.target.getAttribute('data-type'),
-               value: ev.target.state.id,
-            });
+         if (ev.target.classList.contains('add-category-btn')) {
+            this.addProjectsList();
          }
       });
    }
