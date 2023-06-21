@@ -8,9 +8,10 @@ class ListItem extends HTMLElement {
    }
 
    render() {
-      this.innerText = this.state.title;
-      this.setAttribute('data-type', this.state.dataType);
-      this.setAttribute('id', this.state.id);
+      if (this.getState()) {
+         this.innerText = this.state.title;
+         this.setAttribute('id', this.state.id);
+      }
       const editBtn = createElement('button')
          .setContent('edit')
          .setAttributes({ class: 'edit' })

@@ -9,23 +9,17 @@ class ExpandableList extends HTMLElement {
    }
 
    render() {
-      const listHeader = createElement('editable-li').setState(
-         this.state.header
-      );
-      //  .setAttributes({
-      //     class: 'header',
-      //  })
-      //  .setAttributes({ 'data-type': this.state.dataType })
-      //  .setContent(this.state.header.title)
-      //  .appendTo(this);
+      const listHeader = createElement('editable-li')
+         .setAttributes({ 'data-type': this.state.header.type })
+         .setState(this.state.header.data);
 
-      const listUl = createElement('ul');
+      const listUl = createElement('ul').setAttributes({
+         class: 'items-list',
+         'items-type': this.state.items.type,
+      });
 
-      this.state.items.forEach((item) => {
+      this.state.items.data.forEach((item) => {
          const itemLI = createElement('editable-li').setState(item);
-         // .setContent(item.title)
-         // .setAttributes({ 'data-type': this.state.dataType })
-         // .setState(item);
 
          listUl.appendChild(itemLI);
       });
@@ -50,9 +44,10 @@ class ExpandableList extends HTMLElement {
    }
 
    addItem() {
-      const newItem = createElement('editable-li');
-
-      this.appendChild(newItem);
+      const newItem = createElement('editable-li').setContent('New...');
+      const itemsList = this.querySelector('.items-list');
+      itemsList.appendChild(newItem);
+      newItem.editItem();
       newItem.focus();
    }
 }
