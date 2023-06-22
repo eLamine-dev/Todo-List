@@ -19,20 +19,24 @@ class ProjectList extends HTMLElement {
       this.append(addCategoryBtn);
    }
 
-   addProjectsList() {
-      const categoryProjectsList = createElement('exp-list').setState({
-         header: { type: 'category', data: this.state.category },
-         items: { type: 'project', data: this.state.categoryProjects },
-      });
+   setUpList() {
+      this.newList(this.state.category, this.state.categoryProjects);
+   }
 
-      this.append(categoryProjectsList);
+   newList(headerData, listData) {
+      const newList = createElement('exp-list').setState({
+         header: { type: 'category', data: headerData || null },
+         items: { type: 'project', data: listData || null },
+      });
+      this.append(newList);
    }
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
          ev.preventDefault();
          if (ev.target.classList.contains('add-category-btn')) {
-            this.addProjectsList();
+            this.newList();
+            this.lastChild.querySelector('.list-header').editItem();
          }
       });
    }

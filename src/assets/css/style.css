@@ -47,9 +47,14 @@ side-bar {
 
 project-list {
    display: grid;
-   align-content: start;
+   grid-template-columns: repeat(auto-fill, auto);
+   grid-auto-rows: auto;
    gap: 0.2rem;
    padding-left: 1rem;
+}
+
+.add-category-btn {
+   order: 1;
 }
 
 category-list {

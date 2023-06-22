@@ -2,7 +2,7 @@ import pubsub from '../utils/PubSub';
 import createElement from '../utils/ElementBuilder';
 
 class ProjectController {
-   constructor(projectModel, projectView) {
+   constructor(projectModel, projectList) {
       this.model = projectModel;
       [
          {
@@ -39,7 +39,7 @@ class ProjectController {
          this.model.addItem(project);
       });
 
-      this.view = projectView;
+      this.view = projectList;
 
       pubsub.subscribe('project:add', this.handleAddProject.bind(this));
       pubsub.subscribe('project:remove', this.handleRemoveProject.bind(this));
@@ -60,7 +60,7 @@ class ProjectController {
       //    items: { type: 'project', data: categoryProjects },
       // });
 
-      this.view.setState({ category, categoryProjects }).addProjectsList();
+      this.view.setState({ category, categoryProjects }).setUpList();
    }
 
    handleAddProject(data) {

@@ -10,7 +10,11 @@ class ExpandableList extends HTMLElement {
 
    render() {
       const listHeader = createElement('editable-li')
-         .setAttributes({ 'data-type': this.state.header.type })
+         .setAttributes({
+            'data-type': this.state.header.type,
+            class: 'list-header',
+         })
+
          .setState(this.state.header.data);
 
       const listUl = createElement('ul').setAttributes({
