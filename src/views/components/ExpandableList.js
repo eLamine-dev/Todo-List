@@ -14,7 +14,6 @@ class ExpandableList extends HTMLElement {
             'data-type': this.state.header.type,
             class: 'list-header',
          })
-
          .setState(this.state.header.data);
 
       const listUl = createElement('ul').setAttributes({
@@ -54,8 +53,7 @@ class ExpandableList extends HTMLElement {
       const itemType = itemsList.getAttribute('items-type');
       const newItem = createElement('editable-li')
          .setAttributes({ 'data-type': itemType })
-         .setState({});
-
+         .setState(null);
       itemsList.appendChild(newItem);
       newItem.editItem();
       newItem.focus();

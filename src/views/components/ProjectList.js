@@ -25,8 +25,8 @@ class ProjectList extends HTMLElement {
 
    newList(headerData, listData) {
       const newList = createElement('exp-list').setState({
-         header: { type: 'category', data: headerData || null },
-         items: { type: 'project', data: listData || null },
+         header: { type: 'category', data: headerData },
+         items: { type: 'project', data: listData },
       });
       this.append(newList);
    }
@@ -35,7 +35,7 @@ class ProjectList extends HTMLElement {
       this.addEventListener('click', (ev) => {
          ev.preventDefault();
          if (ev.target.classList.contains('add-category-btn')) {
-            this.newList();
+            this.newList(null, null);
             this.lastChild.querySelector('.list-header').editItem();
          }
       });

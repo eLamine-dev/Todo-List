@@ -9,8 +9,8 @@ class ListItem extends HTMLElement {
 
    render() {
       this.innerText = 'Add New...';
-      if (this.getState()) {
-         this.innerText = this.state.title || 'Add New...';
+      if (this.getState() !== null) {
+         this.innerText = this.state.title;
          this.setAttribute('id', this.state.id || null);
       }
 
