@@ -8,9 +8,13 @@ class ListItem extends HTMLElement {
    }
 
    render() {
-      this.innerText = 'Add New...';
+      const title = createElement('h6')
+         .setContent('Add new...')
+         .setAttributes({ class: 'item-title' })
+         .appendTo(this);
+
       if (this.getState() !== null) {
-         this.innerText = this.state.title;
+         title.setContent(this.state.title);
          this.setAttribute('id', this.state.id || null);
       }
 
@@ -41,9 +45,9 @@ class ListItem extends HTMLElement {
    }
 
    editItem() {
-      this.contentEditable = true;
+      this.querySelector('.item-title').contentEditable = true;
+      this.querySelector('.item-title').focus();
       this.querySelector('.edit-item').style.display = 'none';
-      this.focus();
    }
 
    deleteItem() {
