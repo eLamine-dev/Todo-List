@@ -36,7 +36,6 @@ const elementMixin = {
    },
 
    clear() {
-      this.state = null;
       this.innerHTML = '';
       return this;
    },

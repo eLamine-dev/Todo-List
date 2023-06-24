@@ -55,11 +55,6 @@ class ProjectController {
 
    createProjectsList(category) {
       const categoryProjects = this.getCategoryProjects(category);
-      // const categoryProjectsList = createElement('exp-list').setState({
-      //    header: { type: 'category', data: category },
-      //    items: { type: 'project', data: categoryProjects },
-      // });
-
       this.view.setState({ category, categoryProjects }).setUpList();
    }
 

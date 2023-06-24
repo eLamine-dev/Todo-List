@@ -13,7 +13,9 @@ class TaskCard extends HTMLElement {
          type: 'checkbox',
       });
       const title = createElement('h3').setContent(this.state.title);
-      const date = createElement('h3').setContent(this.state.date);
+      const date = createElement('div').setContent(this.state.date);
+      const project = createElement('div').setContent(this.state.project);
+
       const deleteBtn = createElement('button')
          .setContent('delete')
          .setAttributes({ class: 'delete' });

@@ -55,8 +55,7 @@ class ExpandableList extends HTMLElement {
          .setAttributes({ 'data-type': itemType })
          .setState(null);
       itemsList.appendChild(newItem);
-      newItem.editItem();
-      newItem.focus();
+      newItem.startEditItem();
    }
 }
 

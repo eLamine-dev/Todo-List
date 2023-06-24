@@ -57,11 +57,13 @@ project-list {
    order: 1;
 }
 
-category-list {
-   display: grid;
-
-   gap: 0.3rem;
+.item-title {
+   outline: none;
 }
+
+/* .item-title[contentEditable='true'] {
+   border: #0f172a 1px solid;
+} */
 
 .category {
    position: relative;

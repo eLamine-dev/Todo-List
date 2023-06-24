@@ -25,10 +25,28 @@ class AddTaskForm extends HTMLFormElement {
             name: 'save-task',
          })
          .setContent('save');
+
+      const selectProject = createElement('select').setAttributes({
+         class: 'select-project',
+      });
+
       this.id = 'new-task-form';
-      [titleInput, dateInput, submitBtn].forEach((child) => {
+      [titleInput, dateInput, submitBtn, selectProject].forEach((child) => {
          this.appendChild(child);
       });
+   }
+
+   setupSelectList(category, categoryProjects) {
+      const optGrp = createElement('optgroup').setAttributes({
+         label: category.title,
+      });
+      categoryProjects.forEach((project) => {
+         const option = createElement('option').setAttributes({
+            value: project.title,
+         });
+         optGrp.appendChild(option);
+      });
+      // selectProject.appendChild(optGrp);
    }
 
    addEventListeners() {

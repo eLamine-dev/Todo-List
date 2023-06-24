@@ -4,6 +4,7 @@ import TaskController from './TaskController';
 import ProjectController from './ProjectController';
 import CategoryController from './CategoryController';
 import sideBarComponent from '../views/components/SideBar';
+import AddTaskForm from '../views/components/AddTaskForm';
 
 class FrontController {
    constructor(taskController, projectController, categoryController, appPage) {
@@ -22,12 +23,18 @@ class FrontController {
 
    setupFirstLoad() {
       const categories = this.categoryController.model.getAllItems();
-      const projects = this.taskController.model.getAllItems();
+      const tasks = this.taskController.model.getAllItems();
+      const projects = this.projectController.model.getAllItems();
 
-      this.taskController.view.setState(projects);
+      this.taskController.view.setState(tasks);
+      const addTaskForm = new AddTaskForm();
+      this.taskController.view.prepend(addTaskForm);
 
       categories.forEach((category) => {
          this.projectController.createProjectsList(category);
+         const categoryProjects =
+            this.projectController.getCategoryProjects(category);
+         addTaskForm.setupSelectList(category, categoryProjects);
       });
 
       const sideBar = createElement('side-bar').appendChildren(

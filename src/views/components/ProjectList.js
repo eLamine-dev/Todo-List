@@ -36,7 +36,7 @@ class ProjectList extends HTMLElement {
          ev.preventDefault();
          if (ev.target.classList.contains('add-category-btn')) {
             this.newList(null, null);
-            this.lastChild.querySelector('.list-header').editItem();
+            this.lastChild.querySelector('.list-header').startEditItem();
          }
       });
    }

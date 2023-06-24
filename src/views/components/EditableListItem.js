@@ -22,12 +22,14 @@ class ListItem extends HTMLElement {
          .setContent('edit')
          .setAttributes({ class: 'edit-item' })
          .appendTo(this);
+
       const deleteBtn = createElement('button')
-         .setContent('X')
+         .setContent('d')
          .setAttributes({
             class: 'delete-item',
          })
          .appendTo(this);
+
       const saveBtn = createElement('button')
          .setContent('save')
          .setAttributes({ class: 'save-item' })
@@ -36,7 +38,7 @@ class ListItem extends HTMLElement {
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
-         if (ev.target.classList.contains('edit-item')) this.editItem();
+         if (ev.target.classList.contains('edit-item')) this.startEditItem();
 
          if (ev.target.classList.contains('delete-item')) this.deleteItem();
 
@@ -44,10 +46,23 @@ class ListItem extends HTMLElement {
       });
    }
 
-   editItem() {
+   startEditItem() {
       this.querySelector('.item-title').contentEditable = true;
-      this.querySelector('.item-title').focus();
+      this.querySelector('.save-item').style.display = 'block';
       this.querySelector('.edit-item').style.display = 'none';
+      this.querySelector('.item-title').focus();
+   }
+
+   endEditItem() {
+      this.querySelector('.item-title').contentEditable = false;
+      this.querySelector('.save-item').style.display = 'none';
+      this.querySelector('.edit-item').style.display = 'block';
+   }
+
+   cancelChanges() {
+      this.clear();
+      this.render();
+      this.addEventListeners();
    }
 
    deleteItem() {
@@ -59,6 +74,7 @@ class ListItem extends HTMLElement {
    }
 
    saveItem() {
+      this.endEditItem();
       if (this.getAttribute('id')) {
          pubsub.publish(
             `${this.getAttribute('data-type')}:save`,
