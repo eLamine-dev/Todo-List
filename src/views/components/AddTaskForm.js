@@ -2,6 +2,11 @@ import pubsub from '../../utils/PubSub';
 import createElement from '../../utils/ElementBuilder';
 
 class AddTaskForm extends HTMLFormElement {
+   constructor(categorizedProjects) {
+      super();
+      this.categorizedProjects = categorizedProjects;
+   }
+
    connectedCallback() {
       this.render();
       this.addEventListeners();
@@ -30,23 +35,29 @@ class AddTaskForm extends HTMLFormElement {
          class: 'select-project',
       });
 
+      this.setupSelectList(selectProject);
+
       this.id = 'new-task-form';
       [titleInput, dateInput, submitBtn, selectProject].forEach((child) => {
          this.appendChild(child);
       });
    }
 
-   setupSelectList(category, categoryProjects) {
-      const optGrp = createElement('optgroup').setAttributes({
-         label: category.title,
-      });
-      categoryProjects.forEach((project) => {
-         const option = createElement('option').setAttributes({
-            value: project.title,
+   setupSelectList(selectList) {
+      this.categorizedProjects.forEach((category) => {
+         const optGrp = createElement('optgroup').setAttributes({
+            label: category.category.title,
          });
-         optGrp.appendChild(option);
+         category.categoryProjects.forEach((project) => {
+            const option = createElement('option')
+               .setAttributes({
+                  value: project.title,
+               })
+               .setContent(project.title);
+            optGrp.appendChild(option);
+         });
+         selectList.appendChild(optGrp);
       });
-      // selectProject.appendChild(optGrp);
    }
 
    addEventListeners() {

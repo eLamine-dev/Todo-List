@@ -26,16 +26,20 @@ class FrontController {
       const tasks = this.taskController.model.getAllItems();
       const projects = this.projectController.model.getAllItems();
 
-      this.taskController.view.setState(tasks);
-      const addTaskForm = new AddTaskForm();
-      this.taskController.view.prepend(addTaskForm);
+      const categorizedProjects = [];
 
       categories.forEach((category) => {
          this.projectController.createProjectsList(category);
          const categoryProjects =
             this.projectController.getCategoryProjects(category);
-         addTaskForm.setupSelectList(category, categoryProjects);
+         categorizedProjects.push({ category, categoryProjects });
       });
+
+      this.projectController.view.setState(categorizedProjects);
+
+      this.taskController.view.setState(tasks);
+      const addTaskForm = new AddTaskForm(categorizedProjects);
+      this.taskController.view.prepend(addTaskForm);
 
       const sideBar = createElement('side-bar').appendChildren(
          this.projectController.view

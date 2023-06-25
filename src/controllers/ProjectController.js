@@ -55,7 +55,8 @@ class ProjectController {
 
    createProjectsList(category) {
       const categoryProjects = this.getCategoryProjects(category);
-      this.view.setState({ category, categoryProjects }).setUpList();
+      this.view.setState({ category, categoryProjects });
+      // .setUpList();
    }
 
    handleAddProject(data) {

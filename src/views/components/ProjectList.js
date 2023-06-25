@@ -12,6 +12,14 @@ class ProjectList extends HTMLElement {
       const header = createElement('h3').setContent('Projects');
       this.prepend(header);
 
+      this.state.forEach((state) => {
+         const newList = createElement('exp-list').setState({
+            header: { type: 'category', data: state.category },
+            items: { type: 'project', data: state.categoryProjects },
+         });
+         this.append(newList);
+      });
+
       const addCategoryBtn = createElement('button')
          .setAttributes({ class: 'add-category-btn' })
          .setContent('Add category');
@@ -19,17 +27,17 @@ class ProjectList extends HTMLElement {
       this.append(addCategoryBtn);
    }
 
-   setUpList() {
-      this.newList(this.state.category, this.state.categoryProjects);
-   }
+   // setUpList() {
+   //    this.newList(this.state.category, this.state.categoryProjects);
+   // }
 
-   newList(headerData, listData) {
-      const newList = createElement('exp-list').setState({
-         header: { type: 'category', data: headerData },
-         items: { type: 'project', data: listData },
-      });
-      this.append(newList);
-   }
+   // newList(headerData, listData) {
+   //    const newList = createElement('exp-list').setState({
+   //       header: { type: 'category', data: headerData },
+   //       items: { type: 'project', data: listData },
+   //    });
+   //    this.append(newList);
+   // }
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
