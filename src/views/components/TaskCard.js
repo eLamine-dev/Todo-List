@@ -14,13 +14,13 @@ class TaskCard extends HTMLElement {
       });
       const title = createElement('h3').setContent(this.state.title);
       const date = createElement('div').setContent(this.state.date);
-      const project = createElement('div').setContent(this.state.project);
+      const project = createElement('div').setContent(this.state.projectTitle);
 
       const deleteBtn = createElement('button')
          .setContent('delete')
          .setAttributes({ class: 'delete' });
 
-      [taskCheckbox, title, date, deleteBtn].forEach((child) => {
+      [taskCheckbox, title, date, deleteBtn, project].forEach((child) => {
          this.appendChild(child);
       });
    }

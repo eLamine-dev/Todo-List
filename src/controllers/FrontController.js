@@ -37,7 +37,7 @@ class FrontController {
 
       this.projectController.view.setState(categorizedProjects);
 
-      this.taskController.view.setState(tasks);
+      this.taskController.view.setState({ tasks, projects });
       const addTaskForm = new AddTaskForm(categorizedProjects);
       this.taskController.view.prepend(addTaskForm);
 

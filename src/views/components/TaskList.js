@@ -8,14 +8,19 @@ class TaskList extends HTMLElement {
    }
 
    render() {
-      this.state.forEach((task) => {
+      this.state.tasks.forEach((task) => {
          this.renderTask(task);
       });
    }
 
    renderTask(task) {
+      const taskProject = this.state.projects.find(
+         (project) => project.id === task.projectId
+      );
+      task.projectTitle = taskProject.title;
       const newCard = createElement('task-card').setState(task);
       this.appendChild(newCard);
+      console.log(taskProject);
    }
 
    deleteTask(taskId) {}
