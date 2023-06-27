@@ -13,12 +13,21 @@ class AddTaskForm extends HTMLFormElement {
    }
 
    render() {
+      this.id = 'new-task-form';
       const titleInput = createElement('input')
          .setAttributes({
             type: 'text',
             name: 'title-input',
          })
          .appendTo(this);
+
+      const descriptionInput = createElement('input')
+         .setAttributes({
+            type: 'text',
+            name: 'description-input',
+         })
+         .appendTo(this);
+
       const dateInput = createElement('input')
          .setAttributes({
             type: 'date',
@@ -28,6 +37,10 @@ class AddTaskForm extends HTMLFormElement {
          .appendTo(this);
       dateInput.valueAsDate = new Date();
 
+      this.setupSelectProjectList();
+
+      this.setUpPriorities();
+
       const submitBtn = createElement('button')
          .setAttributes({
             type: 'submit',
@@ -35,12 +48,6 @@ class AddTaskForm extends HTMLFormElement {
          })
          .setContent('save')
          .appendTo(this);
-
-      this.setupSelectProjectList();
-
-      this.setUpPriorities();
-
-      this.id = 'new-task-form';
    }
 
    setupSelectProjectList() {

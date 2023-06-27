@@ -9,6 +9,7 @@ class ProjectList extends HTMLElement {
    }
 
    render() {
+      this.setAttribute('id', 'projects-list');
       const header = createElement('h3').setContent('Projects');
       this.prepend(header);
 

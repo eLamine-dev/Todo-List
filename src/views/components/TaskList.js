@@ -8,6 +8,8 @@ class TaskList extends HTMLElement {
    }
 
    render() {
+      const addTaskForm = new AddTaskForm(this.state.categorizedProjects);
+      this.prepend(addTaskForm);
       this.state.tasks.forEach((task) => {
          this.renderTask(task);
       });
@@ -20,7 +22,6 @@ class TaskList extends HTMLElement {
       task.projectTitle = taskProject.title;
       const newCard = createElement('task-card').setState(task);
       this.appendChild(newCard);
-      console.log(taskProject);
    }
 
    deleteTask(taskId) {}

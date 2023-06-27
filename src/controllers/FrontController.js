@@ -5,6 +5,7 @@ import ProjectController from './ProjectController';
 import CategoryController from './CategoryController';
 import sideBarComponent from '../views/components/SideBar';
 import AddTaskForm from '../views/components/AddTaskForm';
+import Filter from '../strategies/Filter';
 
 class FrontController {
    constructor(taskController, projectController, categoryController, appPage) {
@@ -12,6 +13,7 @@ class FrontController {
       this.projectController = projectController;
       this.categoryController = categoryController;
       this.view = appPage;
+      this.filter = new Filter();
 
       this.initializeListeners();
    }
@@ -37,9 +39,11 @@ class FrontController {
 
       this.projectController.view.setState(categorizedProjects);
 
-      this.taskController.view.setState({ tasks, projects });
-      const addTaskForm = new AddTaskForm(categorizedProjects);
-      this.taskController.view.prepend(addTaskForm);
+      this.taskController.view.setState({
+         tasks,
+         projects,
+         categorizedProjects,
+      });
 
       const sideBar = createElement('side-bar').appendChildren(
          this.projectController.view
@@ -49,16 +53,27 @@ class FrontController {
    }
 
    initializeListeners() {
-      pubsub.subscribe('filter:change', this.handleFilterChange.bind(this));
       pubsub.subscribe('task:select', this.handleTaskSelect.bind(this));
-   }
-
-   handleFilterChange(filter) {
-      this.view.updateFilter(filter);
+      pubsub.subscribe('filter:changed', this.handleFilterChange.bind(this));
    }
 
    handleTaskSelect(taskId) {
       this.view.openTaskDetails(taskId);
+   }
+
+   handleFilterChange(data) {
+      const newList = this.filter.filterBy(
+         data.type,
+         this.taskController.model.tasks,
+         data.value
+      );
+      this.taskController.view
+         .clear()
+         .setState({
+            tasks: newList,
+            projects: this.projectController.model.projects,
+         })
+         .render();
    }
 }
 

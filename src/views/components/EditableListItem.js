@@ -16,6 +16,7 @@ class ListItem extends HTMLElement {
       if (this.getState() !== null) {
          title.setContent(this.state.title);
          this.setAttribute('id', this.state.id || null);
+         this.setAttribute('data-type', this.state.dataType);
       }
 
       const editBtn = createElement('button')
@@ -39,10 +40,17 @@ class ListItem extends HTMLElement {
    addEventListeners() {
       this.addEventListener('click', (ev) => {
          if (ev.target.classList.contains('edit-item')) this.startEditItem();
-
-         if (ev.target.classList.contains('delete-item')) this.deleteItem();
-
-         if (ev.target.classList.contains('save-item')) this.saveItem();
+         else if (ev.target.classList.contains('delete-item'))
+            this.deleteItem();
+         else if (ev.target.classList.contains('save-item')) this.saveItem();
+         else {
+            const data = {
+               type: this.getAttribute('data-type'),
+               value: this.getAttribute('id'),
+            };
+            pubsub.publish('filter:changed', data);
+            console.log(data);
+         }
       });
    }
 

@@ -37,7 +37,6 @@ class TaskController {
       pubsub.subscribe('task:add', this.handleAddTask.bind(this));
       pubsub.subscribe('task:remove', this.handleRemoveTask.bind(this));
       pubsub.subscribe('task:update', this.handleRemoveTask.bind(this));
-      pubsub.subscribe('filter:changed', this.handleFilterChange.bind(this));
    }
 
    handleAddTask(data) {
@@ -60,15 +59,6 @@ class TaskController {
          .setState(this.model.getItemById(taskId))
          .build();
       // to be continued
-   }
-
-   handleFilterChange(data) {
-      const newList = this.filter.filterBy(
-         data.type,
-         this.model.tasks,
-         data.value
-      );
-      this.view.clear().setState(newList).render();
    }
 }
 
