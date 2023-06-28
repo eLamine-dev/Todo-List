@@ -1,12 +1,16 @@
 class AppStateModel {
-   constructor(tasks, projects, categories) {
-      this.appState = {
-         currentFilter: '',
+   constructor() {
+      this.state = {
+         data: {},
+         defaultFilter: 'today',
+         currentFilter: this.defaultFilter,
          selectedProject: '',
          selectedTask: '',
-         categorizedProjects: [],
       };
-      this.categorizeProjects(projects, categories);
+   }
+
+   setGlobalState(categories, projects, tasks) {
+      this.state.data = { categories, projects, tasks };
    }
 
    categorizeProjects(projects, categories) {

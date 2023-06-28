@@ -28,6 +28,8 @@ class FrontController {
       const tasks = this.taskController.model.getAllItems();
       const projects = this.projectController.model.getAllItems();
 
+      this.model.setGlobalState(categories, projects, tasks);
+
       const categorizedProjects = [];
 
       categories.forEach((category) => {
