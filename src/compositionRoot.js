@@ -9,11 +9,13 @@ import ProjectList from './views/components/ProjectList';
 import AppPage from './views/pages/AppPage';
 import createElement from './utils/ElementBuilder';
 import FrontController from './controllers/FrontController';
+import AppStateModel from './models/AppStateModel';
 
 export default function initializeApp() {
    const taskModel = new TaskModel();
    const projectModel = new ProjectModel();
    const categoryModel = new CategoryModel();
+   const appState = new AppStateModel();
 
    const taskList = createElement('task-list');
    const projectList = createElement('project-list');
@@ -27,7 +29,8 @@ export default function initializeApp() {
       taskController,
       projectController,
       categoryController,
-      appPage
+      appPage,
+      appState
    );
 
    return frontController;

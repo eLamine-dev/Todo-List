@@ -2,9 +2,9 @@ import pubsub from '../../utils/PubSub';
 import createElement from '../../utils/ElementBuilder';
 
 class AddTaskForm extends HTMLFormElement {
-   constructor(categorizedProjects) {
+   constructor(state) {
       super();
-      this.categorizedProjects = categorizedProjects;
+      this.state = state;
    }
 
    connectedCallback() {
@@ -57,11 +57,16 @@ class AddTaskForm extends HTMLFormElement {
             name: 'select-project',
          })
          .appendTo(this);
-      this.categorizedProjects.forEach((category) => {
+
+      this.state.categories.forEach((category) => {
          const optGrp = createElement('optgroup').setAttributes({
-            label: category.category.title,
+            label: category.title,
          });
-         category.categoryProjects.forEach((project) => {
+
+         const categoryProjects = this.state.projects.filter(
+            (project) => project.categoryId === category.id
+         );
+         categoryProjects.forEach((project) => {
             const option = createElement('option')
                .setAttributes({
                   id: project.id,

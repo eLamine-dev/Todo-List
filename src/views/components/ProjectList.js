@@ -13,10 +13,13 @@ class ProjectList extends HTMLElement {
       const header = createElement('h3').setContent('Projects');
       this.prepend(header);
 
-      this.state.forEach((state) => {
+      this.state.data.categories.forEach((category) => {
+         const categoryProjects = this.state.data.projects.filter(
+            (project) => project.categoryId === category.id
+         );
          const newList = createElement('exp-list').setState({
-            header: { type: 'category', data: state.category },
-            items: { type: 'project', data: state.categoryProjects },
+            header: { type: 'category', data: category },
+            items: { type: 'project', data: categoryProjects },
          });
          this.append(newList);
       });

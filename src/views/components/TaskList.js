@@ -8,15 +8,15 @@ class TaskList extends HTMLElement {
    }
 
    render() {
-      const addTaskForm = new AddTaskForm(this.state.categorizedProjects);
+      const addTaskForm = new AddTaskForm(this.state.data);
       this.prepend(addTaskForm);
-      this.state.tasks.forEach((task) => {
+      this.state.data.tasks.forEach((task) => {
          this.renderTask(task);
       });
    }
 
    renderTask(task) {
-      const taskProject = this.state.projects.find(
+      const taskProject = this.state.data.projects.find(
          (project) => project.id === task.projectId
       );
       task.projectTitle = taskProject.title;

@@ -9,8 +9,12 @@ class AppStateModel {
       };
    }
 
-   setGlobalState(categories, projects, tasks) {
-      this.state.data = { categories, projects, tasks };
+   setGlobalState(tasks, projects, categories) {
+      this.state.data = { tasks, projects, categories };
+   }
+
+   getGlobalState() {
+      return this.state;
    }
 
    categorizeProjects(projects, categories) {
@@ -23,7 +27,7 @@ class AppStateModel {
    }
 
    getState() {
-      return this.appState;
+      return this.state;
    }
 }
 
