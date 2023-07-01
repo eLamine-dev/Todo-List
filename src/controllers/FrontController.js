@@ -1,10 +1,6 @@
 import pubsub from '../utils/PubSub';
 import createElement from '../utils/ElementBuilder';
-import TaskController from './TaskController';
-import ProjectController from './ProjectController';
-import CategoryController from './CategoryController';
 import sideBarComponent from '../views/components/SideBar';
-import AddTaskForm from '../views/components/AddTaskForm';
 
 import Filter from '../strategies/Filter';
 
@@ -56,8 +52,14 @@ class FrontController {
    }
 
    initializeListeners() {
+      pubsub.subscribe('item:add', this.handleAddItem.bind(this));
       pubsub.subscribe('task:select', this.handleTaskSelect.bind(this));
       pubsub.subscribe('filter:changed', this.handleFilterChange.bind(this));
+   }
+
+   handleAddItem(data) {
+      console.log(`${data.dataType}Controller`);
+      this[`${data.dataType}Controller`].handleAddItem(data);
    }
 
    handleTaskSelect(taskId) {

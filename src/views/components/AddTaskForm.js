@@ -113,7 +113,7 @@ class AddTaskForm extends HTMLFormElement {
          projectId: selectProject.options[selectProject.selectedIndex].id,
          priority: selectPriority.options[selectPriority.selectedIndex].id,
       };
-      pubsub.publish('task:add', formData);
+      pubsub.publish('item:add', formData);
    }
 }
 customElements.define('add-task-form', AddTaskForm, { extends: 'form' });

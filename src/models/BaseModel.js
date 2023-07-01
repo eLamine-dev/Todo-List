@@ -6,11 +6,12 @@ class BaseModel {
       this[collectionName] = [];
    }
 
-   static createItem(data) {
-      return new ObjectBuilder(data);
-   }
+   // createItem(data) {
+   //    return new ObjectBuilder(data);
+   // }
 
-   addItem(newItem) {
+   addItem(data) {
+      const newItem = new ObjectBuilder(data);
       this[this.collectionName].push(newItem);
    }
 

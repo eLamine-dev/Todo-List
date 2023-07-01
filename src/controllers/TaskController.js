@@ -1,5 +1,4 @@
 import pubsub from '../utils/PubSub';
-import TaskModel from '../models/TaskModel';
 import Filter from '../strategies/Filter';
 
 class TaskController {
@@ -34,15 +33,22 @@ class TaskController {
          this.model.addItem(task);
       });
 
-      pubsub.subscribe('task:add', this.handleAddTask.bind(this));
+      // pubsub.subscribe('task:add', this.handleAddTask.bind(this));
       pubsub.subscribe('task:remove', this.handleRemoveTask.bind(this));
       pubsub.subscribe('task:update', this.handleRemoveTask.bind(this));
    }
 
-   handleAddTask(data) {
-      const newTask = TaskModel.createItem(data);
-      this.model.addItem(newTask);
-      this.view.renderTask(newTask);
+   handleAddItem(data) {
+      // const newTask = this.model.createItem(data);
+      this.model.addItem(data);
+
+      this.view.setState({
+         tasks: this.model.getAllItems(),
+         projects: {},
+         categories: {},
+      });
+
+      this.view.render();
    }
 
    handleRemoveTask(taskId) {
