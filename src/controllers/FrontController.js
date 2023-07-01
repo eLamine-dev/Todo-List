@@ -32,33 +32,30 @@ class FrontController {
       const tasks = this.taskController.model.getAllItems();
       const projects = this.projectController.model.getAllItems();
 
-      this.model.setGlobalState(tasks, projects, categories);
+      this.taskController.getExternalData({ projects, categories });
+      this.projectController.passData({ categories });
 
-      this.projectController.view.setState(this.model.getGlobalState());
-
-      this.taskController.view.setState(this.model.getGlobalState());
+      // this.model.setGlobalState(tasks, projects, categories);
+      // this.projectController.view.setState(this.model.getGlobalState());
+      // this.taskController.view.setState(this.model.getGlobalState());
 
       const sideBar = createElement('side-bar').appendChildren(
          this.projectController.view
       );
 
       this.view.appendChildren([sideBar, this.taskController.view]);
-      // categories.forEach((category) => {
-      //    this.projectController.createProjectsList(category);
-      //    const categoryProjects =
-      //       this.projectController.getCategoryProjects(category);
-      //    categorizedProjects.push({ category, categoryProjects });
-      // });
    }
 
    initializeListeners() {
       pubsub.subscribe('item:add', this.handleAddItem.bind(this));
+      pubsub.subscribe('item:update', this.handleAddItem.bind(this));
+      pubsub.subscribe('item:delete', this.handleAddItem.bind(this));
+
       pubsub.subscribe('task:select', this.handleTaskSelect.bind(this));
       pubsub.subscribe('filter:changed', this.handleFilterChange.bind(this));
    }
 
    handleAddItem(data) {
-      console.log(`${data.dataType}Controller`);
       this[`${data.dataType}Controller`].handleAddItem(data);
    }
 
