@@ -32,12 +32,8 @@ class FrontController {
       const tasks = this.taskController.model.getAllItems();
       const projects = this.projectController.model.getAllItems();
 
-      this.taskController.getExternalData({ projects, categories });
-      this.projectController.passData({ categories });
-
-      // this.model.setGlobalState(tasks, projects, categories);
-      // this.projectController.view.setState(this.model.getGlobalState());
-      // this.taskController.view.setState(this.model.getGlobalState());
+      this.taskController.setUpViewState({ projects, categories });
+      this.projectController.setUpViewState({ categories });
 
       const sideBar = createElement('side-bar').appendChildren(
          this.projectController.view
@@ -47,36 +43,39 @@ class FrontController {
    }
 
    initializeListeners() {
-      pubsub.subscribe('item:add', this.handleAddItem.bind(this));
-      pubsub.subscribe('item:update', this.handleAddItem.bind(this));
-      pubsub.subscribe('item:delete', this.handleAddItem.bind(this));
-
+      pubsub.subscribe('item:add', this.delegateAddItem.bind(this));
+      pubsub.subscribe('item:update', this.delegateUpdateItem.bind(this));
+      pubsub.subscribe('item:delete', this.delegateDeleteItem.bind(this));
       pubsub.subscribe('task:select', this.handleTaskSelect.bind(this));
       pubsub.subscribe('filter:changed', this.handleFilterChange.bind(this));
    }
 
-   handleAddItem(data) {
+   delegateAddItem(data) {
       this[`${data.dataType}Controller`].handleAddItem(data);
+      pubsub.publish(
+         `${data.dataType}s:update`,
+         this[`${data.dataType}Controller`].model.getAllItems()
+      );
+   }
+
+   delegateUpdateItem(data) {
+      this[`${data.dataType}Controller`].handleUpdateItem(data);
+      pubsub.publish(
+         `${data.dataType}s:update`,
+         this[`${data.dataType}Controller`].model.getAllItems()
+      );
+   }
+
+   delegateDeleteItem(data) {
+      this[`${data.dataType}Controller`].handleDeleteItem(data);
+      pubsub.publish(
+         `${data.dataType}s:update`,
+         this[`${data.dataType}Controller`].model.getAllItems()
+      );
    }
 
    handleTaskSelect(taskId) {
       this.view.openTaskDetails(taskId);
-   }
-
-   handleFilterChange(data) {
-      const categories = this.categoryController.model.getAllItems();
-      const tasks = this.filter.filterBy(
-         data.type,
-         this.taskController.model.tasks,
-         data.value
-      );
-      const projects = this.projectController.model.getAllItems();
-
-      this.model.setGlobalState(tasks, projects, categories);
-      this.taskController.view
-         .clear()
-         .setState(this.model.getGlobalState())
-         .render();
    }
 }
 

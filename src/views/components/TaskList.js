@@ -8,18 +8,27 @@ class TaskList extends HTMLElement {
    }
 
    render() {
-      const addTaskForm = new AddTaskForm(this.state.data);
+      const addTaskForm = new AddTaskForm({
+         projects: this.state.projects,
+         categories: this.state.categories,
+      });
       this.prepend(addTaskForm);
-      this.state.data.tasks.forEach((task) => {
+      this.state.tasks.forEach((task) => {
          this.renderTask(task);
       });
    }
 
    renderTask(task) {
-      const taskProject = this.state.data.projects.find(
+      const taskProject = this.state.projects.find(
          (project) => project.id === task.projectId
       );
-      task.projectTitle = taskProject.title;
+      const projectCategory = this.state.categories.find(
+         (category) => category.id === taskProject.categoryId
+      );
+      Object.assign(task, {
+         taskProject: taskProject.title,
+         projectCategory: projectCategory.title,
+      });
       const newCard = createElement('task-card').setState(task);
       this.appendChild(newCard);
    }

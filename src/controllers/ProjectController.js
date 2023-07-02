@@ -4,6 +4,8 @@ import createElement from '../utils/ElementBuilder';
 class ProjectController {
    constructor(projectModel, projectList) {
       this.model = projectModel;
+      this.view = projectList;
+      this.viewState = {};
       [
          {
             dataType: 'project',
@@ -39,11 +41,26 @@ class ProjectController {
          this.model.addItem(project);
       });
 
-      this.view = projectList;
+      this.initializeListeners();
+   }
 
-      pubsub.subscribe('project:add', this.handleAddProject.bind(this));
-      pubsub.subscribe('project:remove', this.handleRemoveProject.bind(this));
-      pubsub.subscribe('project:update', this.handleUpdateProject.bind(this));
+   initializeListeners() {
+      pubsub.subscribe('categories:update', this.setUpViewState.bind(this));
+   }
+
+   setUpViewState(externalData) {
+      const internalData = { projects: this.model.getAllItems() };
+      Object.assign(this.viewState, internalData, externalData);
+      this.buildProjectsList();
+   }
+
+   buildProjectsList() {
+      this.viewState.categories.forEach((category) => {
+         const categoryProjects = this.viewState.projects.filter(
+            (project) => project.categoryId === category.id
+         );
+         this.view.createListForCategory(category, categoryProjects);
+      });
    }
 
    getCategoryProjects(category) {

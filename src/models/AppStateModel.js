@@ -1,16 +1,22 @@
 class AppStateModel {
    constructor() {
       this.state = {
-         data: {},
-         defaultFilter: 'today',
-         currentFilter: this.defaultFilter,
-         selectedProject: '',
-         selectedTask: '',
+         tasks: [],
+         projects: [],
+         categories: [],
+         currentFilter: {},
       };
    }
 
-   setGlobalState(tasks, projects, categories) {
-      this.state.data = { tasks, projects, categories };
+   updateState(data) {
+      Object.assign(this.state, data);
+   }
+
+   setUpInitialState(tasks, projects, categories) {
+      this.state.tasks = tasks;
+      this.state.projects = projects;
+      this.state.categories = categories;
+      this.currentFilter = 'today';
    }
 
    getGlobalState() {

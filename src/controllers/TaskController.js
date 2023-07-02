@@ -6,6 +6,8 @@ class TaskController {
       this.filter = new Filter();
       this.model = taskModel;
       this.view = taskView;
+      this.viewState = {};
+      this.currentFilter = 'today';
 
       [
          {
@@ -33,9 +35,28 @@ class TaskController {
          this.model.addItem(task);
       });
 
-      // pubsub.subscribe('task:add', this.handleAddTask.bind(this));
-      pubsub.subscribe('task:remove', this.handleRemoveTask.bind(this));
-      pubsub.subscribe('task:update', this.handleRemoveTask.bind(this));
+      this.initializeListeners();
+   }
+
+   initializeListeners() {
+      pubsub.subscribe('projects:update', this.setUpViewState.bind(this));
+      pubsub.subscribe('categories:update', this.setUpViewState.bind(this));
+   }
+
+   setUpViewState(externalData) {
+      const internalData = { tasks: this.model.getAllItems() };
+      Object.assign(this.viewState, internalData, externalData);
+      this.view.setState(this.viewState);
+   }
+
+   handleFilterChange(data) {
+      const tasks = this.filter.filterBy(
+         data.type,
+         this.taskController.model.tasks,
+         data.value
+      );
+
+      this.taskController.setUpViewState({ projects });
    }
 
    handleAddItem(data) {
@@ -51,12 +72,12 @@ class TaskController {
       this.view.render();
    }
 
-   handleRemoveTask(taskId) {
+   handleDeleteItem(taskId) {
       this.model.deleteItem(taskId);
       // this.view.addTask(newTask);
    }
 
-   handleUpdateTask(taskId, newDta) {
+   handleUpdateItem(taskId, newDta) {
       this.model.updateItem(taskId, newDta);
    }
 

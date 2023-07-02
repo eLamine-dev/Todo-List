@@ -14,7 +14,9 @@ class TaskCard extends HTMLElement {
       });
       const title = createElement('h3').setContent(this.state.title);
       const date = createElement('div').setContent(this.state.date);
-      const project = createElement('div').setContent(this.state.projectTitle);
+      const project = createElement('div').setContent(
+         `${this.state.projectCategory} \\ ${this.state.taskProject}`
+      );
 
       const deleteBtn = createElement('button')
          .setContent('delete')
