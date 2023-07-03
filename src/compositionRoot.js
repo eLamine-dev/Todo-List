@@ -8,30 +8,29 @@ import TaskList from './views/components/TaskList';
 import ProjectList from './views/components/ProjectList';
 import AppPage from './views/pages/AppPage';
 import createElement from './utils/ElementBuilder';
-import FrontController from './controllers/FrontController';
-import AppStateModel from './models/AppStateModel';
+import AppController from './controllers/AppController';
+import Filter from './strategies/Filter';
 
 export default function initializeApp() {
    const taskModel = new TaskModel();
    const projectModel = new ProjectModel();
    const categoryModel = new CategoryModel();
-   const appState = new AppStateModel();
+   const filter = new Filter();
 
    const taskList = createElement('task-list');
    const projectList = createElement('project-list');
    const appPage = createElement('app-page');
 
-   const taskController = new TaskController(taskModel, taskList);
+   const taskController = new TaskController(taskModel, taskList, filter);
    const projectController = new ProjectController(projectModel, projectList);
    const categoryController = new CategoryController(categoryModel);
 
-   const frontController = new FrontController(
+   const appController = new AppController(
       taskController,
       projectController,
       categoryController,
-      appPage,
-      appState
+      appPage
    );
 
-   return frontController;
+   return appController;
 }

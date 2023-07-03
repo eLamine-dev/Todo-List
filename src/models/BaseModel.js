@@ -6,10 +6,6 @@ class BaseModel {
       this[collectionName] = [];
    }
 
-   // createItem(data) {
-   //    return new ObjectBuilder(data);
-   // }
-
    addItem(data) {
       const newItem = new ObjectBuilder(data);
       this[this.collectionName].push(newItem);

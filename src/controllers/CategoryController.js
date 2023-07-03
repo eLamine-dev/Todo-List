@@ -1,7 +1,7 @@
 import pubsub from '../utils/PubSub';
 
 class CategoryController {
-   constructor(categoryModel, CategoryView) {
+   constructor(categoryModel) {
       this.model = categoryModel;
       [
          { dataType: 'category', title: 'personal', id: '01' },
@@ -10,9 +10,13 @@ class CategoryController {
       ].forEach((category) => {
          this.model.addItem(category);
       });
+      this.initializeListeners();
+   }
 
-      pubsub.subscribe('Category:add', this.handleAddCategory.bind(this));
-      pubsub.subscribe('Category:remove', this.handleRemoveCategory.bind(this));
+   initializeListeners() {
+      pubsub.subscribe('category:add', this.handleAddCategory.bind(this));
+      pubsub.subscribe('category:update', this.handleUpdateCategory.bind(this));
+      pubsub.subscribe('category:delete', this.handleDeleteCategory.bind(this));
    }
 
    handleAddCategory(data) {
@@ -20,7 +24,7 @@ class CategoryController {
       this.model.addItem(newCategory);
    }
 
-   handleRemoveCategory(CategoryId) {
+   handleDeleteCategory(CategoryId) {
       this.model.deleteItem(CategoryId);
    }
 

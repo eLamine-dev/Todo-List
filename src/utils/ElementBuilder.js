@@ -11,8 +11,13 @@ const elementMixin = {
    },
 
    setState(state) {
-      this.state = state;
-
+      if (this.isConnected) {
+         Object.assign(this.state, state);
+         this.clear();
+         this.render();
+      } else {
+         this.state = state;
+      }
       return this;
    },
 
@@ -37,8 +42,9 @@ const elementMixin = {
    },
 
    clear() {
-      this.innerHTML = '';
-      return this;
+      while (this.firstChild) {
+         this.removeChild(this.firstChild);
+      }
    },
 
    appendTo(parent) {

@@ -45,7 +45,25 @@ class ProjectController {
    }
 
    initializeListeners() {
+      pubsub.subscribe('project:add', this.handleAddProject.bind(this));
+      pubsub.subscribe('project:update', this.handleUpdateProject.bind(this));
+      pubsub.subscribe('project:delete', this.handleDeleteProject.bind(this));
       pubsub.subscribe('categories:update', this.setUpViewState.bind(this));
+   }
+
+   handleAddProject(data) {
+      const newProject = ProjectController.createItem(data);
+      this.model.addItem(newProject);
+      this.view.addProject(data);
+   }
+
+   handleDeleteProject(projectId) {
+      this.model.deleteItem(projectId);
+      // this.view.addTask(newTask);
+   }
+
+   handleUpdateProject(projectId, newData) {
+      this.model.updateItem(projectId, newData);
    }
 
    setUpViewState(externalData) {
@@ -74,21 +92,6 @@ class ProjectController {
       const categoryProjects = this.getCategoryProjects(category);
       this.view.setState({ category, categoryProjects });
       // .setUpList();
-   }
-
-   handleAddProject(data) {
-      const newProject = ProjectController.createItem(data);
-      this.model.addItem(newProject);
-      this.view.addProject(data);
-   }
-
-   handleRemoveProject(projectId) {
-      this.model.deleteItem(projectId);
-      // this.view.addTask(newTask);
-   }
-
-   handleUpdateProject(projectId, newData) {
-      this.model.updateItem(projectId, newData);
    }
 }
 

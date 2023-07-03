@@ -1,20 +1,23 @@
+import { compareAsc, format } from 'date-fns';
 import pubsub from '../utils/PubSub';
-import Filter from '../strategies/Filter';
 
 class TaskController {
-   constructor(taskModel, taskView) {
-      this.filter = new Filter();
+   constructor(taskModel, taskView, filter) {
+      this.filter = filter;
       this.model = taskModel;
       this.view = taskView;
       this.viewState = {};
-      this.currentFilter = 'today';
+      this.currentFilter = {
+         type: 'date',
+         value: format(new Date(), 'yyyy-MM-dd'),
+      };
 
       [
          {
             dataType: 'task',
             id: '1685636158744',
-            title: 'afgjsdf',
-            date: '2023-06-01',
+            title: 'dayhsdafja',
+            date: '2023-07-03',
             projectId: '001',
          },
          {
@@ -39,46 +42,50 @@ class TaskController {
    }
 
    initializeListeners() {
+      pubsub.subscribe('task:add', this.handleAddTask.bind(this));
+      pubsub.subscribe('task:update', this.handleUpdateTask.bind(this));
+      pubsub.subscribe('task:delete', this.handleDeleteTask.bind(this));
       pubsub.subscribe('projects:update', this.setUpViewState.bind(this));
       pubsub.subscribe('categories:update', this.setUpViewState.bind(this));
+      pubsub.subscribe('filter:changed', this.handleFilterChange.bind(this));
    }
 
-   setUpViewState(externalData) {
-      const internalData = { tasks: this.model.getAllItems() };
-      Object.assign(this.viewState, internalData, externalData);
-      this.view.setState(this.viewState);
-   }
-
-   handleFilterChange(data) {
-      const tasks = this.filter.filterBy(
-         data.type,
-         this.taskController.model.tasks,
-         data.value
-      );
-
-      this.taskController.setUpViewState({ projects });
-   }
-
-   handleAddItem(data) {
-      // const newTask = this.model.createItem(data);
+   handleAddTask(data) {
       this.model.addItem(data);
-
       this.view.setState({
-         tasks: this.model.getAllItems(),
-         projects: {},
-         categories: {},
+         tasks: this.getCurrentFilterTasks(this.currentFilter),
       });
-
-      this.view.render();
    }
 
-   handleDeleteItem(taskId) {
+   handleDeleteTask(taskId) {
       this.model.deleteItem(taskId);
       // this.view.addTask(newTask);
    }
 
-   handleUpdateItem(taskId, newDta) {
+   handleUpdateTask(taskId, newDta) {
       this.model.updateItem(taskId, newDta);
+   }
+
+   setUpViewState(externalData) {
+      const internalData = {
+         tasks: this.getCurrentFilterTasks(this.currentFilter),
+      };
+      Object.assign(this.viewState, internalData, externalData);
+      this.view.setState(this.viewState);
+   }
+
+   getCurrentFilterTasks(filterData) {
+      return this.filter.filterBy(
+         filterData.type,
+         this.model.getAllItems(),
+         filterData.value
+      );
+   }
+
+   handleFilterChange(filterData) {
+      this.currentFilter = filterData;
+      const tasks = this.getCurrentFilterTasks(filterData);
+      this.view.setState({ tasks });
    }
 
    handleSelectTask(taskId) {
