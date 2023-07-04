@@ -32,12 +32,6 @@ class TaskList extends HTMLElement {
       const newCard = createElement('task-card').setState(task);
       this.appendChild(newCard);
    }
-
-   deleteTask(taskId) {}
-
-   MarkAsDone(taskId) {}
-
-   updateTask(taskId) {}
 }
 
 customElements.define('task-list', TaskList);

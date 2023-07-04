@@ -1,8 +1,24 @@
 const filteringStrategies = [
    {
+      type: 'inbox',
+      filter: function filter(tasks) {
+         return tasks;
+      },
+   },
+
+   {
       type: 'date',
       filter: function filter(tasks, date) {
          return tasks.filter((task) => task.date === date);
+      },
+   },
+
+   {
+      type: 'date-range',
+      filter: function filter(tasks, dateRange) {
+         return tasks.filter(
+            (task) => task.date > dateRange.start && task.date < dateRange.end
+         );
       },
    },
 

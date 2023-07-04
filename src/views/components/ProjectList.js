@@ -30,9 +30,8 @@ class ProjectList extends HTMLElement {
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
-         ev.preventDefault();
          if (ev.target.classList.contains('add-category-btn')) {
-            this.newList(null, null);
+            this.createListForCategory(null, null);
             this.lastChild.querySelector('.list-header').startEditItem();
          }
       });

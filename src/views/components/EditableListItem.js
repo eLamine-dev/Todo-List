@@ -49,7 +49,6 @@ class ListItem extends HTMLElement {
                value: this.getAttribute('id'),
             };
             pubsub.publish('filter:changed', data);
-            console.log(data);
          }
       });
    }
@@ -85,11 +84,11 @@ class ListItem extends HTMLElement {
       this.endEditItem();
       if (this.getAttribute('id')) {
          pubsub.publish(
-            `${this.getAttribute('data-type')}:save`,
+            `${this.getAttribute('data-type')}:update`,
             this.getAttribute('id')
          );
       } else {
-         pubsub.publish(`${this.getAttribute('data-type')}:add`);
+         pubsub.publish(`${this.getAttribute('data-type')}:add`, this);
       }
    }
 }

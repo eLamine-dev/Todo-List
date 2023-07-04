@@ -8,8 +8,8 @@ class TaskController {
       this.view = taskView;
       this.viewState = {};
       this.currentFilter = {
-         type: 'date',
-         value: format(new Date(), 'yyyy-MM-dd'),
+         type: 'inbox',
+         value: null,
       };
 
       [
@@ -74,25 +74,28 @@ class TaskController {
       this.view.setState(this.viewState);
    }
 
-   getCurrentFilterTasks(filterData) {
+   getCurrentFilterTasks() {
+      if (this.currentFilter.value === 'today') {
+         this.currentFilter.value = format(new Date(), 'yyyy-MM-dd');
+      }
+      console.log(this.currentFilter);
       return this.filter.filterBy(
-         filterData.type,
+         this.currentFilter.type,
          this.model.getAllItems(),
-         filterData.value
+         this.currentFilter.value
       );
    }
 
    handleFilterChange(filterData) {
       this.currentFilter = filterData;
-      const tasks = this.getCurrentFilterTasks(filterData);
+      const tasks = this.getCurrentFilterTasks();
       this.view.setState({ tasks });
    }
 
    handleSelectTask(taskId) {
-      const taskDetails = createElement('task-details')
-         .setState(this.model.getItemById(taskId))
-         .build();
-      // to be continued
+      const taskDetails = createElement('task-details').setState(
+         this.model.getItemById(taskId)
+      );
    }
 }
 

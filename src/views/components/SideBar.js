@@ -1,19 +1,43 @@
 import createElement from '../../utils/ElementBuilder';
+import pubsub from '../../utils/PubSub';
 
 class SideBar extends HTMLElement {
    connectedCallback() {
       this.render();
-      // this.addEventListeners();
+      this.addEventListeners();
    }
 
    render() {
-      const defaultFilters = ['All', 'Today', 'Up-coming'];
+      const defaultFilters = [
+         { type: 'all', value: 'inbox' },
+         { type: 'date', value: 'Today' },
+         { type: 'date-range', value: 'UpComing' },
+      ];
       const defaultFiltersUl = createElement('ul');
       defaultFilters.forEach((filter) => {
-         const filterLi = createElement('li').setContent(filter);
+         const filterLi = createElement('li')
+            .setContent(filter.value)
+            .setAttributes({
+               'filter-type': filter.type,
+               class: 'default-filter',
+               id: filter.value,
+            });
          defaultFiltersUl.appendChild(filterLi);
       });
       this.prepend(defaultFiltersUl);
+   }
+
+   addEventListeners() {
+      this.addEventListener('click', (ev) => {
+         if (ev.target.classList.contains('default-filter')) {
+            const data = {
+               type: ev.target.getAttribute('filter-type'),
+               value: ev.target.getAttribute('id'),
+            };
+            console.log(data);
+            pubsub.publish('filter:changed', data);
+         }
+      });
    }
 }
 
