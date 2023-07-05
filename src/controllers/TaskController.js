@@ -76,7 +76,13 @@ class TaskController {
 
    getCurrentFilterTasks() {
       if (this.currentFilter.value === 'today') {
-         this.currentFilter.value = format(new Date(), 'yyyy-MM-dd');
+         const today = format(new Date(), 'yyyy-MM-dd');
+         console.log(today);
+         this.currentFilter = {
+            type: 'date',
+            value: today,
+         };
+         return this.currentFilter;
       }
       console.log(this.currentFilter);
       return this.filter.filterBy(
@@ -88,6 +94,7 @@ class TaskController {
 
    handleFilterChange(filterData) {
       this.currentFilter = filterData;
+      console.log(this.currentFilter);
       const tasks = this.getCurrentFilterTasks();
       this.view.setState({ tasks });
    }

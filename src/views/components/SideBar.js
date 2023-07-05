@@ -10,7 +10,7 @@ class SideBar extends HTMLElement {
    render() {
       const defaultFilters = [
          { type: 'all', value: 'inbox' },
-         { type: 'date', value: 'Today' },
+         { type: 'date', value: 'today' },
          { type: 'date-range', value: 'UpComing' },
       ];
       const defaultFiltersUl = createElement('ul');
@@ -34,7 +34,7 @@ class SideBar extends HTMLElement {
                type: ev.target.getAttribute('filter-type'),
                value: ev.target.getAttribute('id'),
             };
-            console.log(data);
+
             pubsub.publish('filter:changed', data);
          }
       });
