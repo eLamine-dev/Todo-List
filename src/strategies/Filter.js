@@ -1,6 +1,6 @@
 const filteringStrategies = [
    {
-      type: 'inbox',
+      type: 'all',
       filter: function filter(tasks) {
          return tasks;
       },
@@ -17,7 +17,9 @@ const filteringStrategies = [
       type: 'date-range',
       filter: function filter(tasks, dateRange) {
          return tasks.filter(
-            (task) => task.date > dateRange.start && task.date < dateRange.end
+            (task) =>
+               new Date(task.date) > dateRange.start &&
+               new Date(task.date) < dateRange.end
          );
       },
    },

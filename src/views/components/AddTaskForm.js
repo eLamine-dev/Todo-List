@@ -106,6 +106,7 @@ class AddTaskForm extends HTMLFormElement {
    passData() {
       const selectProject = this.elements['select-project'];
       const selectPriority = this.elements['select-priority'];
+
       const formData = {
          dataType: 'task',
          title: this.elements['title-input'].value,

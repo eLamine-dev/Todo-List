@@ -1,3 +1,4 @@
+import { compareAsc, format, getWeek, startOfWeek, endOfWeek } from 'date-fns';
 import createElement from '../../utils/ElementBuilder';
 import pubsub from '../../utils/PubSub';
 
@@ -8,19 +9,23 @@ class SideBar extends HTMLElement {
    }
 
    render() {
+      const today = new Date();
+      const week = { start: startOfWeek(today), end: endOfWeek(today) };
       const defaultFilters = [
-         { type: 'all', value: 'inbox' },
-         { type: 'date', value: 'today' },
-         { type: 'date-range', value: 'UpComing' },
+         { id: 'all', type: 'all', value: 'all' },
+         { id: 'today', type: 'date', value: today },
+         { id: 'upcoming', type: 'date-range', value: week },
       ];
+
       const defaultFiltersUl = createElement('ul');
       defaultFilters.forEach((filter) => {
          const filterLi = createElement('li')
-            .setContent(filter.value)
+            .setState(filter)
+            .setContent(filter.id.charAt(0).toUpperCase() + filter.id.slice(1))
             .setAttributes({
                'filter-type': filter.type,
                class: 'default-filter',
-               id: filter.value,
+               id: filter.id,
             });
          defaultFiltersUl.appendChild(filterLi);
       });
@@ -32,9 +37,9 @@ class SideBar extends HTMLElement {
          if (ev.target.classList.contains('default-filter')) {
             const data = {
                type: ev.target.getAttribute('filter-type'),
-               value: ev.target.getAttribute('id'),
+               value: ev.target.getState().value,
             };
-
+            console.log(data);
             pubsub.publish('filter:changed', data);
          }
       });
