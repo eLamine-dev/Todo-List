@@ -84,6 +84,7 @@ class TaskController {
 
    handleFilterChange(filterData) {
       this.currentFilter = filterData;
+
       const tasks = this.getCurrentFilterTasks();
       this.view.setState({ tasks });
    }

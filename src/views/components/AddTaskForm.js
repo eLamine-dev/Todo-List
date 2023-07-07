@@ -61,6 +61,7 @@ class AddTaskForm extends HTMLFormElement {
       this.state.categories.forEach((category) => {
          const optGrp = createElement('optgroup').setAttributes({
             label: category.title,
+            id: category.id,
          });
 
          const categoryProjects = this.state.projects.filter(
@@ -113,7 +114,10 @@ class AddTaskForm extends HTMLFormElement {
          date: this.elements['date-input'].value,
          projectId: selectProject.options[selectProject.selectedIndex].id,
          priority: selectPriority.options[selectPriority.selectedIndex].id,
+         categoryId:
+            selectProject.options[selectProject.selectedIndex].parentElement.id,
       };
+
       pubsub.publish('task:add', formData);
    }
 }

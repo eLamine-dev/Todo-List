@@ -18,8 +18,8 @@ const filteringStrategies = [
       filter: function filter(tasks, dateRange) {
          return tasks.filter(
             (task) =>
-               new Date(task.date) > dateRange.start &&
-               new Date(task.date) < dateRange.end
+               new Date(task.date) >= dateRange.start &&
+               new Date(task.date) <= dateRange.end
          );
       },
    },
@@ -28,6 +28,13 @@ const filteringStrategies = [
       type: 'project',
       filter: function filter(tasks, projectId) {
          return tasks.filter((task) => task.projectId === projectId);
+      },
+   },
+
+   {
+      type: 'category',
+      filter: function filter(tasks, categoryId) {
+         return tasks.filter((task) => task.categoryId === categoryId);
       },
    },
 ];
