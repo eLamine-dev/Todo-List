@@ -52,8 +52,7 @@ class ProjectController {
    }
 
    handleAddProject(data) {
-      const newProject = ProjectController.createItem(data);
-      this.model.addItem(newProject);
+      this.model.addItem(data);
       this.view.addProject(data);
    }
 

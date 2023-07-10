@@ -20,8 +20,7 @@ class CategoryController {
    }
 
    handleAddCategory(data) {
-      const newCategory = this.categoryModel.createItem(data);
-      this.model.addItem(newCategory);
+      this.model.addItem(data);
    }
 
    handleDeleteCategory(CategoryId) {

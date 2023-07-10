@@ -19,22 +19,26 @@ class ListItem extends HTMLElement {
          this.setAttribute('data-type', this.state.dataType);
       }
 
-      const editBtn = createElement('button')
-         .setContent('edit')
-         .setAttributes({ class: 'edit-item' })
+      const buttons = createElement('div')
+         .setAttributes({ class: 'item-buttons' })
          .appendTo(this);
 
+      const editBtn = createElement('button')
+         .setContent('E')
+         .setAttributes({ class: 'edit-item' })
+         .appendTo(buttons);
+
       const deleteBtn = createElement('button')
-         .setContent('d')
+         .setContent('D')
          .setAttributes({
             class: 'delete-item',
          })
-         .appendTo(this);
+         .appendTo(buttons);
 
       const saveBtn = createElement('button')
-         .setContent('save')
+         .setContent('S')
          .setAttributes({ class: 'save-item' })
-         .appendTo(this);
+         .appendTo(buttons);
    }
 
    addEventListeners() {

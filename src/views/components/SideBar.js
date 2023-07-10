@@ -39,7 +39,7 @@ class SideBar extends HTMLElement {
                type: ev.target.getAttribute('filter-type'),
                value: ev.target.getState().value,
             };
-            console.log(data);
+
             pubsub.publish('filter:changed', data);
          }
       });
