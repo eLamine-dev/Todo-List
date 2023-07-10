@@ -53,7 +53,6 @@ class ExpandableList extends HTMLElement {
       const itemType = itemsList.getAttribute('items-type');
       const newItem = createElement('editable-li').setState({
          dataType: itemType,
-         title: `New ${itemType.toLowerCase()}`,
       });
 
       itemsList.appendChild(newItem);

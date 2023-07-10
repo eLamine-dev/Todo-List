@@ -55,14 +55,23 @@ class ListItem extends HTMLElement {
    }
 
    startEditItem() {
-      this.querySelector('.item-title').contentEditable = true;
+      createElement('input')
+         .setAttributes({
+            placeholder: `New ${this.getAttribute('data-type')}`,
+            value: this.state.title || '',
+            type: 'text',
+         })
+         .appendTo(this);
+      this.querySelector('.item-title').style = 'display:none';
       this.querySelector('.save-item').style.display = 'block';
       this.querySelector('.edit-item').style.display = 'none';
       this.querySelector('.item-title').focus();
    }
 
    endEditItem() {
-      this.querySelector('.item-title').contentEditable = false;
+      this.querySelector('.item-title').textContent =
+         this.querySelector('input').value;
+      this.querySelector('.item-title').style = 'display:block';
       this.querySelector('.save-item').style.display = 'none';
       this.querySelector('.edit-item').style.display = 'block';
    }

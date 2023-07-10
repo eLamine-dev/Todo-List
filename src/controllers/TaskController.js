@@ -59,7 +59,6 @@ class TaskController {
 
    handleDeleteTask(taskId) {
       this.model.deleteItem(taskId);
-      // this.view.addTask(newTask);
    }
 
    handleUpdateTask(taskId, newDta) {
