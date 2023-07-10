@@ -51,18 +51,22 @@ class ProjectController {
       pubsub.subscribe('categories:update', this.setUpViewState.bind(this));
    }
 
-   handleAddProject(data) {
-      this.model.addItem(data);
-      this.view.addProject(data);
+   handleAddProject(newProjectLi) {
+      this.model.addItem(newProjectLi.getState());
+      const newProject = this.model.getLastAddedItem();
+      newProjectLi.setState(newProject);
    }
 
    handleDeleteProject(projectId) {
       this.model.deleteItem(projectId);
-      // this.view.addTask(newTask);
    }
 
-   handleUpdateProject(projectId, newData) {
-      this.model.updateItem(projectId, newData);
+   handleUpdateProject(projectLi) {
+      this.model.updateItem(projectLi.getAttribute('id'), projectLi.getState());
+      const editedProject = this.model.getItemById(
+         projectLi.getAttribute('id')
+      );
+      projectLi.setState(editedProject);
    }
 
    setUpViewState(externalData) {

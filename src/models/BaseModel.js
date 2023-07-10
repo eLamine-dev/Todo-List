@@ -15,7 +15,7 @@ class BaseModel {
       return this[this.collectionName];
    }
 
-   getLastItem() {
+   getLastAddedItem() {
       return this[this.collectionName].slice(-1)[0];
    }
 

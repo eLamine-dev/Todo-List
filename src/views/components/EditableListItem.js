@@ -8,16 +8,13 @@ class ListItem extends HTMLElement {
    }
 
    render() {
-      const title = createElement('h6')
-         .setContent('Add new...')
+      const title = createElement('div')
+         .setContent(this.state.title)
          .setAttributes({ class: 'item-title' })
          .appendTo(this);
 
-      if (this.getState() !== null) {
-         title.setContent(this.state.title);
-         this.setAttribute('id', this.state.id || null);
-         this.setAttribute('data-type', this.state.dataType);
-      }
+      this.setAttribute('data-type', this.state.dataType);
+      if (this.state.id) this.setAttribute('id', this.state.id);
 
       const buttons = createElement('div')
          .setAttributes({ class: 'item-buttons' })
@@ -86,11 +83,10 @@ class ListItem extends HTMLElement {
 
    saveItem() {
       this.endEditItem();
+      const title = this.querySelector('.item-title').textContent;
+      this.state.title = title;
       if (this.getAttribute('id')) {
-         pubsub.publish(
-            `${this.getAttribute('data-type')}:update`,
-            this.getAttribute('id')
-         );
+         pubsub.publish(`${this.getAttribute('data-type')}:update`, this);
       } else {
          pubsub.publish(`${this.getAttribute('data-type')}:add`, this);
       }
