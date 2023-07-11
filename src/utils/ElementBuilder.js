@@ -15,11 +15,16 @@ const elementMixin = {
          Object.assign(this.state, state);
          this.clear();
          this.render();
-         console.log(this.state);
       } else {
          this.state = state;
       }
       return this;
+   },
+
+   updateState(state) {
+      Object.assign(this.state, state);
+      this.clear();
+      this.render();
    },
 
    getState() {

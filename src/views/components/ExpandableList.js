@@ -32,8 +32,9 @@ class ExpandableList extends HTMLElement {
          .setAttributes({
             class: 'add-item',
          })
-         .setContent('+')
-         .appendTo(listHeader.querySelector('.item-buttons'));
+         .setContent('+');
+
+      listHeader.querySelector('.item-buttons').prepend(addItemBtn);
    }
 
    addEventListeners() {

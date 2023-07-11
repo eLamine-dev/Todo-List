@@ -38,7 +38,7 @@ class CategoryController {
          categoryLi.getAttribute('id')
       );
 
-      categoryLi.parentElement.setState({ header: editedCategory });
+      categoryLi.parentElement.updateState({ header: editedCategory });
    }
 
    handleDeleteCategory(CategoryId) {

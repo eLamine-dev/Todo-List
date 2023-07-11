@@ -92,6 +92,10 @@ class ListItem extends HTMLElement {
    }
 
    cancelChanges() {
+      if (!this.getAttribute('id')) {
+         this.remove();
+         return;
+      }
       this.classList.remove('editing');
       this.clear();
       this.render();
@@ -107,6 +111,7 @@ class ListItem extends HTMLElement {
 
    saveItem() {
       const title = this.querySelector('input').value;
+      if (!title || title.length < 3 || title.length > 25) return;
       this.state.title = title;
       this.endEditItem();
       if (this.getAttribute('id')) {
