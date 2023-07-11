@@ -48,7 +48,7 @@ class ProjectController {
       pubsub.subscribe('project:add', this.handleAddProject.bind(this));
       pubsub.subscribe('project:update', this.handleUpdateProject.bind(this));
       pubsub.subscribe('project:delete', this.handleDeleteProject.bind(this));
-      pubsub.subscribe('categories:update', this.setUpViewState.bind(this));
+      pubsub.subscribe('categories:update', this.createProjectsList.bind(this));
    }
 
    handleAddProject(newProjectLi) {
@@ -77,10 +77,7 @@ class ProjectController {
 
    buildProjectsList() {
       this.viewState.categories.forEach((category) => {
-         const categoryProjects = this.viewState.projects.filter(
-            (project) => project.categoryId === category.id
-         );
-         this.view.createListForCategory(category, categoryProjects);
+         this.createProjectsList(category);
       });
    }
 
@@ -93,8 +90,7 @@ class ProjectController {
 
    createProjectsList(category) {
       const categoryProjects = this.getCategoryProjects(category);
-      this.view.setState({ category, categoryProjects });
-      // .setUpList();
+      this.view.createListForCategory(category, categoryProjects);
    }
 }
 

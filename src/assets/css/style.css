@@ -63,7 +63,7 @@ project-list editable-li .item-buttons {
    gap: 3px;
    opacity: 0;
    position: absolute;
-   right: 0%;
+   right: 20%;
 }
 
 project-list editable-li:hover .item-buttons {
@@ -72,11 +72,11 @@ project-list editable-li:hover .item-buttons {
    right: 0%;
 }
 
-project-list .list-header {
+project-list [data-type='category'] {
    color: blue;
 }
 
-project-list .items-list {
+project-list [data-type='project'] {
    color: red;
 }
 

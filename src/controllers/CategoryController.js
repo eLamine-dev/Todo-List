@@ -19,8 +19,14 @@ class CategoryController {
       pubsub.subscribe('category:delete', this.handleDeleteCategory.bind(this));
    }
 
-   handleAddCategory(data) {
-      this.model.addItem(data);
+   handleAddCategory(newCategoryLi) {
+      this.model.addItem(newCategoryLi.getState());
+      const newCategory = this.model.getLastAddedItem();
+      newCategoryLi.parentElement.setState({
+         header: newCategory,
+         items: { type: 'project', list: null },
+      });
+      console.log(newCategoryLi.parentElement);
    }
 
    handleDeleteCategory(CategoryId) {

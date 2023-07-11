@@ -106,9 +106,9 @@ class ListItem extends HTMLElement {
    }
 
    saveItem() {
-      this.endEditItem();
       const title = this.querySelector('input').value;
       this.state.title = title;
+      this.endEditItem();
       if (this.getAttribute('id')) {
          pubsub.publish(`${this.getAttribute('data-type')}:update`, this);
       } else {

@@ -11,18 +11,17 @@ class ExpandableList extends HTMLElement {
    render() {
       const listHeader = createElement('editable-li')
          .setAttributes({
-            'data-type': this.state.header.type,
             class: 'list-header',
          })
-         .setState(this.state.header.data);
+         .setState(this.state.header);
 
       const listUl = createElement('ul').setAttributes({
          class: 'items-list',
          'items-type': this.state.items.type,
       });
 
-      if (this.state.items.data) {
-         this.state.items.data.forEach((item) => {
+      if (this.state.items.list) {
+         this.state.items.list.forEach((item) => {
             const itemLI = createElement('editable-li').setState(item);
             listUl.appendChild(itemLI);
          });
@@ -57,7 +56,6 @@ class ExpandableList extends HTMLElement {
       const newItem = createElement('editable-li').setState({
          dataType: itemType,
       });
-
       itemsList.appendChild(newItem);
       newItem.startEditItem();
    }
