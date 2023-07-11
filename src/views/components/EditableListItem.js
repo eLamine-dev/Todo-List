@@ -36,50 +36,65 @@ class ListItem extends HTMLElement {
          .setContent('S')
          .setAttributes({ class: 'save-item' })
          .appendTo(buttons);
+
+      const cancelBtn = createElement('button')
+         .setContent('c')
+         .setAttributes({ class: 'cancel-editing' })
+         .appendTo(buttons);
    }
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
-         if (ev.target.classList.contains('edit-item')) this.startEditItem();
-         else if (ev.target.classList.contains('delete-item'))
-            this.deleteItem();
-         else if (ev.target.classList.contains('save-item')) this.saveItem();
-         else {
-            const data = {
-               type: this.getAttribute('data-type'),
-               value: this.getAttribute('id'),
-            };
-            pubsub.publish('filter:changed', data);
+         if (!document.querySelector('editable-li.editing')) {
+            if (ev.target.classList.contains('edit-item')) this.startEditItem();
+            else if (ev.target.classList.contains('delete-item'))
+               this.deleteItem();
+            else {
+               const data = {
+                  type: this.getAttribute('data-type'),
+                  value: this.getAttribute('id'),
+               };
+               pubsub.publish('filter:changed', data);
+            }
          }
+         if (ev.target.classList.contains('save-item')) this.saveItem();
+         if (ev.target.classList.contains('cancel-editing'))
+            this.cancelChanges();
       });
    }
 
    startEditItem() {
-      createElement('input')
+      this.setAttributes({ class: 'editing' });
+      const input = createElement('input')
          .setAttributes({
+            maxlength: '25',
             placeholder: `New ${this.getAttribute('data-type')}`,
             value: this.state.title || '',
             type: 'text',
+            class: 'editing-input',
          })
          .appendTo(this);
-      this.querySelector('.item-title').style = 'display:none';
-      this.querySelector('.save-item').style.display = 'block';
-      this.querySelector('.edit-item').style.display = 'none';
-      this.querySelector('.item-title').focus();
+
+      input.focus();
+      input.addEventListener('blur', () => {
+         input.classList.add('error');
+         setTimeout(() => {
+            input.classList.remove('error');
+            input.focus();
+         }, 1000);
+      });
    }
 
    endEditItem() {
+      this.classList.remove('editing');
       this.querySelector('.item-title').textContent =
          this.querySelector('input').value;
-      this.querySelector('.item-title').style = 'display:block';
-      this.querySelector('.save-item').style.display = 'none';
-      this.querySelector('.edit-item').style.display = 'block';
    }
 
    cancelChanges() {
+      this.classList.remove('editing');
       this.clear();
       this.render();
-      this.addEventListeners();
    }
 
    deleteItem() {
@@ -92,7 +107,7 @@ class ListItem extends HTMLElement {
 
    saveItem() {
       this.endEditItem();
-      const title = this.querySelector('.item-title').textContent;
+      const title = this.querySelector('input').value;
       this.state.title = title;
       if (this.getAttribute('id')) {
          pubsub.publish(`${this.getAttribute('data-type')}:update`, this);

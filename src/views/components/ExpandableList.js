@@ -42,7 +42,10 @@ class ExpandableList extends HTMLElement {
    addEventListeners() {
       this.addEventListener('click', (ev) => {
          ev.preventDefault();
-         if (ev.target.classList.contains('add-item')) {
+         if (
+            !document.querySelector('editable-li.editing') &&
+            ev.target.classList.contains('add-item')
+         ) {
             this.addItem();
          }
       });

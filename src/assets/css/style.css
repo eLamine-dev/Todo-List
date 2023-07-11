@@ -90,14 +90,64 @@ project-list exp-list {
    order: 1;
 }
 
-.item-title {
+.item-title-input {
    outline: none;
 }
 
-.item-title[contentEditable='true'] {
-   border: #0f172a 1px solid;
+editable-li .save-item,
+editable-li .cancel-editing {
+   display: none;
 }
 
-editable-li .save-item {
+editable-li.editing .save-item,
+editable-li.editing .cancel-editing {
+   display: block;
+}
+
+editable-li.editing .edit-item,
+editable-li.editing .delete-item,
+editable-li.editing .item-title {
    display: none;
+}
+
+editable-li .edit-item,
+editable-li .delete-item,
+editable-li .item-title {
+   display: block;
+}
+
+editable-li input.error {
+   -webkit-animation: shake 0.2s ease-in-out 0s 2;
+   animation: shake 0.2s ease-in-out 0s 2;
+   background-color: red;
+}
+
+@-webkit-keyframes shake {
+   0% {
+      margin-left: 0rem;
+   }
+   25% {
+      margin-left: 0.5rem;
+   }
+   75% {
+      margin-left: -0.5rem;
+   }
+   100% {
+      margin-left: 0rem;
+   }
+}
+
+@keyframes shake {
+   0% {
+      margin-left: 0rem;
+   }
+   25% {
+      margin-left: 0.5rem;
+   }
+   75% {
+      margin-left: -0.5rem;
+   }
+   100% {
+      margin-left: 0rem;
+   }
 }
