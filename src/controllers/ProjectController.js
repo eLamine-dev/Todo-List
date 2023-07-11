@@ -66,6 +66,7 @@ class ProjectController {
       const editedProject = this.model.getItemById(
          projectLi.getAttribute('id')
       );
+      // console.log(editedProject);
       projectLi.setState(editedProject);
    }
 

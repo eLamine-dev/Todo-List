@@ -1,3 +1,4 @@
+import { it } from 'date-fns/locale';
 import ObjectBuilder from '../utils/ObjectBuilder';
 
 class BaseModel {
@@ -20,7 +21,7 @@ class BaseModel {
    }
 
    getItemById(id) {
-      this[this.collectionName].find((item) => item.id === id);
+      return this[this.collectionName].find((item) => item.id === id);
    }
 
    updateItem(id, data) {
@@ -28,6 +29,7 @@ class BaseModel {
          (item) => item.id === id
       );
       itemToEdit.editProperties(data);
+      console.log(itemToEdit);
    }
 
    deleteItem(id) {

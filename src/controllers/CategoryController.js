@@ -26,15 +26,23 @@ class CategoryController {
          header: newCategory,
          items: { type: 'project', list: null },
       });
-      console.log(newCategoryLi.parentElement);
+   }
+
+   handleUpdateCategory(categoryLi) {
+      this.model.updateItem(
+         categoryLi.getAttribute('id'),
+         categoryLi.getState()
+      );
+
+      const editedCategory = this.model.getItemById(
+         categoryLi.getAttribute('id')
+      );
+
+      categoryLi.parentElement.setState({ header: editedCategory });
    }
 
    handleDeleteCategory(CategoryId) {
       this.model.deleteItem(CategoryId);
-   }
-
-   handleUpdateCategory(CategoryId, newData) {
-      this.model.updateItem(CategoryId, newData);
    }
 }
 
