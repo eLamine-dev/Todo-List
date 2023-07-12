@@ -64,7 +64,8 @@ class ListItem extends HTMLElement {
    }
 
    startEditItem() {
-      this.setAttributes({ class: 'editing' });
+      if (document.querySelector('[edit=true]')) return;
+      this.setAttributes({ edit: true });
       const input = createElement('input')
          .setAttributes({
             maxlength: '25',
@@ -86,7 +87,7 @@ class ListItem extends HTMLElement {
    }
 
    endEditItem() {
-      this.classList.remove('editing');
+      this.setAttributes({ edit: false });
       this.querySelector('.item-title').textContent =
          this.querySelector('input').value;
    }
@@ -96,7 +97,7 @@ class ListItem extends HTMLElement {
          this.remove();
          return;
       }
-      this.classList.remove('editing');
+      this.setAttributes({ edit: false });
       this.clear();
       this.render();
    }

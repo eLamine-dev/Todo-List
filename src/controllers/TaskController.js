@@ -22,14 +22,14 @@ class TaskController {
          },
          {
             dataType: 'task',
-            id: '1685636158744',
+            id: '1685v63cxv6158744',
             title: 'asddfggf',
             date: '2023-06-01',
             projectId: '002',
          },
          {
             dataType: 'task',
-            id: '1685636158744',
+            id: '1685636cxv158744',
             title: 'asdj;l;f',
             date: '2023-06-01',
             projectId: '003',
@@ -88,11 +88,11 @@ class TaskController {
       this.view.setState({ tasks });
    }
 
-   handleSelectTask(taskId) {
-      const taskDetails = createElement('task-details').setState(
-         this.model.getItemById(taskId)
-      );
-   }
+   // handleSelectTask(taskId) {
+   //    const taskDetails = createElement('task-details').setState(
+   //       this.model.getItemById(taskId)
+   //    );
+   // }
 }
 
 export default TaskController;

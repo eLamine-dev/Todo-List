@@ -33,11 +33,15 @@ class AppController {
    }
 
    initializeListeners() {
-      pubsub.subscribe('task:select', this.handleTaskSelect.bind(this));
+      pubsub.subscribe('task:edit', this.openTaskEdit.bind(this));
    }
 
-   handleTaskSelect(taskId) {
-      this.view.openTaskDetails(taskId);
+   openTaskEdit(taskId) {
+      const categories = this.categoryController.model.getAllItems();
+      const projects = this.projectController.model.getAllItems();
+      const task = this.taskController.model.getItemById(taskId);
+
+      this.view.openTaskDetails({ task, categories, projects });
    }
 }
 

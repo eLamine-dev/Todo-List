@@ -14,27 +14,32 @@ class TaskCard extends HTMLElement {
          type: 'checkbox',
       });
 
-      const title = createElement('h3').setContent(this.state.title);
-      const date = createElement('div').setContent(this.state.date);
-      const project = createElement('div').setContent(
-         `${this.state.projectCategory} \\ ${this.state.taskProject}`
-      );
+      const title = createElement('h3')
+         .setContent(this.state.title)
+         .appendTo(this);
+      const date = createElement('div')
+         .setContent(this.state.date)
+         .appendTo(this);
+      const project = createElement('div')
+         .setContent(
+            `${this.state.projectCategory} \\ ${this.state.taskProject}`
+         )
+         .appendTo(this);
 
       const deleteBtn = createElement('button')
          .setContent('delete')
-         .setAttributes({ class: 'delete' });
+         .setAttributes({ class: 'delete' })
+         .appendTo(this);
 
       const editBtn = createElement('button')
          .setContent('edit')
-         .setAttributes({ class: 'edit' });
-
-      [taskCheckbox, title, date, deleteBtn, project].forEach((child) => {
-         this.appendChild(child);
-      });
+         .setAttributes({ class: 'edit' })
+         .appendTo(this);
    }
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
+         if (document.querySelector('[edit=true]')) return;
          if (ev.target.classList.contains('delete')) {
             this.remove();
             pubsub.publish('task:delete', this.state.id);
@@ -43,7 +48,8 @@ class TaskCard extends HTMLElement {
             pubsub.publish('task:update', this.state.id);
          }
          if (ev.target.classList.contains('edit')) {
-            pubsub.publish('task:edit', this.state.id);
+            this.setAttributes({ edit: true });
+            pubsub.publish('task:edit', this.getAttribute('task-id'));
          }
       });
    }

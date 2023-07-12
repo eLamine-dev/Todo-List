@@ -1,4 +1,5 @@
 import createElement from '../../utils/ElementBuilder';
+import AddTaskForm from './AddTaskForm';
 
 class TaskDetails extends HTMLElement {
    connectedCallback() {
@@ -7,29 +8,56 @@ class TaskDetails extends HTMLElement {
    }
 
    render() {
-      const title = createElement('h2')
+      this.id = 'task-details';
+
+      const form = createElement('form')
+         .setAttributes({ id: 'edit-task-form' })
+         .appendTo(this);
+
+      const title = createElement('input')
          .setAttributes({
             type: 'text',
             name: 'title-input',
             contenteditable: true,
+            value: this.state.task.title,
          })
-         .setContent(this.state.title);
+         .appendTo(form);
 
-      const description = createElement('textarea').setAttributes({
-         name: 'description',
-         Placeholder: 'add task description...',
-      });
-      const date = createElement('input').setAttributes({
-         type: 'date',
-         name: 'date-input',
-         value: `${this.state.date}`,
-         // min: '',
-      });
-      this.id = 'task-details';
+      const description = createElement('textarea')
+         .setAttributes({
+            name: 'description',
+            Placeholder: 'add task description...',
+         })
+         .setContent(this.state.task.description)
+         .appendTo(form);
 
-      [title, date, description].forEach((child) => {
-         this.appendChild(child);
-      });
+      const date = createElement('input')
+         .setAttributes({
+            type: 'date',
+            name: 'date-input',
+            value: `${this.state.task.date}`,
+            min: new Date().toISOString().split('T')[0],
+         })
+         .appendTo(form);
+
+      const submitBtn = createElement('button')
+         .setAttributes({
+            type: 'submit',
+            name: 'save-task',
+         })
+         .setContent('Save')
+         .appendTo(form);
+
+      const cancelBtn = createElement('button')
+         .setAttributes({
+            type: '',
+            name: 'cancel',
+         })
+         .setContent('X')
+         .appendTo(form);
+
+      this.setupSelectProjectList(form);
+      this.setUpPriorities(form);
    }
 
    addEventListeners() {
@@ -44,6 +72,62 @@ class TaskDetails extends HTMLElement {
          title: this.elements['title-input'].value,
          date: this.elements['date-input'].value,
       };
+   }
+
+   setupSelectProjectList(form) {
+      const selectProject = createElement('select')
+         .setAttributes({
+            class: 'select-project',
+            name: 'select-project',
+         })
+         .appendTo(form);
+
+      this.state.categories.forEach((category) => {
+         const optGrp = createElement('optgroup').setAttributes({
+            label: category.title,
+            id: category.id,
+         });
+
+         const categoryProjects = this.state.projects.filter(
+            (project) => project.categoryId === category.id
+         );
+         categoryProjects.forEach((project) => {
+            const option = createElement('option')
+               .setAttributes({
+                  id: project.id,
+               })
+               .setContent(project.title)
+               .appendTo(optGrp);
+
+            if (project.id === this.state.task.projectId) {
+               option.setAttribute('selected', true);
+            }
+         });
+
+         selectProject.appendChild(optGrp);
+      });
+   }
+
+   setUpPriorities(form) {
+      const selectPriority = createElement('select')
+         .setAttributes({
+            class: 'select-priority',
+            name: 'select-priority',
+         })
+         .appendTo(form);
+      const priorities = ['1', '2', '3', '4'];
+      priorities.forEach((priority) => {
+         const option = createElement('option')
+            .setAttributes({
+               id: priority,
+            })
+            .setContent(`Priority ${priority}`)
+            .appendTo(selectPriority);
+
+         if (priority === this.state.task.priority) {
+            option.setAttribute('selected', true);
+         }
+      });
    }
 }
 

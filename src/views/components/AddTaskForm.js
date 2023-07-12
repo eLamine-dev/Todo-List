@@ -91,14 +91,14 @@ class AddTaskForm extends HTMLFormElement {
             name: 'select-priority',
          })
          .appendTo(this);
-      const priorities = [1, 2, 3, 4];
+      const priorities = ['1', '2', '3', '4'];
       priorities.forEach((priority) => {
          const option = createElement('option')
             .setAttributes({
-               id: `${priority}`,
+               id: priority,
             })
-            .setContent(`Priority ${priority}`);
-         selectPriority.appendChild(option);
+            .setContent(`Priority ${priority}`)
+            .appendTo(selectPriority);
       });
    }
 
@@ -116,6 +116,7 @@ class AddTaskForm extends HTMLFormElement {
       const formData = {
          dataType: 'task',
          title: this.elements['title-input'].value,
+         description: this.elements['description-input'].value,
          date: this.elements['date-input'].value,
          projectId: selectProject.options[selectProject.selectedIndex].id,
          priority: selectPriority.options[selectPriority.selectedIndex].id,

@@ -41,7 +41,7 @@ class ExpandableList extends HTMLElement {
       this.addEventListener('click', (ev) => {
          ev.preventDefault();
          if (
-            !document.querySelector('editable-li.editing') &&
+            !document.querySelector(`[edit=true]`) &&
             ev.target.classList.contains('add-item')
          ) {
             this.addItem();
