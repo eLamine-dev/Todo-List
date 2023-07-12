@@ -53,7 +53,7 @@ class TaskController {
    handleAddTask(data) {
       this.model.addItem(data);
       this.view.setState({
-         tasks: this.getCurrentFilterTasks(this.currentFilter),
+         tasks: this.getCurrentFilterTasks(),
       });
    }
 

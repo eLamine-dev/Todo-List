@@ -13,7 +13,7 @@ class SideBar extends HTMLElement {
       const week = { start: startOfWeek(today), end: endOfWeek(today) };
       const defaultFilters = [
          { id: 'all', type: 'all', value: 'all' },
-         { id: 'today', type: 'date', value: today },
+         { id: 'today', type: 'date', value: format(today, 'yyyy-MM-dd') },
          { id: 'upcoming', type: 'date-range', value: week },
       ];
 

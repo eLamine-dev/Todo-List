@@ -1,3 +1,5 @@
+import { isEqual, isWithinInterval } from 'date-fns';
+
 const filteringStrategies = [
    {
       type: 'all',
@@ -9,17 +11,17 @@ const filteringStrategies = [
    {
       type: 'date',
       filter: function filter(tasks, date) {
-         return tasks.filter((task) => task.date === date);
+         return tasks.filter((task) =>
+            isEqual(new Date(task.date), new Date(date))
+         );
       },
    },
 
    {
       type: 'date-range',
       filter: function filter(tasks, dateRange) {
-         return tasks.filter(
-            (task) =>
-               new Date(task.date) >= dateRange.start &&
-               new Date(task.date) <= dateRange.end
+         return tasks.filter((task) =>
+            isWithinInterval(new Date(task.date), dateRange)
          );
       },
    },

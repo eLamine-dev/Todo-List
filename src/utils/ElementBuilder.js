@@ -21,11 +21,11 @@ const elementMixin = {
       return this;
    },
 
-   updateState(state) {
-      Object.assign(this.state, state);
-      this.clear();
-      this.render();
-   },
+   // updateState(state) {
+   //    Object.assign(this.state, state);
+   //    this.clear();
+   //    this.render();
+   // },
 
    getState() {
       return this.state;

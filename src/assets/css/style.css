@@ -24,6 +24,8 @@ app-page {
 
 task-list {
    display: grid;
+   gap: 1rem;
+   align-content: start;
 }
 
 task-card {
@@ -34,8 +36,12 @@ task-card {
    border-radius: 1rem;
 }
 
-add-task-form {
+#new-task-form {
    display: grid;
+   height: 10rem;
+   padding: 1rem;
+   border: #0f172a 1px solid;
+   border-radius: 1rem;
 }
 
 side-bar {

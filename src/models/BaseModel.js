@@ -29,7 +29,6 @@ class BaseModel {
          (item) => item.id === id
       );
       itemToEdit.editProperties(data);
-      console.log(itemToEdit);
    }
 
    deleteItem(id) {

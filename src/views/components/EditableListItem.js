@@ -111,7 +111,7 @@ class ListItem extends HTMLElement {
 
    saveItem() {
       const title = this.querySelector('input').value;
-      if (!title || title.length < 3 || title.length > 25) return;
+      if (!title || title.length < 4 || title.length > 25) return;
       this.state.title = title;
       this.endEditItem();
       if (this.getAttribute('id')) {

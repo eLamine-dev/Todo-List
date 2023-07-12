@@ -18,6 +18,9 @@ class AddTaskForm extends HTMLFormElement {
          .setAttributes({
             type: 'text',
             name: 'title-input',
+            placeholder: 'Title',
+            maxlength: '50',
+            minlength: '5',
          })
          .appendTo(this);
 
@@ -25,6 +28,8 @@ class AddTaskForm extends HTMLFormElement {
          .setAttributes({
             type: 'text',
             name: 'description-input',
+            placeholder: 'Enter a description',
+            maxlength: '150',
          })
          .appendTo(this);
 
@@ -32,7 +37,7 @@ class AddTaskForm extends HTMLFormElement {
          .setAttributes({
             type: 'date',
             name: 'date-input',
-            // min: '',
+            min: new Date().toISOString().split('T')[0],
          })
          .appendTo(this);
       dateInput.valueAsDate = new Date();
@@ -46,7 +51,7 @@ class AddTaskForm extends HTMLFormElement {
             type: 'submit',
             name: 'save-task',
          })
-         .setContent('save')
+         .setContent('New Task')
          .appendTo(this);
    }
 
