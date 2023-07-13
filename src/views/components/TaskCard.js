@@ -39,7 +39,7 @@ class TaskCard extends HTMLElement {
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
-         if (document.querySelector('[edit=true]')) return;
+         if (document.querySelector('task-card[edit=true]')) return;
          if (ev.target.classList.contains('delete')) {
             this.remove();
             pubsub.publish('task:delete', this.state.id);
@@ -48,7 +48,7 @@ class TaskCard extends HTMLElement {
             pubsub.publish('task:update', this.state.id);
          }
          if (ev.target.classList.contains('edit')) {
-            // this.setAttributes({ edit: true });
+            this.setAttributes({ edit: true });
             pubsub.publish('task:edit', this.getAttribute('task-id'));
          }
       });

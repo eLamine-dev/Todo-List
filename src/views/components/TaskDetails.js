@@ -73,7 +73,6 @@ class TaskDetails extends HTMLElement {
             !ev.target.closest('.item-buttons')
          ) {
             const item = ev.target.closest('[data-type=checklist-item]');
-
             item.toggleAttribute('checked');
          }
       });
