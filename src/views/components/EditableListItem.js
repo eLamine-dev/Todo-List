@@ -45,17 +45,10 @@ class ListItem extends HTMLElement {
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
-         if (!document.querySelector('editable-li [edit=true]')) {
+         if (!document.querySelector('editable-li[edit=true]')) {
             if (ev.target.classList.contains('edit-item')) this.startEditItem();
             else if (ev.target.classList.contains('delete-item'))
                this.deleteItem();
-            // else {
-            //    const data = {
-            //       type: this.getAttribute('data-type'),
-            //       value: this.getAttribute('id'),
-            //    };
-            //    pubsub.publish('filter:changed', data);
-            // }
          }
          if (ev.target.classList.contains('save-item')) this.saveItem();
          if (ev.target.classList.contains('cancel-editing'))
@@ -102,16 +95,17 @@ class ListItem extends HTMLElement {
    }
 
    deleteItem() {
+      pubsub.publish(`${this.getAttribute('data-type')}:delete`, this);
       this.remove();
-      pubsub.publish(
-         `${this.getAttribute('data-type')}:delete`,
-         this.getAttribute('id')
-      );
    }
 
    saveItem() {
       const title = this.querySelector('input').value;
       if (!title || title.length < 4 || title.length > 25) return;
+      this.setAttribute(
+         'parent-list',
+         this.parentElement.getAttribute('list-id')
+      );
       this.state.title = title;
       this.endEditItem();
       if (this.getAttribute('id')) {

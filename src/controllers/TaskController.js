@@ -19,6 +19,7 @@ class TaskController {
             title: 'dayhsdafja',
             date: '2023-07-03',
             projectId: '001',
+            categoryId: '01',
             checklist: [
                {
                   title: 'do something',
@@ -57,8 +58,8 @@ class TaskController {
       pubsub.subscribe('task:add', this.handleAddTask.bind(this));
       pubsub.subscribe('task:update', this.handleUpdateTask.bind(this));
       pubsub.subscribe('task:delete', this.handleDeleteTask.bind(this));
-      pubsub.subscribe('projects:update', this.setUpViewState.bind(this));
-      pubsub.subscribe('categories:update', this.setUpViewState.bind(this));
+      pubsub.subscribe('projects:updated', this.buildViewState.bind(this));
+      pubsub.subscribe('categories:updated', this.buildViewState.bind(this));
       pubsub.subscribe('filter:changed', this.handleFilterChange.bind(this));
    }
 
@@ -77,9 +78,9 @@ class TaskController {
       this.model.updateItem(taskId, newDta);
    }
 
-   setUpViewState(externalData) {
+   buildViewState(externalData) {
       const internalData = {
-         tasks: this.getCurrentFilterTasks(this.currentFilter),
+         tasks: this.getCurrentFilterTasks(),
       };
       Object.assign(this.viewState, internalData, externalData);
       this.view.setState(this.viewState);
@@ -100,10 +101,12 @@ class TaskController {
       this.view.setState({ tasks });
    }
 
-   // handleSelectTask(taskId) {
-   //    const taskDetails = createElement('task-details').setState(
-   //       this.model.getItemById(taskId)
-   //    );
+   // handleProjectsUpdates(projects) {
+   //    this.view.setState({ projects });
+   // }
+
+   // handleCategoriesUpdates(categories) {
+   //    this.view.setState({ categories });
    // }
 }
 

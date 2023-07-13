@@ -13,6 +13,8 @@ class ProjectList extends HTMLElement {
       const header = createElement('h3').setContent('Projects');
       this.prepend(header);
 
+      this.buildProjectsList();
+
       const addCategoryBtn = createElement('button')
          .setAttributes({ class: 'add-category-btn' })
          .setContent('Add category');
@@ -20,7 +22,16 @@ class ProjectList extends HTMLElement {
       this.append(addCategoryBtn);
    }
 
-   createListForCategory(category, categoryProjects) {
+   buildProjectsList() {
+      this.state.categories.forEach((category) => {
+         const categoryProjects = this.state.projects.filter(
+            (project) => project.categoryId === category.id
+         );
+         this.createCategoryList(category, categoryProjects);
+      });
+   }
+
+   createCategoryList(category, categoryProjects) {
       const list = createElement('exp-list').setState({
          header: category,
          items: { type: 'project', list: categoryProjects },
@@ -32,7 +43,7 @@ class ProjectList extends HTMLElement {
       this.addEventListener('click', (ev) => {
          if (document.querySelector(`[edit=true]`)) return;
          if (ev.target.classList.contains('add-category-btn')) {
-            this.createListForCategory({ dataType: 'category' }, null);
+            this.createCategoryList({ dataType: 'category' }, null);
             this.lastChild.firstChild.startEditItem();
          } else if (
             ev.target.closest('editable-li') &&
@@ -42,6 +53,7 @@ class ProjectList extends HTMLElement {
                type: ev.target.closest('editable-li').getAttribute('data-type'),
                value: ev.target.closest('editable-li').getAttribute('id'),
             };
+
             pubsub.publish('filter:changed', data);
          }
       });

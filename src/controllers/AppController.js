@@ -1,7 +1,6 @@
 import pubsub from '../utils/PubSub';
 import createElement from '../utils/ElementBuilder';
 import sideBarComponent from '../views/components/SideBar';
-
 import Filter from '../strategies/Filter';
 
 class AppController {
@@ -22,8 +21,8 @@ class AppController {
       const categories = this.categoryController.model.getAllItems();
       const projects = this.projectController.model.getAllItems();
 
-      this.taskController.setUpViewState({ projects, categories });
-      this.projectController.setUpViewState({ categories });
+      this.taskController.buildViewState({ projects, categories });
+      this.projectController.buildViewState({ categories });
 
       const sideBar = createElement('side-bar').appendChildren(
          this.projectController.view

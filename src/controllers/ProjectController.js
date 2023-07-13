@@ -48,17 +48,27 @@ class ProjectController {
       pubsub.subscribe('project:add', this.handleAddProject.bind(this));
       pubsub.subscribe('project:update', this.handleUpdateProject.bind(this));
       pubsub.subscribe('project:delete', this.handleDeleteProject.bind(this));
-      pubsub.subscribe('categories:update', this.createProjectsList.bind(this));
+      pubsub.subscribe('categories:updated', this.buildViewState.bind(this));
    }
 
    handleAddProject(newProjectLi) {
-      this.model.addItem(newProjectLi.getState());
+      const data = newProjectLi.getState();
+      Object.assign(data, {
+         categoryId: newProjectLi.getAttribute('parent-list'),
+      });
+      this.model.addItem(data);
       const newProject = this.model.getLastAddedItem();
       newProjectLi.setState(newProject);
+      pubsub.publish('projects:updated', {
+         projects: this.model.getAllItems(),
+      });
    }
 
-   handleDeleteProject(projectId) {
-      this.model.deleteItem(projectId);
+   handleDeleteProject(projectLi) {
+      this.model.deleteItem(projectLi.getAttribute('id'));
+      pubsub.publish('projects:updated', {
+         projects: this.model.getAllItems(),
+      });
    }
 
    handleUpdateProject(projectLi) {
@@ -66,32 +76,17 @@ class ProjectController {
       const editedProject = this.model.getItemById(
          projectLi.getAttribute('id')
       );
-      // console.log(editedProject);
+
       projectLi.setState(editedProject);
-   }
-
-   setUpViewState(externalData) {
-      const internalData = { projects: this.model.getAllItems() };
-      Object.assign(this.viewState, internalData, externalData);
-      this.buildProjectsList();
-   }
-
-   buildProjectsList() {
-      this.viewState.categories.forEach((category) => {
-         this.createProjectsList(category);
+      pubsub.publish('projects:updated', {
+         projects: this.model.getAllItems(),
       });
    }
 
-   getCategoryProjects(category) {
-      const categoryProjects = this.model
-         .getAllItems()
-         .filter((project) => project.categoryId === category.id);
-      return categoryProjects;
-   }
-
-   createProjectsList(category) {
-      const categoryProjects = this.getCategoryProjects(category);
-      this.view.createListForCategory(category, categoryProjects);
+   buildViewState(externalData) {
+      const internalData = { projects: this.model.getAllItems() };
+      Object.assign(this.viewState, internalData, externalData);
+      this.view.setState(this.viewState);
    }
 }
 
