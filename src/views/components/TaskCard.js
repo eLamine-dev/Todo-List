@@ -48,7 +48,7 @@ class TaskCard extends HTMLElement {
             pubsub.publish('task:update', this.state.id);
          }
          if (ev.target.classList.contains('edit')) {
-            this.setAttributes({ edit: true });
+            // this.setAttributes({ edit: true });
             pubsub.publish('task:edit', this.getAttribute('task-id'));
          }
       });

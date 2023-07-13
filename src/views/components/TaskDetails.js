@@ -66,6 +66,17 @@ class TaskDetails extends HTMLElement {
          ev.preventDefault();
          this.passData();
       });
+
+      this.addEventListener('click', (ev) => {
+         if (
+            ev.target.closest('[data-type=checklist-item]') &&
+            !ev.target.closest('.item-buttons')
+         ) {
+            const item = ev.target.closest('[data-type=checklist-item]');
+
+            item.toggleAttribute('checked');
+         }
+      });
    }
 
    passData() {
@@ -147,7 +158,7 @@ class TaskDetails extends HTMLElement {
       );
 
       checklistItems.forEach((item) => {
-         item.setAttribute('checked', item.getState().checked);
+         if (item.getState().checked) item.setAttribute('checked', '');
       });
    }
 }
