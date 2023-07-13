@@ -84,6 +84,22 @@ class TaskController {
       };
       Object.assign(this.viewState, internalData, externalData);
       this.view.setState(this.viewState);
+      this.clearDeletedProjectsTasks(this.viewState);
+   }
+
+   clearDeletedProjectsTasks() {
+      this.model.getAllItems().forEach((task) => {
+         const taskProject = this.viewState.projects.find(
+            (project) => project.id === task.projectId
+         );
+         const projectCategory = this.viewState.categories.find(
+            (category) => category.id === task.categoryId
+         );
+
+         if (!taskProject || !projectCategory) {
+            this.handleDeleteTask(task.id);
+         }
+      });
    }
 
    getCurrentFilterTasks() {
@@ -100,14 +116,6 @@ class TaskController {
       const tasks = this.getCurrentFilterTasks();
       this.view.setState({ tasks });
    }
-
-   // handleProjectsUpdates(projects) {
-   //    this.view.setState({ projects });
-   // }
-
-   // handleCategoriesUpdates(categories) {
-   //    this.view.setState({ categories });
-   // }
 }
 
 export default TaskController;

@@ -87,6 +87,21 @@ class ProjectController {
       const internalData = { projects: this.model.getAllItems() };
       Object.assign(this.viewState, internalData, externalData);
       this.view.setState(this.viewState);
+      this.clearNonCategorizedProjects();
+   }
+
+   clearNonCategorizedProjects() {
+      this.model.getAllItems().forEach((project) => {
+         const projectCategory = this.viewState.categories.find(
+            (category) => project.categoryId === category.id
+         );
+         if (!projectCategory) {
+            this.model.deleteItem(project.id);
+            pubsub.publish('projects:updated', {
+               projects: this.model.getAllItems(),
+            });
+         }
+      });
    }
 }
 
