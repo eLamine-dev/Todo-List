@@ -30,12 +30,19 @@ class ProjectList extends HTMLElement {
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
-         if (
-            ev.target.classList.contains('add-category-btn') &&
-            !document.querySelector(`[edit=true]`)
-         ) {
+         if (document.querySelector(`[edit=true]`)) return;
+         if (ev.target.classList.contains('add-category-btn')) {
             this.createListForCategory({ dataType: 'category' }, null);
             this.lastChild.firstChild.startEditItem();
+         } else if (
+            ev.target.closest('editable-li') &&
+            !ev.target.closest('.item-buttons')
+         ) {
+            const data = {
+               type: ev.target.closest('editable-li').getAttribute('data-type'),
+               value: ev.target.closest('editable-li').getAttribute('id'),
+            };
+            pubsub.publish('filter:changed', data);
          }
       });
    }

@@ -1,5 +1,5 @@
 import createElement from '../../utils/ElementBuilder';
-import AddTaskForm from './AddTaskForm';
+import ExpandableList from './ExpandableList';
 
 class TaskDetails extends HTMLElement {
    connectedCallback() {
@@ -58,6 +58,7 @@ class TaskDetails extends HTMLElement {
 
       this.setupSelectProjectList(form);
       this.setUpPriorities(form);
+      this.setupChecklist(form);
    }
 
    addEventListeners() {
@@ -127,6 +128,26 @@ class TaskDetails extends HTMLElement {
          if (priority === this.state.task.priority) {
             option.setAttribute('selected', true);
          }
+      });
+   }
+
+   setupChecklist(form) {
+      const checklist = createElement('exp-list')
+         .setAttributes({
+            class: 'checklist',
+         })
+         .setState({
+            header: { dataType: 'checklist', title: 'Checklist' },
+            items: { type: 'checklist-item', list: this.state.task.checklist },
+         })
+         .appendTo(form);
+
+      const checklistItems = checklist.querySelectorAll(
+         '[data-type=checklist-item]'
+      );
+
+      checklistItems.forEach((item) => {
+         item.setAttribute('checked', item.getState().checked);
       });
    }
 }

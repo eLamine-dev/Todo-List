@@ -19,6 +19,18 @@ class TaskController {
             title: 'dayhsdafja',
             date: '2023-07-03',
             projectId: '001',
+            checklist: [
+               {
+                  title: 'do something',
+                  checked: false,
+                  dataType: 'checklist-item',
+               },
+               {
+                  title: 'do something2',
+                  checked: true,
+                  dataType: 'checklist-item',
+               },
+            ],
          },
          {
             dataType: 'task',
