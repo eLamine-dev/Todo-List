@@ -45,7 +45,7 @@ class ListItem extends HTMLElement {
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
-         if (!document.querySelector('editable-li[edit=true]')) {
+         if (!document.querySelector('[edit=true]')) {
             if (ev.target.classList.contains('edit-item')) this.startEditItem();
             else if (ev.target.classList.contains('delete-item'))
                this.deleteItem();

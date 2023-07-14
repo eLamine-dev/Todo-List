@@ -42,6 +42,10 @@ task-card {
    border-radius: 1rem;
 }
 
+task-card[edit='true'] {
+   background-color: #0d9488;
+}
+
 #new-task-form {
    display: grid;
    height: 10rem;

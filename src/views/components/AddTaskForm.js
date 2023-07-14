@@ -106,6 +106,7 @@ class AddTaskForm extends HTMLFormElement {
       this.addEventListener('submit', (ev) => {
          ev.preventDefault();
          this.passData();
+         this.reset();
       });
    }
 
@@ -115,6 +116,7 @@ class AddTaskForm extends HTMLFormElement {
 
       const formData = {
          dataType: 'task',
+         completed: false,
          title: this.elements['title-input'].value,
          description: this.elements['description-input'].value,
          date: this.elements['date-input'].value,

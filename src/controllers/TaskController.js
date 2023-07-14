@@ -31,6 +31,7 @@ class TaskController {
                   dataType: 'checklist-item',
                },
             ],
+            completed: false,
          },
          {
             dataType: 'task',
@@ -38,12 +39,14 @@ class TaskController {
             title: 'asddfvmnbggf',
             date: '2023-06-01',
             projectId: '002',
+            completed: false,
          },
          {
             dataType: 'task',
             title: 'asdj;l;f',
             date: '2023-06-01',
             projectId: '003',
+            completed: false,
          },
 
          {
@@ -51,10 +54,10 @@ class TaskController {
             title: 'asdj;xcvbvbl;f',
             date: '2023-06-01',
             projectId: '003',
+            completed: false,
          },
       ].forEach((task) => {
          this.model.addItem(task);
-         console.log(this.model.getAllItems());
       });
 
       this.initializeListeners();
@@ -104,11 +107,8 @@ class TaskController {
          const taskProject = this.viewState.projects.find(
             (project) => project.id === task.projectId
          );
-         const projectCategory = this.viewState.categories.find(
-            (category) => category.id === task.categoryId
-         );
 
-         if (!taskProject || !projectCategory) {
+         if (!taskProject) {
             this.handleDeleteTask(task.id);
          }
       });

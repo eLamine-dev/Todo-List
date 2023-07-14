@@ -49,13 +49,14 @@ class TaskDetails extends HTMLElement {
          .setContent('Save')
          .appendTo(form);
 
-      const cancelBtn = createElement('button')
+      const closeBtn = createElement('button')
          .setAttributes({
-            type: '',
+            class: 'close',
+
             name: 'cancel',
          })
          .setContent('X')
-         .appendTo(form);
+         .appendTo(this);
 
       this.setupSelectProjectList(form);
       this.setUpPriorities(form);
@@ -76,6 +77,13 @@ class TaskDetails extends HTMLElement {
          ) {
             const item = ev.target.closest('[data-type=checklist-item]');
             item.toggleAttribute('checked');
+         }
+
+         if (ev.target.closest('.close')) {
+            document
+               .querySelector('task-card[edit=true]')
+               .setAttribute('edit', false);
+            this.remove();
          }
       });
    }

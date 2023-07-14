@@ -8,13 +8,15 @@ class TaskCard extends HTMLElement {
    }
 
    render() {
+      console.log(this.state.completed);
       this.setAttribute('task-id', `${this.state.id}`);
       const taskCheckbox = createElement('input')
          .setAttributes({
-            class: 'done',
+            class: 'completed',
             type: 'checkbox',
          })
          .appendTo(this);
+      taskCheckbox.checked = this.state.completed;
 
       const title = createElement('h3')
          .setContent(this.state.title)
@@ -41,16 +43,17 @@ class TaskCard extends HTMLElement {
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
-         if (document.querySelector('task-card[edit=true]')) return;
+         if (document.querySelector('task-details')) return;
          if (ev.target.classList.contains('delete')) {
-            pubsub.publish('task:delete', this.state.id);
             this.remove();
+            pubsub.publish('task:delete', this.state.id);
          }
-         if (ev.target.classList.contains('done')) {
-            pubsub.publish('task:update', this.state.id);
+         if (ev.target.classList.contains('completed')) {
+            this.state.completed = this.querySelector('.completed').checked;
+            pubsub.publish('task:update', this.state);
          }
          if (ev.target.classList.contains('edit')) {
-            this.setAttributes({ edit: true });
+            this.setAttribute('edit', true);
             pubsub.publish('task:edit', this.getAttribute('task-id'));
          }
       });
