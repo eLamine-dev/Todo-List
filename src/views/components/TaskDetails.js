@@ -1,4 +1,5 @@
 import createElement from '../../utils/ElementBuilder';
+import pubsub from '../../utils/PubSub';
 import ExpandableList from './ExpandableList';
 
 class TaskDetails extends HTMLElement {
@@ -25,7 +26,7 @@ class TaskDetails extends HTMLElement {
 
       const description = createElement('textarea')
          .setAttributes({
-            name: 'description',
+            name: 'description-input',
             Placeholder: 'add task description...',
          })
          .setContent(this.state.task.description)
@@ -62,9 +63,10 @@ class TaskDetails extends HTMLElement {
    }
 
    addEventListeners() {
-      this.addEventListener('submit', (ev) => {
+      this.querySelector('form').addEventListener('submit', (ev) => {
          ev.preventDefault();
          this.passData();
+         this.remove();
       });
 
       this.addEventListener('click', (ev) => {
@@ -79,10 +81,35 @@ class TaskDetails extends HTMLElement {
    }
 
    passData() {
+      const form = this.querySelector('form');
+      const selectProject = form.elements['select-project'];
+      const selectPriority = form.elements['select-priority'];
+      const checklistItems = form.querySelectorAll(
+         '[data-type=checklist-item]'
+      );
+      const checklist = [];
+
+      checklistItems.forEach((item) => {
+         const itemData = {
+            title: item.textContent,
+            checked: item.hasAttribute('checked'),
+         };
+         checklist.push(itemData);
+      });
+
       const formData = {
-         title: this.elements['title-input'].value,
-         date: this.elements['date-input'].value,
+         id: this.state.task.id,
+         title: form.elements['title-input'].value,
+         description: form.elements['description-input'].value,
+         date: form.elements['date-input'].value,
+         projectId: selectProject.options[selectProject.selectedIndex].id,
+         priority: selectPriority.options[selectPriority.selectedIndex].id,
+         categoryId:
+            selectProject.options[selectProject.selectedIndex].parentElement.id,
+         checklist,
       };
+
+      pubsub.publish('task:update', formData);
    }
 
    setupSelectProjectList(form) {

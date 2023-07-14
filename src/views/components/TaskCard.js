@@ -9,10 +9,12 @@ class TaskCard extends HTMLElement {
 
    render() {
       this.setAttribute('task-id', `${this.state.id}`);
-      const taskCheckbox = createElement('input').setAttributes({
-         class: 'done',
-         type: 'checkbox',
-      });
+      const taskCheckbox = createElement('input')
+         .setAttributes({
+            class: 'done',
+            type: 'checkbox',
+         })
+         .appendTo(this);
 
       const title = createElement('h3')
          .setContent(this.state.title)
@@ -41,8 +43,8 @@ class TaskCard extends HTMLElement {
       this.addEventListener('click', (ev) => {
          if (document.querySelector('task-card[edit=true]')) return;
          if (ev.target.classList.contains('delete')) {
-            this.remove();
             pubsub.publish('task:delete', this.state.id);
+            this.remove();
          }
          if (ev.target.classList.contains('done')) {
             pubsub.publish('task:update', this.state.id);

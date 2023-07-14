@@ -1,9 +1,7 @@
 const sortingStrategies = [
    {
-      type: 'date',
-      sort: function sort(tasks) {
-         return tasks.Filter((a, b) => a.date - b.date);
-      },
+      type: 'priority',
+      filter: (tasks) => tasks.sort((a, b) => b.priority - a.priority),
    },
 ];
 

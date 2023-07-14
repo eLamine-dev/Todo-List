@@ -3,5 +3,6 @@ import './assets/css/style.css';
 import initializeApp from './compositionRoot';
 
 document.addEventListener('DOMContentLoaded', () => {
-   initializeApp().start();
+   const appController = initializeApp();
+   appController.launch();
 });

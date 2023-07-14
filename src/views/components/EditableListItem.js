@@ -79,9 +79,10 @@ class ListItem extends HTMLElement {
    }
 
    endEditItem() {
+      const input = this.querySelector('input');
       this.setAttributes({ edit: false });
-      this.querySelector('.item-title').textContent =
-         this.querySelector('input').value;
+      this.querySelector('.item-title').textContent = input.value;
+      input.remove();
    }
 
    cancelChanges() {

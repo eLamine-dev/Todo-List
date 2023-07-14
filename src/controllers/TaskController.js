@@ -15,7 +15,6 @@ class TaskController {
       [
          {
             dataType: 'task',
-            id: '1685636158744',
             title: 'dayhsdafja',
             date: '2023-07-03',
             projectId: '001',
@@ -35,20 +34,27 @@ class TaskController {
          },
          {
             dataType: 'task',
-            id: '1685v63cxv6158744',
-            title: 'asddfggf',
+
+            title: 'asddfvmnbggf',
             date: '2023-06-01',
             projectId: '002',
          },
          {
             dataType: 'task',
-            id: '1685636cxv158744',
             title: 'asdj;l;f',
+            date: '2023-06-01',
+            projectId: '003',
+         },
+
+         {
+            dataType: 'task',
+            title: 'asdj;xcvbvbl;f',
             date: '2023-06-01',
             projectId: '003',
          },
       ].forEach((task) => {
          this.model.addItem(task);
+         console.log(this.model.getAllItems());
       });
 
       this.initializeListeners();
@@ -74,8 +80,14 @@ class TaskController {
       this.model.deleteItem(taskId);
    }
 
-   handleUpdateTask(taskId, newDta) {
-      this.model.updateItem(taskId, newDta);
+   handleUpdateTask(newTaskData) {
+      this.model.updateItem(newTaskData.id, newTaskData);
+      this.view.setState({
+         tasks: this.getCurrentFilterTasks(),
+      });
+      // this.view.querySelector(`[task-id="${newTaskData.id}"]`);
+      // const editedTask = this.model.getItemById(newTaskData.id);
+      // this.view.updateTaskCard(editedTask);
    }
 
    buildViewState(externalData) {

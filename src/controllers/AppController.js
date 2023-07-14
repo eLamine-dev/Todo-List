@@ -12,7 +12,7 @@ class AppController {
       this.initializeListeners();
    }
 
-   start() {
+   launch() {
       this.setupFirstLoad();
       document.getElementById('body').appendChild(this.view);
    }
