@@ -11,24 +11,26 @@
 }
 
 :root {
-   --darker: #0f172a;
-   --dark: #334155;
-   --medium: #64748b;
-   --light: #cbd5e1;
+   --darker: #1e2124;
+   --dark: #282b30;
+   --medium: #36393e;
+   --light: #36393e;
    --lighter: #f1f5f9;
    --red: #f87171;
    --green: #0d9488;
 }
 
 app-page {
-   height: 90vh;
+   height: 100vh;
    display: grid;
    grid-template-columns: 2fr 7fr 2fr;
    justify-items: stretch;
    justify-content: space-between;
+   color: var(--lighter);
 }
 
 task-list {
+   background-color: var(--darker);
    display: grid;
    gap: 1rem;
    align-content: start;
@@ -38,8 +40,12 @@ task-card {
    display: grid;
    height: 10rem;
    padding: 1rem;
-   border: #0f172a 1px solid;
    border-radius: 1rem;
+   background-color: var(--dark);
+}
+
+task-card:hover {
+   background-color: var(--medium);
 }
 
 task-card[edit='true'] {
@@ -59,6 +65,7 @@ side-bar {
    display: grid;
    grid-template-rows: 1fr 7fr;
    gap: 3rem;
+   background-color: var(--dark);
 }
 
 project-list {
@@ -72,6 +79,11 @@ project-list editable-li {
    position: relative;
    cursor: pointer;
    height: 1.5rem;
+}
+
+side-bar editable-li:hover,
+.default-filter:hover {
+   background-color: var(--medium);
 }
 
 project-list editable-li .item-buttons {
@@ -93,11 +105,9 @@ project-list editable-li:hover .item-buttons {
 }
 
 project-list [data-type='category'] {
-   color: blue;
 }
 
 project-list [data-type='project'] {
-   color: red;
 }
 
 project-list exp-list {

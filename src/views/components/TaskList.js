@@ -14,11 +14,12 @@ class TaskList extends HTMLElement {
       });
       this.prepend(addTaskForm);
       this.state.tasks.forEach((task) => {
-         this.renderTask(task);
+         const taskCard = this.makeTaskCard(task);
+         this.appendChild(taskCard);
       });
    }
 
-   renderTask(task) {
+   makeTaskCard(task) {
       const taskProject = this.state.projects.find(
          (project) => project.id === task.projectId
       );
@@ -40,7 +41,7 @@ class TaskList extends HTMLElement {
          projectCategory: projectCategory.title,
       });
       const newCard = createElement('task-card').setState(task);
-      this.appendChild(newCard);
+      return newCard;
    }
 }
 

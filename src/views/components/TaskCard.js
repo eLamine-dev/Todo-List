@@ -8,7 +8,6 @@ class TaskCard extends HTMLElement {
    }
 
    render() {
-      console.log(this.state.completed);
       this.setAttribute('task-id', `${this.state.id}`);
       const taskCheckbox = createElement('input')
          .setAttributes({
