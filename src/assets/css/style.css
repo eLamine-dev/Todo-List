@@ -11,19 +11,20 @@
 }
 
 :root {
-   --darker: #1e2124;
-   --dark: #282b30;
-   --medium: #36393e;
-   --light: #36393e;
+   --darker: #0f172a;
+   --dark: #1e293b;
+   --medium: #334155;
+   --light: #475569;
    --lighter: #f1f5f9;
    --red: #f87171;
    --green: #0d9488;
+   --blurple: #4f46e5;
 }
 
 app-page {
    height: 100vh;
    display: grid;
-   grid-template-columns: 2fr 7fr 2fr;
+   grid-template-columns: 1fr 7fr auto;
    justify-items: stretch;
    justify-content: space-between;
    color: var(--lighter);
@@ -34,6 +35,7 @@ task-list {
    display: grid;
    gap: 1rem;
    align-content: start;
+   padding: 1rem;
 }
 
 task-card {
@@ -53,10 +55,52 @@ task-card[edit='true'] {
 }
 
 #new-task-form {
-   display: grid;
-   height: 10rem;
+   display: flex;
+
    padding: 1rem;
-   border: #0f172a 1px solid;
+   border-radius: 1rem;
+   background-color: var(--dark);
+}
+
+#new-task-form [name='save-task'] {
+   color: var(--lighter);
+   border: none;
+   background-color: var(--blurple);
+   width: 7rem;
+   height: 3rem;
+   border-radius: 1.5rem;
+}
+
+#new-task-form [name='date-input'] {
+   outline: none;
+   color: var(--lighter);
+   border: none;
+   background-color: var(--darker);
+   width: max-content;
+   padding: 0 2rem;
+   height: 2rem;
+   border-radius: 1rem;
+}
+
+#new-task-form [name='select-priority'] {
+   outline: none;
+   color: var(--lighter);
+   border: none;
+   background-color: var(--darker);
+   width: max-content;
+   padding: 0 2rem;
+   height: 2rem;
+   border-radius: 1rem;
+}
+
+#new-task-form [name='select-project'] {
+   outline: none;
+   color: var(--lighter);
+   border: none;
+   background-color: var(--darker);
+   width: max-content;
+   padding: 0 2rem;
+   height: 2rem;
    border-radius: 1rem;
 }
 
