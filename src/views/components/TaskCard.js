@@ -9,12 +9,20 @@ class TaskCard extends HTMLElement {
 
    render() {
       this.setAttribute('task-id', `${this.state.id}`);
+
+      const statusLabel = createElement('label')
+         .setAttributes({ class: 'status' })
+         .appendTo(this);
+
+      this.setStatus(statusLabel);
+
       const taskCheckbox = createElement('input')
          .setAttributes({
             class: 'completed',
             type: 'checkbox',
          })
-         .appendTo(this);
+         .prependTo(statusLabel);
+
       taskCheckbox.checked = this.state.completed;
 
       const title = createElement('h3')
@@ -40,10 +48,26 @@ class TaskCard extends HTMLElement {
          .appendTo(this);
    }
 
+   setStatus(statusLabel) {
+      const today = new Date().setHours(0, 0, 0);
+      const taskDate = new Date(this.state.date).setHours(0, 0, 1);
+
+      if (this.state.completed) {
+         statusLabel.setContent('Completed');
+      } else if (!this.state.completed && taskDate < today) {
+         statusLabel.setContent('Overdue');
+      } else {
+         statusLabel.setContent('Planned');
+      }
+   }
+
    addEventListeners() {
       this.addEventListener('click', (ev) => {
-         if (document.querySelector('task-details')) return;
-         if (ev.target.classList.contains('delete')) {
+         // if (document.querySelector('task-details')) return;
+         if (
+            ev.target.classList.contains('delete') &&
+            !this.getAttribute('edit')
+         ) {
             this.remove();
             pubsub.publish('task:delete', this.state.id);
          }
@@ -51,7 +75,10 @@ class TaskCard extends HTMLElement {
             this.state.completed = this.querySelector('.completed').checked;
             pubsub.publish('task:update', this.state);
          }
-         if (ev.target.classList.contains('edit')) {
+         if (
+            ev.target.classList.contains('edit') &&
+            !document.querySelector('task-details')
+         ) {
             this.setAttribute('edit', true);
             pubsub.publish('task:edit', this.getAttribute('task-id'));
          }

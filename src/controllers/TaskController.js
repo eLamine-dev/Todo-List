@@ -1,5 +1,6 @@
 import { compareAsc, format } from 'date-fns';
 import pubsub from '../utils/PubSub';
+import TaskCard from '../views/components/TaskCard';
 
 class TaskController {
    constructor(taskModel, taskView, filter) {
@@ -31,7 +32,7 @@ class TaskController {
                   dataType: 'checklist-item',
                },
             ],
-            completed: false,
+            completed: true,
          },
          {
             dataType: 'task',
@@ -85,12 +86,14 @@ class TaskController {
 
    handleUpdateTask(newTaskData) {
       this.model.updateItem(newTaskData.id, newTaskData);
-      this.view.setState({
-         tasks: this.getCurrentFilterTasks(),
-      });
-      // this.view.querySelector(`[task-id="${newTaskData.id}"]`);
-      // const editedTask = this.model.getItemById(newTaskData.id);
-      // this.view.updateTaskCard(editedTask);
+      // this.view.setState({
+      //    tasks: this.getCurrentFilterTasks(),
+      // });
+      const targetCard = this.view.querySelector(
+         `[task-id="${newTaskData.id}"]`
+      );
+      const editedTask = this.model.getItemById(newTaskData.id);
+      targetCard.setState(editedTask);
    }
 
    buildViewState(externalData) {

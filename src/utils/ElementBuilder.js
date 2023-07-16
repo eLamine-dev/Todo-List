@@ -57,6 +57,11 @@ const elementMixin = {
       parent.appendChild(this);
       return this;
    },
+
+   prependTo(parent) {
+      parent.prepend(this);
+      return this;
+   },
 };
 
 function createElement(tag) {
