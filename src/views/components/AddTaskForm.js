@@ -14,6 +14,16 @@ class AddTaskForm extends HTMLFormElement {
 
    render() {
       this.id = 'new-task-form';
+
+      const closeFormBtn = createElement('button')
+         .setAttributes({
+            type: 'button',
+            class: 'close-form',
+            name: 'close-form',
+         })
+         .appendIcon('fa-sharp fa-solid fa-xmark')
+         .appendTo(this);
+
       const titleInput = createElement('input')
          .setAttributes({
             type: 'text',
@@ -24,14 +34,36 @@ class AddTaskForm extends HTMLFormElement {
          })
          .appendTo(this);
 
-      const descriptionInput = createElement('input')
+      const openFormBtn = createElement('button')
+         .setAttributes({
+            type: 'button',
+            class: 'open-form',
+            name: 'open-form',
+         })
+
+         .setContent(' Add Task')
+         .prependIcon('fa-regular fa-calendar-plus')
+         .appendTo(this);
+
+      const hiddenInputs = createElement('fieldset')
+         .setAttributes({ class: 'hidden-inputs' })
+         .appendTo(this);
+
+      const descriptionInput = createElement('textarea')
          .setAttributes({
             type: 'text',
             name: 'description-input',
             placeholder: 'Enter a description',
-            maxlength: '150',
+            maxlength: '300',
+            rows: '3',
          })
-         .appendTo(this);
+         .appendTo(hiddenInputs);
+
+      const selectionInputs = createElement('div')
+         .setAttributes({
+            class: 'selection-inputs',
+         })
+         .appendTo(hiddenInputs);
 
       const dateInput = createElement('input')
          .setAttributes({
@@ -39,30 +71,46 @@ class AddTaskForm extends HTMLFormElement {
             name: 'date-input',
             min: new Date().toISOString().split('T')[0],
          })
-         .appendTo(this);
+         .appendTo(selectionInputs);
       dateInput.valueAsDate = new Date();
 
-      this.setupSelectProjectList();
+      const selectProject = createElement('select')
+         .setAttributes({
+            class: 'select-project',
+            name: 'select-project',
+         })
+         .appendTo(selectionInputs);
 
-      this.setUpPriorities();
+      const selectPriority = createElement('select')
+         .setAttributes({
+            class: 'select-priority',
+            name: 'select-priority',
+         })
+         .appendTo(selectionInputs);
 
       const submitBtn = createElement('button')
          .setAttributes({
             type: 'submit',
             name: 'save-task',
          })
-         .setContent('New Task')
-         .appendTo(this);
+         .setContent('Save')
+         .prependIcon('fa-regular fa-calendar-check')
+         .appendTo(hiddenInputs);
+
+      this.setupSelectProjectList(selectProject);
+      this.setUpPriorities(selectPriority);
+      this.setAttribute('expanded', false);
    }
 
-   setupSelectProjectList() {
-      const selectProject = createElement('select')
-         .setAttributes({
-            class: 'select-project',
-            name: 'select-project',
-         })
-         .appendTo(this);
+   expand() {
+      this.setAttribute('expanded', true);
+   }
 
+   contract() {
+      this.setAttribute('expanded', false);
+   }
+
+   setupSelectProjectList(selectProject) {
       this.state.categories.forEach((category) => {
          const optGrp = createElement('optgroup').setAttributes({
             label: category.title,
@@ -84,13 +132,7 @@ class AddTaskForm extends HTMLFormElement {
       });
    }
 
-   setUpPriorities() {
-      const selectPriority = createElement('select')
-         .setAttributes({
-            class: 'select-priority',
-            name: 'select-priority',
-         })
-         .appendTo(this);
+   setUpPriorities(selectPriority) {
       const priorities = ['1', '2', '3', '4'];
       priorities.forEach((priority) => {
          const option = createElement('option')
@@ -106,7 +148,16 @@ class AddTaskForm extends HTMLFormElement {
       this.addEventListener('submit', (ev) => {
          ev.preventDefault();
          this.passData();
-         this.reset();
+         this.contract();
+      });
+
+      this.addEventListener('click', (ev) => {
+         if (ev.target.name === 'open-form') {
+            this.expand();
+         }
+         if (ev.target.name === 'close-form') {
+            this.contract();
+         }
       });
    }
 

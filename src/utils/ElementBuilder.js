@@ -1,3 +1,9 @@
+function createElement(tag) {
+   const element = document.createElement(tag);
+   Object.assign(element, elementMixin);
+   return element;
+}
+
 const elementMixin = {
    setAttributes(attributes) {
       Object.entries(attributes).forEach(([key, value]) => {
@@ -62,12 +68,16 @@ const elementMixin = {
       parent.prepend(this);
       return this;
    },
-};
 
-function createElement(tag) {
-   const element = document.createElement(tag);
-   Object.assign(element, elementMixin);
-   return element;
-}
+   appendIcon(icon) {
+      createElement('i').setAttributes({ class: icon }).appendTo(this);
+      return this;
+   },
+
+   prependIcon(icon) {
+      createElement('i').setAttributes({ class: icon }).prependTo(this);
+      return this;
+   },
+};
 
 export default createElement;

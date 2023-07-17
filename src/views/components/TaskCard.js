@@ -63,7 +63,6 @@ class TaskCard extends HTMLElement {
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
-         // if (document.querySelector('task-details')) return;
          if (
             ev.target.classList.contains('delete') &&
             !this.getAttribute('edit')
