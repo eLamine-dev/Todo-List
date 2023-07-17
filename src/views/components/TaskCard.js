@@ -10,53 +10,88 @@ class TaskCard extends HTMLElement {
    render() {
       this.setAttribute('task-id', `${this.state.id}`);
 
-      const statusDiv = createElement('div')
-         .setAttributes({ class: 'status' })
+      const tags = createElement('div')
+         .setAttributes({ class: 'tags' })
+         .appendTo(this);
+
+      const category = createElement('div')
+         .setContent(this.state.projectCategory)
+         .capitalFirstLetter()
+         .setAttributes({ class: 'tag' })
+         .appendTo(tags);
+
+      const project = createElement('span')
+         .setContent(this.state.taskProject)
+         .capitalFirstLetter()
+         .setAttributes({ class: 'tag' })
+         .appendTo(tags);
+
+      const date = createElement('div')
+         .setContent(this.state.date)
+         .setAttributes({ class: 'tag' })
+         .appendTo(tags);
+
+      const priority = createElement('div')
+         .setContent(`Priority ${this.state.priority}`)
+         .prependIcon('fa-regular fa-flag')
+         .setAttributes({ class: 'tag', priority: this.state.priority })
+         .appendTo(tags);
+
+      const titleLine = createElement('div')
+         .setAttributes({ class: 'title-line' })
          .appendTo(this);
 
       const title = createElement('h3')
          .setContent(this.state.title)
-         .appendTo(this);
-      const date = createElement('div')
-         .setContent(this.state.date)
-         .appendTo(this);
-      const project = createElement('div')
-         .setContent(
-            `${this.state.projectCategory} \\ ${this.state.taskProject}`
-         )
+         .capitalFirstLetter()
+         .setAttributes({ class: 'title' })
+         .appendTo(titleLine);
+
+      const statusDiv = createElement('div')
+         .setAttributes({ class: 'status' })
+         .appendTo(titleLine);
+
+      const description = createElement('p')
+         .setContent(this.state.description)
+         .capitalFirstLetter()
+         .setAttributes({ class: 'description' })
          .appendTo(this);
 
-      const checkboxLabel = createElement('label')
+      const buttons = createElement('div')
+         .setAttributes({ class: 'buttons' })
+         .appendTo(this);
+
+      const checkboxContainer = createElement('label')
          .setAttributes({
             class: 'checkbox-label',
             completed: this.state.completed,
          })
-         .appendTo(this);
+         .appendTo(buttons);
 
-      this.setStatus(statusDiv, checkboxLabel);
+      this.setStatus(statusDiv, checkboxContainer);
 
       const checkbox = createElement('input')
          .setAttributes({
             class: 'completed-checkbox',
             type: 'checkbox',
          })
-         .prependTo(checkboxLabel);
+         .prependTo(checkboxContainer);
 
       const checkmark = createElement('div')
          .setAttributes({ class: 'checkmark' })
-         .appendTo(checkboxLabel);
+         .appendTo(checkboxContainer);
 
       checkbox.checked = this.state.completed;
 
       const editBtn = createElement('button')
          .appendIcon('fa-solid fa-pen-to-square')
          .setAttributes({ class: 'edit-btn' })
-         .appendTo(this);
+         .appendTo(buttons);
 
       const deleteBtn = createElement('button')
          .setAttributes({ class: 'delete', type: 'button' })
          .prependIcon('fa-regular fa-calendar-xmark')
-         .appendTo(this);
+         .appendTo(buttons);
    }
 
    setStatus(statusDiv, checkboxLabel) {
@@ -65,11 +100,15 @@ class TaskCard extends HTMLElement {
 
       if (this.state.completed) {
          statusDiv.setContent('Completed');
+         statusDiv.setAttribute('status', 'completed');
          checkboxLabel.setAttribute('completed', true);
       } else if (!this.state.completed && taskDate < today) {
          statusDiv.setContent('Overdue');
+         statusDiv.setAttribute('status', 'overdue');
+         checkboxLabel.setAttribute('completed', false);
       } else {
-         statusDiv.setContent('Planned');
+         statusDiv.setContent('Pending');
+         statusDiv.setAttribute('status', 'pending');
       }
    }
 
@@ -88,7 +127,7 @@ class TaskCard extends HTMLElement {
 
             pubsub.publish('task:update', this.state);
          } else if (
-            ev.target.classList.contains('edit') &&
+            ev.target.classList.contains('edit-btn') &&
             !document.querySelector('task-details')
          ) {
             this.setAttribute('edit', true);

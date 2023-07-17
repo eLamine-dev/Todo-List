@@ -78,6 +78,12 @@ const elementMixin = {
       createElement('i').setAttributes({ class: icon }).prependTo(this);
       return this;
    },
+
+   capitalFirstLetter() {
+      this.textContent =
+         this.textContent.charAt(0).toUpperCase() + this.textContent.slice(1);
+      return this;
+   },
 };
 
 export default createElement;

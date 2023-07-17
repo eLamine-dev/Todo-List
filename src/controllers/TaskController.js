@@ -20,6 +20,9 @@ class TaskController {
             date: '2023-07-03',
             projectId: '001',
             categoryId: '01',
+            priority: '1',
+            description:
+               'Lorem Applies a hue rotation on the image. The value defines the number of degrees around the color circle the image samples will be adjusted. 0deg is default, and represents the original image.',
             checklist: [
                {
                   title: 'do something',
@@ -41,6 +44,7 @@ class TaskController {
             date: '2023-06-01',
             projectId: '002',
             completed: false,
+            priority: '2',
          },
          {
             dataType: 'task',
@@ -48,6 +52,7 @@ class TaskController {
             date: '2023-06-01',
             projectId: '003',
             completed: false,
+            priority: '3',
          },
 
          {
@@ -56,6 +61,7 @@ class TaskController {
             date: '2023-06-01',
             projectId: '003',
             completed: false,
+            priority: '4',
          },
       ].forEach((task) => {
          this.model.addItem(task);

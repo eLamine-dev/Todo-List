@@ -139,8 +139,10 @@ class AddTaskForm extends HTMLFormElement {
       priorities.forEach((priority) => {
          const option = createElement('option')
             .setAttributes({
+               class: 'priority',
                id: priority,
             })
+            .prependIcon('fa-solid fa-flag')
             .setContent(`Priority ${priority}`)
             .appendTo(selectPriority);
       });
