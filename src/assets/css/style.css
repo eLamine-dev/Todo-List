@@ -24,22 +24,28 @@
 
 app-page {
    height: 100vh;
+
    display: grid;
-   grid-template-columns: 1fr 7fr auto;
+   grid-template-columns: minmax(200px, 1fr) 6fr auto;
+
    justify-items: stretch;
-   justify-content: space-between;
+   justify-content: center;
    color: var(--lighter);
 }
 
 task-list {
    background-color: var(--darker);
    display: grid;
+
    gap: 0.7rem;
+   justify-content: stretch;
+   justify-items: center;
    align-content: start;
    padding: 1rem;
 }
 
 task-card {
+   width: min(100%, 900px);
    display: grid;
    grid-auto-flow: row;
    grid-template-rows: max-content auto auto max-content;
@@ -244,6 +250,7 @@ task-card .status[status='pending'] {
 }
 
 #new-task-form {
+   min-width: min(100%, 900px);
    display: grid;
    grid-template-columns: max-content auto max-content;
    align-items: center;
@@ -381,6 +388,10 @@ project-list editable-li {
    position: relative;
    cursor: pointer;
    height: 1.5rem;
+}
+
+side-bar [current-filter] {
+   background-color: #3b82f6;
 }
 
 side-bar editable-li:hover,

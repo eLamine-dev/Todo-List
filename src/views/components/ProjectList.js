@@ -39,6 +39,13 @@ class ProjectList extends HTMLElement {
       this.append(list);
    }
 
+   highlightCurrentFilter(filterElm) {
+      document
+         .querySelector('[current-filter]')
+         .removeAttribute('current-filter');
+      filterElm.setAttribute('current-filter', '');
+   }
+
    addEventListeners() {
       this.addEventListener('click', (ev) => {
          if (document.querySelector(`[edit=true]`)) return;
@@ -53,7 +60,7 @@ class ProjectList extends HTMLElement {
                type: ev.target.closest('editable-li').getAttribute('data-type'),
                value: ev.target.closest('editable-li').getAttribute('id'),
             };
-
+            this.highlightCurrentFilter(ev.target.closest('editable-li'));
             pubsub.publish('filter:changed', data);
          }
       });

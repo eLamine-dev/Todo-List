@@ -27,9 +27,17 @@ class SideBar extends HTMLElement {
                class: 'default-filter',
                id: filter.id,
             });
+         if (filter.type === 'all') filterLi.setAttribute('current-filter', '');
          defaultFiltersUl.appendChild(filterLi);
       });
       this.prepend(defaultFiltersUl);
+   }
+
+   highlightCurrentFilter(filterElm) {
+      document
+         .querySelector('[current-filter]')
+         .removeAttribute('current-filter');
+      filterElm.setAttribute('current-filter', '');
    }
 
    addEventListeners() {
@@ -39,7 +47,7 @@ class SideBar extends HTMLElement {
                type: ev.target.getAttribute('filter-type'),
                value: ev.target.getState().value,
             };
-
+            this.highlightCurrentFilter(ev.target);
             pubsub.publish('filter:changed', data);
          }
       });
