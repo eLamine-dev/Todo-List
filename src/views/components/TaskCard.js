@@ -10,20 +10,9 @@ class TaskCard extends HTMLElement {
    render() {
       this.setAttribute('task-id', `${this.state.id}`);
 
-      const statusLabel = createElement('label')
+      const statusDiv = createElement('div')
          .setAttributes({ class: 'status' })
          .appendTo(this);
-
-      this.setStatus(statusLabel);
-
-      const taskCheckbox = createElement('input')
-         .setAttributes({
-            class: 'completed',
-            type: 'checkbox',
-         })
-         .prependTo(statusLabel);
-
-      taskCheckbox.checked = this.state.completed;
 
       const title = createElement('h3')
          .setContent(this.state.title)
@@ -37,27 +26,50 @@ class TaskCard extends HTMLElement {
          )
          .appendTo(this);
 
-      const deleteBtn = createElement('button')
-         .setContent('delete')
-         .setAttributes({ class: 'delete' })
+      const checkboxLabel = createElement('label')
+         .setAttributes({
+            class: 'checkbox-label',
+            completed: this.state.completed,
+         })
          .appendTo(this);
 
+      this.setStatus(statusDiv, checkboxLabel);
+
+      const checkbox = createElement('input')
+         .setAttributes({
+            class: 'completed-checkbox',
+            type: 'checkbox',
+         })
+         .prependTo(checkboxLabel);
+
+      const checkmark = createElement('div')
+         .setAttributes({ class: 'checkmark' })
+         .appendTo(checkboxLabel);
+
+      checkbox.checked = this.state.completed;
+
       const editBtn = createElement('button')
-         .setContent('edit')
-         .setAttributes({ class: 'edit' })
+         .appendIcon('fa-solid fa-pen-to-square')
+         .setAttributes({ class: 'edit-btn' })
+         .appendTo(this);
+
+      const deleteBtn = createElement('button')
+         .setAttributes({ class: 'delete', type: 'button' })
+         .prependIcon('fa-regular fa-calendar-xmark')
          .appendTo(this);
    }
 
-   setStatus(statusLabel) {
+   setStatus(statusDiv, checkboxLabel) {
       const today = new Date().setHours(0, 0, 0);
       const taskDate = new Date(this.state.date).setHours(0, 0, 1);
 
       if (this.state.completed) {
-         statusLabel.setContent('Completed');
+         statusDiv.setContent('Completed');
+         checkboxLabel.setAttribute('completed', true);
       } else if (!this.state.completed && taskDate < today) {
-         statusLabel.setContent('Overdue');
+         statusDiv.setContent('Overdue');
       } else {
-         statusLabel.setContent('Planned');
+         statusDiv.setContent('Planned');
       }
    }
 
@@ -69,12 +81,13 @@ class TaskCard extends HTMLElement {
          ) {
             this.remove();
             pubsub.publish('task:delete', this.state.id);
-         }
-         if (ev.target.classList.contains('completed')) {
-            this.state.completed = this.querySelector('.completed').checked;
+         } else if (ev.target.classList.contains('completed-checkbox')) {
+            this.state.completed = this.querySelector(
+               '.completed-checkbox'
+            ).checked;
+
             pubsub.publish('task:update', this.state);
-         }
-         if (
+         } else if (
             ev.target.classList.contains('edit') &&
             !document.querySelector('task-details')
          ) {

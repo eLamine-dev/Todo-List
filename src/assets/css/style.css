@@ -39,8 +39,7 @@ task-list {
 }
 
 task-card {
-   display: grid;
-
+   display: flex;
    height: 10rem;
    padding: 1rem;
    border-radius: 1rem;
@@ -54,6 +53,115 @@ task-card:hover {
 
 task-card[edit='true'] {
    background-color: var(--medium);
+}
+
+task-card .edit-btn,
+task-card .delete,
+task-card .checkbox-label {
+   cursor: pointer;
+   height: 2.1rem;
+   width: 3.4rem;
+
+   background-color: var(--darker);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 0.7rem;
+}
+
+task-card .edit-btn {
+   font-size: 20px;
+   color: gray;
+   background-color: var(--darker);
+}
+
+task-card .edit-btn:hover {
+   color: var(--green);
+   border: var(--green) solid 1px;
+   filter: brightness(1.5);
+}
+
+task-card .delete {
+   color: #0d9488;
+   font-size: 20px;
+}
+
+task-card .delete:hover {
+   color: var(--red);
+   border: var(--red) solid 1px;
+   filter: brightness(1.5);
+}
+
+task-card .checkbox-label {
+   background-color: var(--darker);
+}
+
+task-card .checkbox-label[completed='true'],
+task-card .checkbox-label:hover {
+   border: var(--blurple) solid 1px;
+   filter: brightness(2);
+}
+
+/* Hide the default checkbox */
+task-card .checkbox-label input {
+   position: absolute;
+   opacity: 0;
+   cursor: pointer;
+   height: 0;
+   width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+   position: relative;
+   box-shadow: rgba(255, 85, 0, 0.478) 0px 0px 0px 2px;
+   background-color: rgba(16, 16, 16, 0.5);
+   height: 20px;
+   width: 20px;
+   flex-shrink: 0;
+   transition: all 0.2s ease 0s;
+   cursor: pointer;
+   transform-origin: 0px 10px;
+   border-radius: 4px;
+   padding: 0px;
+   box-sizing: border-box;
+}
+
+task-card .checkbox-label input:checked ~ .checkmark {
+   box-shadow: rgb(255, 84, 0) 0px 0px 0px 2px;
+   background-color: rgba(245, 24, 24, 0.5);
+}
+
+.checkmark:after {
+   content: '';
+   position: absolute;
+   opacity: 30%;
+}
+
+task-card .checkbox-label input:checked ~ .checkmark:after {
+   opacity: 100%;
+}
+
+task-card .checkbox-label .checkmark:after {
+   left: 0.45em;
+   top: 0.25em;
+   width: 0.25em;
+   height: 0.5em;
+   border: solid white;
+   border-width: 0 0.15em 0.15em 0;
+   transform: rotate(45deg);
+   transition: all 500ms ease-in-out;
+}
+
+task-card .status {
+   background-color: var(--red);
+   color: var(--lighter);
+   width: max-content;
+   padding: 0 2rem;
+   height: 2rem;
+   font-family: 'gg sans Medium', sans-serif;
+   font-size: 1.1rem;
+   border-radius: 1.5rem;
 }
 
 #new-task-form {
@@ -73,13 +181,23 @@ button {
    border: none;
 }
 
+button {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 0.3rem;
+}
+
+i {
+   pointer-events: none;
+}
+
 #new-task-form input,
 #new-task-form textarea {
    padding: 0;
    outline: none;
    color: var(--lighter);
    border: none;
-
    background-color: var(--dark);
 }
 
@@ -159,7 +277,6 @@ button {
    border-radius: 1.5rem;
    width: 1.5rem;
    height: 1.5rem;
-   align-items: center;
    font-size: 1.1rem;
 }
 

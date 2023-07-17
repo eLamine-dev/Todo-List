@@ -1,5 +1,6 @@
 import pubsub from '../../utils/PubSub';
 import createElement from '../../utils/ElementBuilder';
+import { th } from 'date-fns/locale';
 
 class AddTaskForm extends HTMLFormElement {
    constructor(state) {
@@ -70,9 +71,9 @@ class AddTaskForm extends HTMLFormElement {
             type: 'date',
             name: 'date-input',
             min: new Date().toISOString().split('T')[0],
+            value: new Date().toISOString().split('T')[0],
          })
          .appendTo(selectionInputs);
-      dateInput.valueAsDate = new Date();
 
       const selectProject = createElement('select')
          .setAttributes({
@@ -108,6 +109,7 @@ class AddTaskForm extends HTMLFormElement {
 
    contract() {
       this.setAttribute('expanded', false);
+      this.reset();
    }
 
    setupSelectProjectList(selectProject) {
@@ -151,11 +153,14 @@ class AddTaskForm extends HTMLFormElement {
          this.contract();
       });
 
+      // this.addEventListener('reset', (ev) => {
+      //    this.contract();
+      // });
+
       this.addEventListener('click', (ev) => {
          if (ev.target.name === 'open-form') {
             this.expand();
-         }
-         if (ev.target.name === 'close-form') {
+         } else if (ev.target.classList.contains('close-form')) {
             this.contract();
          }
       });
