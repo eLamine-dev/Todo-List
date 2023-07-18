@@ -11,6 +11,7 @@
 }
 
 :root {
+   --darkest: #020617;
    --darker: #0f172a;
    --dark: #1e293b;
    --medium: #334155;
@@ -18,30 +19,37 @@
    --lighter: #f1f5f9;
    --red: #f87171;
    --green: #22c55e;
-   --blurple: #4f46e5;
    --blue: #3b82f6;
+   --blurple: #4f46e5;
 }
 
 app-page {
    height: 100vh;
-
    display: grid;
-   grid-template-columns: minmax(200px, 1fr) 6fr auto;
-
+   grid-template-columns: minmax(100px, 1fr) 6fr auto;
    justify-items: stretch;
    justify-content: center;
    color: var(--lighter);
+   overflow: hidden;
 }
 
 task-list {
+   min-width: 0px;
    background-color: var(--darker);
    display: grid;
-
    gap: 0.7rem;
    justify-content: stretch;
    justify-items: center;
    align-content: start;
    padding: 1rem;
+   overflow: scroll;
+}
+
+task-details {
+   z-index: 1;
+
+   background-color: var(--dark);
+   max-width: min(400px, 80vw);
 }
 
 task-card {
@@ -77,11 +85,10 @@ task-card .buttons {
 }
 
 task-card .tag {
-   font-size: 0.9rem;
+   font-size: 0.8rem;
    border-radius: 1rem;
    padding: 0.3rem 0.5rem;
    width: max-content;
-   height: max-content;
    max-width: 8rem;
    white-space: nowrap;
    overflow: hidden;
@@ -272,6 +279,7 @@ button {
    align-items: center;
    justify-content: center;
    gap: 0.3rem;
+   cursor: pointer;
 }
 
 i {
@@ -381,17 +389,28 @@ project-list {
    display: grid;
    grid-template-rows: repeat(auto-fill, auto);
    align-content: start;
+   gap: 0.4rem;
 }
 
-project-list editable-li {
+project-list editable-li,
+.default-filter {
+   font-size: 1.1rem;
    display: flex;
+   align-items: center;
    position: relative;
    cursor: pointer;
-   height: 1.5rem;
+   height: 2rem;
+   padding: 0 0.4rem;
+   border-radius: 0.4rem;
+   overflow: hidden;
+}
+
+project-list editable-li[edit='true'] {
+   background-color: var(--medium);
 }
 
 side-bar [current-filter] {
-   background-color: #3b82f6;
+   background-color: var(--medium);
 }
 
 side-bar editable-li:hover,
@@ -401,10 +420,10 @@ side-bar editable-li:hover,
 
 project-list editable-li .item-buttons {
    display: flex;
-   gap: 3px;
+   gap: 0.2rem;
    opacity: 0;
    position: absolute;
-   right: 0%;
+   right: 4%;
 }
 
 project-list editable-li[edit='true'] .item-buttons {
@@ -414,10 +433,10 @@ project-list editable-li[edit='true'] .item-buttons {
 project-list editable-li:hover .item-buttons {
    opacity: 1;
    position: absolute;
-   right: 0%;
 }
 
 project-list [data-type='category'] {
+   border-bottom: var(--darker) solid 1px;
 }
 
 project-list [data-type='project'] {
@@ -433,8 +452,34 @@ project-list exp-list {
    order: 1;
 }
 
-.item-title-input {
+editable-li .editing-input {
    outline: none;
+   font-size: 1.1rem;
+   color: var(--lighter);
+   background-color: rgba(255, 255, 255, 0);
+   border-radius: 0.4rem;
+   width: 100%;
+   align-self: stretch;
+}
+
+project-list editable-li.error {
+   -webkit-animation: shake 0.2s ease-in-out 0s 2;
+   animation: shake 0.2s ease-in-out 0s 2;
+   background-color: var(--red);
+}
+
+editable-li button {
+   font-size: 0.8rem;
+   height: 1.4rem;
+   width: 1.4rem;
+   border-radius: 0.2rem;
+   background-color: rgba(255, 255, 255, 0);
+   color: var(--lighter);
+}
+
+editable-li button:hover {
+   background-color: var(--light);
+   filter: brightness(1.5);
 }
 
 editable-li .save-item,
@@ -457,12 +502,6 @@ editable-li .edit-item,
 editable-li .delete-item,
 editable-li .item-title {
    display: block;
-}
-
-editable-li input.error {
-   -webkit-animation: shake 0.2s ease-in-out 0s 2;
-   animation: shake 0.2s ease-in-out 0s 2;
-   background-color: red;
 }
 
 .checklist {

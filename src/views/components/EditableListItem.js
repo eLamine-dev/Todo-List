@@ -11,6 +11,7 @@ class ListItem extends HTMLElement {
       const title = createElement('div')
          .setContent(this.state.title)
          .setAttributes({ class: 'item-title' })
+         .capitalFirstLetter()
          .appendTo(this);
 
       this.setAttribute('data-type', this.state.dataType);
@@ -21,24 +22,24 @@ class ListItem extends HTMLElement {
          .appendTo(this);
 
       const editBtn = createElement('button')
-         .setContent('E')
+         .appendIcon('fa-solid fa-pen')
          .setAttributes({ class: 'edit-item' })
          .appendTo(buttons);
 
       const deleteBtn = createElement('button')
-         .setContent('D')
+         .appendIcon('fa-regular fa-trash-can')
          .setAttributes({
             class: 'delete-item',
          })
          .appendTo(buttons);
 
       const saveBtn = createElement('button')
-         .setContent('S')
+         .appendIcon('fa-solid fa-check')
          .setAttributes({ class: 'save-item' })
          .appendTo(buttons);
 
       const cancelBtn = createElement('button')
-         .setContent('c')
+         .appendIcon('fa-solid fa-xmark')
          .setAttributes({ class: 'cancel-editing' })
          .appendTo(buttons);
    }
@@ -70,9 +71,9 @@ class ListItem extends HTMLElement {
 
       input.focus();
       input.addEventListener('blur', () => {
-         input.classList.add('error');
+         this.classList.add('error');
          setTimeout(() => {
-            input.classList.remove('error');
+            this.classList.remove('error');
             input.focus();
          }, 1000);
       });

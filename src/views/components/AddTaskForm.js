@@ -29,7 +29,7 @@ class AddTaskForm extends HTMLFormElement {
          .setAttributes({
             type: 'text',
             name: 'title-input',
-            placeholder: 'Title',
+            placeholder: 'Create a task',
             maxlength: '50',
             minlength: '5',
          })
@@ -105,11 +105,19 @@ class AddTaskForm extends HTMLFormElement {
 
    expand() {
       this.setAttribute('expanded', true);
+      this.querySelector('input[name=title-input]').setAttribute(
+         'placeholder',
+         'Title'
+      );
    }
 
    contract() {
       this.setAttribute('expanded', false);
       this.reset();
+      this.querySelector('input[name=title-input]').setAttribute(
+         'placeholder',
+         'Create a task'
+      );
    }
 
    setupSelectProjectList(selectProject) {
@@ -155,9 +163,12 @@ class AddTaskForm extends HTMLFormElement {
          this.contract();
       });
 
-      // this.addEventListener('reset', (ev) => {
-      //    this.contract();
-      // });
+      this.querySelector('input[name=title-input]').addEventListener(
+         'focus',
+         () => {
+            this.expand();
+         }
+      );
 
       this.addEventListener('click', (ev) => {
          if (ev.target.name === 'open-form') {
