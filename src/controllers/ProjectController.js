@@ -15,7 +15,7 @@ class ProjectController {
          },
          {
             dataType: 'project',
-            title: 'project02',
+            title: 'project02 oiurtouw reutouert eruor',
             id: '002',
             categoryId: '02',
          },

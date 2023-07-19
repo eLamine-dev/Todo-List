@@ -57,10 +57,10 @@ class ListItem extends HTMLElement {
       });
 
       document.addEventListener('mousedown', (ev) => {
-         if (!document.querySelector('editable-li[edit=true]')) return;
-
+         if (!document.querySelector('editable-li[edit="true"]')) return;
+         this.getAttribute('edit');
          if (
-            this.getAttribute('edit') === true &&
+            this.getAttribute('edit') === 'true' &&
             ev.target.closest('editable-li') !== this
          ) {
             this.classList.add('error');

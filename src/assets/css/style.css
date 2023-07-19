@@ -378,7 +378,7 @@ i {
 }
 
 side-bar {
-   padding: 1rem;
+   padding: 0.6rem;
    display: grid;
    grid-template-rows: 1fr 7fr;
    gap: 3rem;
@@ -386,10 +386,19 @@ side-bar {
 }
 
 project-list {
+   width: 100%;
    display: grid;
    grid-template-rows: repeat(auto-fill, auto);
+   justify-content: stretch;
    align-content: start;
    gap: 0.4rem;
+}
+
+project-list exp-list {
+   display: flex;
+   flex-direction: row;
+   align-items: stretch;
+   overflow: hidden;
 }
 
 project-list editable-li,
@@ -402,7 +411,12 @@ project-list editable-li,
    height: 2rem;
    padding: 0 0.4rem;
    border-radius: 0.4rem;
+}
+
+project-list editable-li .item-title {
+   white-space: nowrap;
    overflow: hidden;
+   text-overflow: ellipsis;
 }
 
 project-list editable-li[edit='true'] {
@@ -479,14 +493,6 @@ editable-li button {
 editable-li button:hover {
    background-color: var(--light);
    filter: brightness(1.5);
-}
-
-project-list editable-li .item-title {
-   border: #020617 solid 2px;
-   overflow: hidden;
-   white-space: nowrap;
-   overflow: hidden;
-   text-overflow: ellipsis;
 }
 
 editable-li .save-item,
