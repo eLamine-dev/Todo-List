@@ -24,6 +24,14 @@ class TaskList extends HTMLElement {
          .prependTo(this);
    }
 
+   updateCard(task) {
+      const updatedCard = this.makeTaskCard(task);
+      this.replaceChild(
+         updatedCard,
+         this.querySelector(`task-card[task-id=${task.id}]`)
+      );
+   }
+
    makeTaskCard(task) {
       const taskProject = this.state.projects.find(
          (project) => project.id === task.projectId
@@ -46,6 +54,7 @@ class TaskList extends HTMLElement {
          projectCategory: projectCategory.title,
       });
       const newCard = createElement('task-card').setState(task);
+
       return newCard;
    }
 }

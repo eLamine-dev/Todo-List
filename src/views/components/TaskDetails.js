@@ -37,7 +37,6 @@ class TaskDetails extends HTMLElement {
             type: 'date',
             name: 'date-input',
             value: `${this.state.task.date}`,
-            min: new Date().toISOString().split('T')[0],
          })
          .appendTo(form);
 

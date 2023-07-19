@@ -92,15 +92,8 @@ class TaskController {
 
    handleUpdateTask(newTaskData) {
       this.model.updateItem(newTaskData.id, newTaskData);
-      // this.view.setState({
-      //    tasks: this.getCurrentFilterTasks(),
-      // });
-      const targetCard = this.view.querySelector(
-         `[task-id="${newTaskData.id}"]`
-      );
       const editedTask = this.model.getItemById(newTaskData.id);
-
-      targetCard.setState(editedTask);
+      this.view.updateCard(editedTask);
    }
 
    buildViewState(externalData) {
