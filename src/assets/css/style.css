@@ -11,8 +11,8 @@
 }
 
 :root {
-   --darkest: #020617;
-   --darker: #0f172a;
+   --darkest: #0f172a;
+   --darker: #141e37;
    --dark: #1e293b;
    --medium: #334155;
    --light: #475569;
@@ -28,29 +28,24 @@ app-page {
    display: grid;
    grid-template-columns: minmax(250px, 1fr) 7fr;
    grid-auto-flow: column;
-   grid-auto-columns: 5fr;
+   grid-auto-columns: 3fr;
    justify-items: stretch;
    justify-content: stretch;
    color: var(--lighter);
-   overflow: hidden;
+   background-color: var(--darkest);
+   gap: 0.4rem;
 }
 
 task-list {
    min-width: 0px;
    background-color: var(--darker);
    display: grid;
+   grid-template-rows: 3rem;
    gap: 0.7rem;
    justify-content: stretch;
    justify-items: center;
    align-content: start;
-   padding: 1rem;
    overflow: scroll;
-}
-
-task-details {
-   z-index: 1;
-
-   background-color: var(--dark);
 }
 
 task-card {
@@ -384,8 +379,10 @@ side-bar {
    background-color: var(--dark);
 }
 
-side-bar .side-bar-header {
-   background-color: var(--light);
+.header {
+   background-color: #22c55e;
+   justify-self: stretch;
+   border-radius: 0.5rem 0.5rem 0 0;
 }
 
 side-bar .default-filters-ul {
@@ -422,7 +419,7 @@ project-list editable-li,
    border-radius: 0.4rem;
 }
 
-project-list editable-li .item-title {
+editable-li .item-title {
    white-space: nowrap;
    overflow: hidden;
    text-overflow: ellipsis;
@@ -441,7 +438,7 @@ side-bar editable-li:hover,
    background-color: var(--medium);
 }
 
-project-list editable-li .item-buttons {
+editable-li .item-buttons {
    display: flex;
    gap: 0.2rem;
    opacity: 0;
@@ -449,13 +446,12 @@ project-list editable-li .item-buttons {
    right: 4%;
 }
 
-project-list editable-li[edit='true'] .item-buttons {
+editable-li[edit='true'] .item-buttons {
    opacity: 1;
 }
 
-project-list editable-li:hover .item-buttons {
+editable-li:hover .item-buttons {
    opacity: 1;
-   position: absolute;
 }
 
 project-list [data-type='category'] {
@@ -483,7 +479,7 @@ editable-li .editing-input {
    align-self: stretch;
 }
 
-project-list editable-li[edit='true'].error {
+editable-li[edit='true'].error {
    -webkit-animation: shake 0.2s ease-in-out 0s 2;
    animation: shake 0.2s ease-in-out 0s 2;
    background-color: var(--red);
@@ -526,30 +522,23 @@ editable-li .item-title {
 }
 
 .checklist {
+   background-color: var(--darker);
    display: grid;
    grid-template-rows: repeat(auto-fill, auto);
    align-content: start;
+   border-radius: 0.4rem;
 }
 
 .checklist editable-li {
+   font-size: 1.1rem;
    display: flex;
+   align-items: center;
    position: relative;
    cursor: pointer;
-   height: 1.5rem;
-}
+   height: 2rem;
+   padding: 0 0.4rem;
 
-.checklist editable-li .item-buttons {
-   display: flex;
-   gap: 3px;
-   opacity: 0;
-   position: absolute;
-   right: 20%;
-}
-
-.checklist editable-li:hover .item-buttons {
-   opacity: 1;
-   position: absolute;
-   right: 0%;
+   border-radius: 0.4rem;
 }
 
 .checklist editable-li[data-type='checklist'] .edit-item,
@@ -557,10 +546,10 @@ editable-li .item-title {
    display: none;
 }
 
-.checklist [data-type='checklist-item'] {
-   color: red;
+.checklist .list-header {
+   border-radius: 0;
+   border-bottom: var(--dark) solid 1px;
 }
-
 .checklist [data-type='checklist-item'][checked] {
    text-decoration: line-through;
 }
@@ -568,16 +557,63 @@ editable-li .item-title {
 .checklist {
    display: flex;
    flex-direction: column;
-}
-
-task-details {
-   display: flex;
+   gap: 1rem;
+   flex-basis: 100%;
 }
 
 task-details form {
    display: flex;
-   flex-direction: column;
+   flex-wrap: wrap;
+   justify-content: space-evenly;
    background-color: var(--dark);
+   padding: 2rem;
+   gap: 1rem;
+}
+
+task-details {
+   z-index: 1;
+   display: grid;
+   grid-template-rows: 3rem auto;
+   background-color: var(--dark);
+   border-radius: 1rem;
+}
+
+task-details form select,
+task-details form [name='date-input'] {
+   outline: none;
+   color: var(--lighter);
+   border: none;
+   background-color: var(--darker);
+   max-width: 10rem;
+   padding: 0 1rem;
+   height: 2rem;
+   border-radius: 0.5rem;
+   font-family: 'gg sans Medium', sans-serif;
+   font-size: 1rem;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+
+task-details form [name='title-input'],
+task-details form [name='description-input'] {
+   padding: 0;
+   outline: none;
+   color: var(--lighter);
+   border: none;
+   background-color: var(--dark);
+   flex-basis: 100%;
+}
+
+task-details form [name='title-input'] {
+   font-size: 1.6rem;
+   font-family: 'gg sans medium', sans-serif;
+}
+
+task-details form [name='description-input'] {
+   resize: none;
+   height: 7rem;
+   font-family: 'gg sans normal', sans-serif;
 }
 
 @-webkit-keyframes shake {

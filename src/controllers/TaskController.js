@@ -99,6 +99,7 @@ class TaskController {
          `[task-id="${newTaskData.id}"]`
       );
       const editedTask = this.model.getItemById(newTaskData.id);
+
       targetCard.setState(editedTask);
    }
 

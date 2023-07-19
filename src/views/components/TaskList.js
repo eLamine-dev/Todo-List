@@ -17,6 +17,11 @@ class TaskList extends HTMLElement {
          const taskCard = this.makeTaskCard(task);
          this.appendChild(taskCard);
       });
+
+      const header = createElement('header')
+         .setContent('ToDo')
+         .setAttributes({ class: 'header' })
+         .prependTo(this);
    }
 
    makeTaskCard(task) {

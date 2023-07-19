@@ -36,7 +36,7 @@ class SideBar extends HTMLElement {
 
       const header = createElement('header')
          .setContent('ToDo')
-         .setAttributes({ class: 'side-bar-header' })
+         .setAttributes({ class: 'header' })
          .prependTo(this);
    }
 

@@ -58,18 +58,21 @@ class ListItem extends HTMLElement {
 
       document.addEventListener('mousedown', (ev) => {
          if (this.getAttribute('edit') !== 'true') return;
-
          if (
             this.getAttribute('edit') === 'true' &&
             ev.target.closest('editable-li') !== this
          ) {
-            this.classList.add('error');
-            setTimeout(() => {
-               this.querySelector('.editing-input').focus();
-               this.classList.remove('error');
-            }, 1000);
+            this.showInputError();
          }
       });
+   }
+
+   showInputError() {
+      this.classList.add('error');
+      setTimeout(() => {
+         this.querySelector('.editing-input').focus();
+         this.classList.remove('error');
+      }, 1000);
    }
 
    startEditItem() {
@@ -114,11 +117,7 @@ class ListItem extends HTMLElement {
       const input = this.querySelector('input');
       const title = input.value;
       if (!title || title.length < 7 || title.length > 25) {
-         this.classList.add('error');
-         setTimeout(() => {
-            input.focus();
-            this.classList.remove('error');
-         }, 1000);
+         this.showInputError();
          return;
       }
       this.setAttribute(

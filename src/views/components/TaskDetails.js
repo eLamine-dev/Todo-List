@@ -41,6 +41,10 @@ class TaskDetails extends HTMLElement {
          })
          .appendTo(form);
 
+      this.setupSelectProjectList(form);
+      this.setUpPriorities(form);
+      this.setupChecklist(form);
+
       const submitBtn = createElement('button')
          .setAttributes({
             type: 'submit',
@@ -58,19 +62,25 @@ class TaskDetails extends HTMLElement {
          .setContent('X')
          .appendTo(form);
 
-      this.setupSelectProjectList(form);
-      this.setUpPriorities(form);
-      this.setupChecklist(form);
+      const header = createElement('header')
+         .setContent('ToDo')
+         .setAttributes({ class: 'header' })
+         .prependTo(this);
    }
 
    addEventListeners() {
       this.querySelector('form').addEventListener('submit', (ev) => {
+         if (this.querySelector('[edit="true"]')) return;
          ev.preventDefault();
          this.passData();
          this.remove();
+         document
+            .querySelector('task-card[active=true]')
+            .setAttribute('active', false);
       });
 
       this.addEventListener('click', (ev) => {
+         if (this.querySelector('[edit="true"]')) return;
          if (
             ev.target.closest('[data-type=checklist-item]') &&
             !ev.target.closest('.item-buttons')
@@ -81,8 +91,8 @@ class TaskDetails extends HTMLElement {
 
          if (ev.target.closest('.close')) {
             document
-               .querySelector('task-card[edit=true]')
-               .setAttribute('edit', false);
+               .querySelector('task-card[active=true]')
+               .setAttribute('active', false);
             this.remove();
          }
       });
@@ -93,17 +103,10 @@ class TaskDetails extends HTMLElement {
       const selectProject = form.elements['select-project'];
       const selectPriority = form.elements['select-priority'];
       const checklistItems = form.querySelectorAll(
-         '[data-type=checklist-item]'
+         '[data-type="checklist-item"]'
       );
-      const checklist = [];
 
-      checklistItems.forEach((item) => {
-         const itemData = {
-            title: item.textContent,
-            checked: item.hasAttribute('checked'),
-         };
-         checklist.push(itemData);
-      });
+      console.log(checklistItems);
 
       const formData = {
          id: this.state.task.id,
@@ -114,8 +117,18 @@ class TaskDetails extends HTMLElement {
          priority: selectPriority.options[selectPriority.selectedIndex].id,
          categoryId:
             selectProject.options[selectProject.selectedIndex].parentElement.id,
-         checklist,
+         checklist: [],
       };
+
+      checklistItems.forEach((item) => {
+         const itemData = {
+            dataType: 'checklist-item',
+            title: item.textContent,
+            checked: item.hasAttribute('checked'),
+         };
+         formData.checklist.push(itemData);
+      });
+      console.log(formData.checklist);
 
       pubsub.publish('task:update', formData);
    }
@@ -182,7 +195,7 @@ class TaskDetails extends HTMLElement {
             class: 'checklist',
          })
          .setState({
-            header: { dataType: 'checklist', title: 'Checklist' },
+            header: { dataType: 'checklist', title: 'Task checklist' },
             items: { type: 'checklist-item', list: this.state.task.checklist },
          })
          .appendTo(form);

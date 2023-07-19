@@ -17,9 +17,9 @@ class ObjectBuilder {
       return Object.assign(this, data);
    }
 
-   editProperties(data) {
+   updateProperties(data) {
       Object.keys(data).forEach((key) => {
-         if (this.hasOwnProperty(key)) this[key] = data[key];
+         this[key] = data[key];
       });
    }
 

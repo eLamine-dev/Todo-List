@@ -27,7 +27,7 @@ class BaseModel {
       const itemToEdit = this[this.collectionName].find(
          (item) => item.id === id
       );
-      itemToEdit.editProperties(data);
+      itemToEdit.updateProperties(data);
    }
 
    deleteItem(id) {
