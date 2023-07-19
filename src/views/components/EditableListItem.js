@@ -45,8 +45,8 @@ class ListItem extends HTMLElement {
    }
 
    addEventListeners() {
-      this.addEventListener('mousedown', (ev) => {
-         if (!document.querySelector('[edit=true]')) {
+      this.addEventListener('click', (ev) => {
+         if (!document.querySelector('[edit="true"]')) {
             if (ev.target.classList.contains('edit-item')) this.startEditItem();
             else if (ev.target.classList.contains('delete-item'))
                this.deleteItem();
@@ -57,8 +57,8 @@ class ListItem extends HTMLElement {
       });
 
       document.addEventListener('mousedown', (ev) => {
-         if (!document.querySelector('editable-li[edit="true"]')) return;
-         this.getAttribute('edit');
+         if (this.getAttribute('edit') !== 'true') return;
+
          if (
             this.getAttribute('edit') === 'true' &&
             ev.target.closest('editable-li') !== this
@@ -73,10 +73,11 @@ class ListItem extends HTMLElement {
    }
 
    startEditItem() {
+      this.setAttributes({ edit: true });
       const input = createElement('input')
          .setAttributes({
             minlength: '7',
-            maxlength: '25',
+            maxlength: '32',
             placeholder: `New ${this.getAttribute('data-type')}`,
             value: this.state.title || '',
             type: 'text',
@@ -85,8 +86,6 @@ class ListItem extends HTMLElement {
          .appendTo(this);
 
       input.focus();
-
-      this.setAttributes({ edit: true });
    }
 
    endEditItem() {

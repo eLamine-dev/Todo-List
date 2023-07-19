@@ -26,9 +26,11 @@
 app-page {
    height: 100vh;
    display: grid;
-   grid-template-columns: minmax(100px, 1fr) 6fr auto;
+   grid-template-columns: minmax(250px, 1fr) 7fr;
+   grid-auto-flow: column;
+   grid-auto-columns: 5fr;
    justify-items: stretch;
-   justify-content: center;
+   justify-content: stretch;
    color: var(--lighter);
    overflow: hidden;
 }
@@ -49,7 +51,6 @@ task-details {
    z-index: 1;
 
    background-color: var(--dark);
-   max-width: min(400px, 80vw);
 }
 
 task-card {
@@ -71,7 +72,7 @@ task-card:hover {
    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
-task-card[edit='true'] {
+task-card[active='true'] {
    background-color: var(--medium);
 }
 
@@ -149,7 +150,7 @@ task-card .edit-btn {
 }
 
 task-card .edit-btn:hover,
-task-card[edit='true'] .edit-btn {
+task-card[active='true'] .edit-btn {
    background-color: var(--dark);
    color: var(--green);
    border: var(--blurple) solid 0.5px;
@@ -191,7 +192,6 @@ task-card .checkbox-label input {
    transition: all 0.2s ease 0s;
    cursor: pointer;
    transform-origin: 0px 10px;
-   /* border: 2px solid #0974f1; */
    border-radius: 4px;
    padding: 0px;
    box-sizing: content-box;
@@ -378,11 +378,18 @@ i {
 }
 
 side-bar {
-   padding: 0.6rem;
    display: grid;
-   grid-template-rows: 1fr 7fr;
+   grid-template-rows: 3rem 1fr 7fr;
    gap: 3rem;
    background-color: var(--dark);
+}
+
+side-bar .side-bar-header {
+   background-color: var(--light);
+}
+
+side-bar .default-filters-ul {
+   padding: 0 0.5rem;
 }
 
 project-list {
@@ -391,6 +398,7 @@ project-list {
    grid-template-rows: repeat(auto-fill, auto);
    justify-content: stretch;
    align-content: start;
+   padding: 0 0.5rem;
    gap: 0.4rem;
 }
 
@@ -410,6 +418,7 @@ project-list editable-li,
    cursor: pointer;
    height: 2rem;
    padding: 0 0.4rem;
+
    border-radius: 0.4rem;
 }
 
@@ -458,7 +467,6 @@ project-list [data-type='project'] {
 project-list exp-list {
    display: flex;
    flex-direction: column;
-   /* gap: 1rem; */
 }
 
 .add-category-btn {
@@ -511,11 +519,11 @@ editable-li[edit='true'] .item-title {
    display: none;
 }
 
-/* editable-li .edit-item,
+editable-li .edit-item,
 editable-li .delete-item,
 editable-li .item-title {
    display: block;
-} */
+}
 
 .checklist {
    display: grid;
@@ -560,7 +568,16 @@ editable-li .item-title {
 .checklist {
    display: flex;
    flex-direction: column;
-   /* gap: 1rem; */
+}
+
+task-details {
+   display: flex;
+}
+
+task-details form {
+   display: flex;
+   flex-direction: column;
+   background-color: var(--dark);
 }
 
 @-webkit-keyframes shake {

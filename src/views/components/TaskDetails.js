@@ -52,11 +52,11 @@ class TaskDetails extends HTMLElement {
       const closeBtn = createElement('button')
          .setAttributes({
             class: 'close',
-
+            type: 'button',
             name: 'cancel',
          })
          .setContent('X')
-         .appendTo(this);
+         .appendTo(form);
 
       this.setupSelectProjectList(form);
       this.setUpPriorities(form);

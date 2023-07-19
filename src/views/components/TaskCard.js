@@ -116,7 +116,7 @@ class TaskCard extends HTMLElement {
       this.addEventListener('click', (ev) => {
          if (
             ev.target.classList.contains('delete') &&
-            !this.getAttribute('edit')
+            !this.getAttribute('active')
          ) {
             this.remove();
             pubsub.publish('task:delete', this.state.id);
@@ -130,7 +130,7 @@ class TaskCard extends HTMLElement {
             ev.target.classList.contains('edit-btn') &&
             !document.querySelector('task-details')
          ) {
-            this.setAttribute('edit', true);
+            this.setAttribute('active', true);
             pubsub.publish('task:edit', this.getAttribute('task-id'));
          }
       });

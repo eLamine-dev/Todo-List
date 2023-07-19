@@ -17,7 +17,9 @@ class SideBar extends HTMLElement {
          { id: 'upcoming', type: 'date-range', value: week },
       ];
 
-      const defaultFiltersUl = createElement('ul');
+      const defaultFiltersUl = createElement('ul').setAttributes({
+         class: 'default-filters-ul',
+      });
       defaultFilters.forEach((filter) => {
          const filterLi = createElement('li')
             .setState(filter)
@@ -31,6 +33,11 @@ class SideBar extends HTMLElement {
          defaultFiltersUl.appendChild(filterLi);
       });
       this.prepend(defaultFiltersUl);
+
+      const header = createElement('header')
+         .setContent('ToDo')
+         .setAttributes({ class: 'side-bar-header' })
+         .prependTo(this);
    }
 
    highlightCurrentFilter(filterElm) {
