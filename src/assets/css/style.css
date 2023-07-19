@@ -436,7 +436,6 @@ project-list editable-li:hover .item-buttons {
 }
 
 project-list [data-type='category'] {
-   border-bottom: var(--darker) solid 1px;
 }
 
 project-list [data-type='project'] {
@@ -462,7 +461,7 @@ editable-li .editing-input {
    align-self: stretch;
 }
 
-project-list editable-li.error {
+project-list editable-li[edit='true'].error {
    -webkit-animation: shake 0.2s ease-in-out 0s 2;
    animation: shake 0.2s ease-in-out 0s 2;
    background-color: var(--red);
@@ -482,6 +481,14 @@ editable-li button:hover {
    filter: brightness(1.5);
 }
 
+project-list editable-li .item-title {
+   border: #020617 solid 2px;
+   overflow: hidden;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+
 editable-li .save-item,
 editable-li .cancel-editing {
    display: none;
@@ -498,11 +505,11 @@ editable-li[edit='true'] .item-title {
    display: none;
 }
 
-editable-li .edit-item,
+/* editable-li .edit-item,
 editable-li .delete-item,
 editable-li .item-title {
    display: block;
-}
+} */
 
 .checklist {
    display: grid;

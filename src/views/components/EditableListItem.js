@@ -8,7 +8,7 @@ class ListItem extends HTMLElement {
    }
 
    render() {
-      const title = createElement('div')
+      const title = createElement('span')
          .setContent(this.state.title)
          .setAttributes({ class: 'item-title' })
          .capitalFirstLetter()
@@ -45,7 +45,7 @@ class ListItem extends HTMLElement {
    }
 
    addEventListeners() {
-      this.addEventListener('click', (ev) => {
+      this.addEventListener('mousedown', (ev) => {
          if (!document.querySelector('[edit=true]')) {
             if (ev.target.classList.contains('edit-item')) this.startEditItem();
             else if (ev.target.classList.contains('delete-item'))
@@ -55,12 +55,27 @@ class ListItem extends HTMLElement {
          if (ev.target.classList.contains('cancel-editing'))
             this.cancelChanges();
       });
+
+      document.addEventListener('mousedown', (ev) => {
+         if (!document.querySelector('editable-li[edit=true]')) return;
+
+         if (
+            this.getAttribute('edit') === true &&
+            ev.target.closest('editable-li') !== this
+         ) {
+            this.classList.add('error');
+            setTimeout(() => {
+               this.querySelector('.editing-input').focus();
+               this.classList.remove('error');
+            }, 1000);
+         }
+      });
    }
 
    startEditItem() {
-      this.setAttributes({ edit: true });
       const input = createElement('input')
          .setAttributes({
+            minlength: '7',
             maxlength: '25',
             placeholder: `New ${this.getAttribute('data-type')}`,
             value: this.state.title || '',
@@ -70,13 +85,8 @@ class ListItem extends HTMLElement {
          .appendTo(this);
 
       input.focus();
-      input.addEventListener('blur', () => {
-         this.classList.add('error');
-         setTimeout(() => {
-            this.classList.remove('error');
-            input.focus();
-         }, 1000);
-      });
+
+      this.setAttributes({ edit: true });
    }
 
    endEditItem() {
@@ -102,8 +112,16 @@ class ListItem extends HTMLElement {
    }
 
    saveItem() {
-      const title = this.querySelector('input').value;
-      if (!title || title.length < 4 || title.length > 25) return;
+      const input = this.querySelector('input');
+      const title = input.value;
+      if (!title || title.length < 7 || title.length > 25) {
+         this.classList.add('error');
+         setTimeout(() => {
+            input.focus();
+            this.classList.remove('error');
+         }, 1000);
+         return;
+      }
       this.setAttribute(
          'parent-list',
          this.parentElement.getAttribute('list-id')

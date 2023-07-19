@@ -41,6 +41,8 @@ class ExpandableList extends HTMLElement {
       listHeader.querySelector('.item-buttons').prepend(addItemBtn);
    }
 
+   toggleList() {}
+
    addEventListeners() {
       this.addEventListener('click', (ev) => {
          ev.preventDefault();
@@ -49,6 +51,10 @@ class ExpandableList extends HTMLElement {
             ev.target.classList.contains('add-item')
          ) {
             this.addItem();
+         }
+
+         if (ev.target.classList.contains('list-header')) {
+            this.toggleList();
          }
       });
    }
