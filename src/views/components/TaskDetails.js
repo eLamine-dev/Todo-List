@@ -69,29 +69,28 @@ class TaskDetails extends HTMLElement {
 
    addEventListeners() {
       this.querySelector('form').addEventListener('submit', (ev) => {
-         if (this.querySelector('[edit="true"]')) return;
          ev.preventDefault();
+         if (this.querySelector('[edit="true"]')) return;
+
          this.passData();
          this.remove();
-         document
-            .querySelector('task-card[active=true]')
-            .setAttribute('active', false);
+         document.querySelector(`task-card[active]`).removeAttribute('active');
       });
 
       this.addEventListener('click', (ev) => {
          if (this.querySelector('[edit="true"]')) return;
          if (
-            ev.target.closest('[data-type=checklist-item]') &&
+            ev.target.closest('[data-type="checklist-item"]') &&
             !ev.target.closest('.item-buttons')
          ) {
-            const item = ev.target.closest('[data-type=checklist-item]');
+            const item = ev.target.closest('[data-type="checklist-item"]');
             item.toggleAttribute('checked');
          }
 
          if (ev.target.closest('.close')) {
             document
-               .querySelector('task-card[active=true]')
-               .setAttribute('active', false);
+               .querySelector('task-card[active]')
+               .removeAttribute('active');
             this.remove();
          }
       });
@@ -104,8 +103,6 @@ class TaskDetails extends HTMLElement {
       const checklistItems = form.querySelectorAll(
          '[data-type="checklist-item"]'
       );
-
-      console.log(checklistItems);
 
       const formData = {
          id: this.state.task.id,
@@ -127,7 +124,6 @@ class TaskDetails extends HTMLElement {
          };
          formData.checklist.push(itemData);
       });
-      console.log(formData.checklist);
 
       pubsub.publish('task:update', formData);
    }

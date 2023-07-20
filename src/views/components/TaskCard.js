@@ -8,7 +8,7 @@ class TaskCard extends HTMLElement {
    }
 
    render() {
-      this.setAttribute('task-id', `${this.state.id}`);
+      this.setAttribute('task-id', this.state.id);
 
       const tags = createElement('div')
          .setAttributes({ class: 'tags' })
@@ -130,7 +130,7 @@ class TaskCard extends HTMLElement {
             ev.target.classList.contains('edit-btn') &&
             !document.querySelector('task-details')
          ) {
-            this.setAttribute('active', true);
+            this.setAttribute('active', '');
             pubsub.publish('task:edit', this.getAttribute('task-id'));
          }
       });

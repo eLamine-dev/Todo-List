@@ -3,7 +3,7 @@ import createNewID from './IdGenerator';
 class ObjectBuilder {
    constructor(data = {}) {
       this.validateTitle(data.title);
-      this.id = createNewID();
+      this.id = `${data.dataType ? data.dataType : 'id'}-${createNewID()}`;
       this.setProperties(data);
    }
 

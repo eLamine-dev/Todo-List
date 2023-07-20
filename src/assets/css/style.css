@@ -53,8 +53,8 @@ task-list {
    justify-items: center;
    align-content: start;
    overflow: auto;
-   border-radius: 0.6rem 0.6rem 0 0;
-   padding: 0 1rem;
+   border-radius: 0 0.6rem 0.6rem 0;
+   padding: 0 0.5rem;
 }
 
 task-card {
@@ -76,7 +76,7 @@ task-card:hover {
    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
-task-card[active='true'] {
+task-card[active] {
    background-color: var(--medium);
 }
 
@@ -154,7 +154,7 @@ task-card .edit-btn {
 }
 
 task-card .edit-btn:hover,
-task-card[active='true'] .edit-btn {
+task-card[active] .edit-btn {
    background-color: var(--dark);
    color: var(--green);
    border: var(--blurple) solid 0.5px;

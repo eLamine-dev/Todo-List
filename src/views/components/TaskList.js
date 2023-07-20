@@ -26,10 +26,9 @@ class TaskList extends HTMLElement {
 
    updateCard(task) {
       const updatedCard = this.makeTaskCard(task);
-      this.replaceChild(
-         updatedCard,
-         this.querySelector(`task-card[task-id=${task.id}]`)
-      );
+      const existingCard = this.querySelector(`task-card[task-id=${task.id}]`);
+
+      this.replaceChild(updatedCard, existingCard);
    }
 
    makeTaskCard(task) {
