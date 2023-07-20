@@ -17,7 +17,8 @@ class ProjectList extends HTMLElement {
 
       const addCategoryBtn = createElement('button')
          .setAttributes({ class: 'add-category-btn' })
-         .setContent('Add category');
+         .setContent('New projects list...')
+         .prependIcon('fa-solid fa-square-plus');
 
       this.append(addCategoryBtn);
    }

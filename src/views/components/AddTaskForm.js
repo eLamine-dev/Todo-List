@@ -174,7 +174,10 @@ class AddTaskForm extends HTMLFormElement {
       });
 
       this.addEventListener('click', (ev) => {
-         if (document.querySelector(`[active]`)) {
+         if (
+            document.querySelector(`[active]`) &&
+            document.querySelector(`[active]`) !== this
+         ) {
             document.querySelector(`[active]`).showError();
             ev.preventDefault();
             return;

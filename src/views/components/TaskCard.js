@@ -79,7 +79,7 @@ class TaskCard extends HTMLElement {
 
       const checkmark = createElement('div')
          .setAttributes({ class: 'checkmark' })
-         .appendIcon('fa-regular fa-calendar-check')
+         .appendIcon('fa-solid fa-calendar-check')
          .appendTo(checkboxContainer);
 
       checkbox.checked = this.state.completed;
@@ -91,7 +91,7 @@ class TaskCard extends HTMLElement {
 
       const deleteBtn = createElement('button')
          .setAttributes({ class: 'delete', type: 'button' })
-         .prependIcon('fa-regular fa-calendar-xmark')
+         .prependIcon('fa-solid fa-trash-can')
          .appendTo(buttons);
    }
 

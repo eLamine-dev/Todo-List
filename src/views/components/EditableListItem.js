@@ -23,19 +23,20 @@ class ListItem extends HTMLElement {
 
       const editBtn = createElement('button')
          .appendIcon('fa-solid fa-pen')
-         .setAttributes({ class: 'edit-item' })
+         .setAttributes({ class: 'edit-item', type: 'button' })
          .appendTo(buttons);
 
       const deleteBtn = createElement('button')
          .appendIcon('fa-regular fa-trash-can')
          .setAttributes({
             class: 'delete-item',
+            type: 'button',
          })
          .appendTo(buttons);
 
       const saveBtn = createElement('button')
          .appendIcon('fa-solid fa-check')
-         .setAttributes({ class: 'save-item' })
+         .setAttributes({ class: 'save-item', type: 'button' })
          .appendTo(buttons);
 
       const cancelBtn = createElement('button')
@@ -87,7 +88,7 @@ class ListItem extends HTMLElement {
       const input = createElement('input')
          .setAttributes({
             minlength: '7',
-            maxlength: '32',
+            maxlength: '30',
             placeholder: `New ${this.getAttribute('data-type')}`,
             value: this.state.title || '',
             type: 'text',
@@ -124,7 +125,7 @@ class ListItem extends HTMLElement {
    saveItem() {
       const input = this.querySelector('input');
       const title = input.value;
-      if (!title || title.length < 7 || title.length > 25) {
+      if (!title || title.length < 7 || title.length > 30) {
          this.showError();
          return;
       }

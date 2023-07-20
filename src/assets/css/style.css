@@ -54,6 +54,7 @@ task-list {
    overflow: auto;
    border-radius: 0 0.6rem 0.6rem 0;
    padding: 0 0.5rem;
+   margin-right: 0.5rem;
 }
 
 task-card {
@@ -149,29 +150,24 @@ task-card .checkbox-label {
 }
 
 task-card .edit-btn {
-   color: var(--gray);
+   color: var(--light);
 }
 
-task-card .edit-btn:hover,
+/* task-card .edit-btn:hover,
 task-card[editing] .edit-btn {
-   background-color: var(--dark);
-   color: var(--green);
-   border: var(--blurple) solid 0.5px;
-   filter: brightness(2);
-}
+   color: var(--blurple);
+} */
 
 task-card .delete {
-   color: var(--red);
+   color: var(--light);
 }
 
-task-card .delete:hover {
-   background-color: var(--dark);
-   border: var(--blurple) solid 1px;
-   filter: brightness(2);
-}
-
+task-card .delete:hover,
 task-card .checkbox-label[completed='true'],
-task-card .checkbox-label:hover {
+task-card .checkbox-label:hover,
+task-card .edit-btn:hover,
+task-card[editing] .edit-btn {
+   /* color: var(--lighter); */
    background-color: var(--dark);
    border: var(--blurple) solid 1px;
    filter: brightness(2);
@@ -186,7 +182,7 @@ task-card .checkbox-label input {
 }
 
 .checkmark {
-   color: var(--gray);
+   color: var(--light);
    /* position: relative;
    box-shadow: rgba(255, 85, 0, 0.478) 0px 0px 0px 2px;
    background-color: rgba(16, 16, 16, 0.5);
@@ -202,9 +198,9 @@ task-card .checkbox-label input {
 }
 
 task-card .checkbox-label input:checked ~ .checkmark {
-   color: rgb(195, 255, 0);
-   /* box-shadow: rgb(255, 84, 0) 0px 0px 10px 1px; */
-   /* background-color: rgba(245, 24, 24, 0.5); */
+   /* color: var(--green); */
+   /* box-shadow: rgb(255, 84, 0) 0px 0px 0px 2px;
+   background-color: rgba(245, 24, 24, 0.5); */
 }
 
 /* .checkmark:after {
@@ -213,9 +209,9 @@ task-card .checkbox-label input:checked ~ .checkmark {
    opacity: 30%;
 } */
 
-task-card .checkbox-label input:checked ~ .checkmark:after {
+/* task-card .checkbox-label input:checked ~ .checkmark:after {
    opacity: 100%;
-}
+} */
 
 task-card .checkbox-label .checkmark:after {
    left: 0.3em;
@@ -420,7 +416,7 @@ project-list {
    justify-content: stretch;
    align-content: start;
    padding: 0 0.5rem;
-   gap: 0.4rem;
+   gap: 0.6rem;
 }
 
 project-list exp-list {
@@ -430,17 +426,27 @@ project-list exp-list {
    overflow: hidden;
 }
 
+project-list exp-list ul {
+   border-top: var(--light) solid 1px;
+   min-height: 2rem;
+   display: grid;
+   gap: 0.2rem;
+   overflow: hidden;
+   padding-left: 1rem;
+}
+
 project-list editable-li,
 .default-filter {
-   font-size: 1.1rem;
+   font-size: 1rem;
    display: flex;
    align-items: center;
    position: relative;
    cursor: pointer;
    height: 2rem;
    padding: 0 0.4rem;
-
    border-radius: 0.4rem;
+   gap: 0.3rem;
+   overflow: hidden;
 }
 
 editable-li .item-title {
@@ -460,6 +466,11 @@ editable-li input {
 
 side-bar [current-filter] {
    background-color: var(--medium);
+}
+
+side-bar .default-filters-ul {
+   display: grid;
+   gap: 0.3rem;
 }
 
 side-bar editable-li:hover,
@@ -483,7 +494,9 @@ editable-li:hover .item-buttons {
    opacity: 1;
 }
 
-project-list [data-type='category'] {
+project-list [data-type='category'] i {
+   font-size: 0.8rem;
+   color: var(--lightest);
 }
 
 project-list [data-type='project'] {
@@ -494,8 +507,24 @@ project-list exp-list {
    flex-direction: column;
 }
 
-.add-category-btn {
+project-list .add-category-btn {
+   display: flex;
+   justify-content: start;
+
    order: 1;
+   color: var(--lighter);
+   background-color: rgba(255, 255, 255, 0);
+   padding: 0 1rem;
+   height: 2rem;
+   font-family: 'gg sans Medium', sans-serif;
+   font-size: 1rem;
+   border-radius: 0.4rem;
+   gap: 1rem;
+}
+
+project-list .add-category-btn:hover {
+   background-color: var(--medium);
+   color: var(--lightest);
 }
 
 editable-li .editing-input {
@@ -585,7 +614,7 @@ editable-li .item-title {
 
 .checklist .list-header {
    border-radius: 0;
-   border-bottom: var(--dark) solid 1px;
+   border-bottom: var(--medium) solid 1px;
 }
 .checklist [data-type='checklist-item'][checked] {
    text-decoration: line-through;
@@ -608,7 +637,6 @@ task-details {
    align-items: stretch;
    background-color: var(--dark);
    border-radius: 0.5rem;
-   margin-left: 0.4rem;
    align-content: start;
    overflow: auto;
 }
@@ -677,15 +705,13 @@ task-details .close {
 
 @-webkit-keyframes shake {
    0% {
-      margin-left: 0rem;
    }
    25% {
-      margin-left: 0.5rem;
+      transform: translateX(1rem);
    }
    75% {
-      margin-left: -0.5rem;
+      transform: translateX(-1rem);
    }
    100% {
-      margin-left: 0rem;
    }
 }
