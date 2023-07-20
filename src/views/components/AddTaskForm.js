@@ -22,7 +22,7 @@ class AddTaskForm extends HTMLFormElement {
             class: 'close-form',
             name: 'close-form',
          })
-         .appendIcon('fa-sharp fa-solid fa-xmark')
+         .appendIcon('fa-solid fa-circle-xmark')
          .appendTo(this);
 
       const titleInput = createElement('input')
@@ -41,9 +41,8 @@ class AddTaskForm extends HTMLFormElement {
             class: 'open-form',
             name: 'open-form',
          })
-
-         .setContent(' Add Task')
-         .prependIcon('fa-regular fa-calendar-plus')
+         .setContent('New Task')
+         .prependIcon('fa-solid fa-feather-pointed')
          .appendTo(this);
 
       const hiddenInputs = createElement('fieldset')
@@ -94,8 +93,8 @@ class AddTaskForm extends HTMLFormElement {
             type: 'submit',
             name: 'save-task',
          })
-         .setContent('Save')
-         .prependIcon('fa-regular fa-calendar-check')
+         .setContent('Add Task')
+         .prependIcon('fa-regular fa-calendar-plus')
          .appendTo(hiddenInputs);
 
       this.setupSelectProjectList(selectProject);
@@ -104,20 +103,31 @@ class AddTaskForm extends HTMLFormElement {
    }
 
    expand() {
+      this.setAttribute('active', '');
       this.setAttribute('expanded', true);
-      this.querySelector('input[name=title-input]').setAttribute(
-         'placeholder',
-         'Title'
-      );
+      const titleInput = this.querySelector('input[name=title-input]');
+      titleInput.setAttribute('placeholder', 'Title');
+      titleInput.focus();
    }
 
    contract() {
+      this.removeAttribute('active');
+
       this.setAttribute('expanded', false);
       this.reset();
       this.querySelector('input[name=title-input]').setAttribute(
          'placeholder',
          'Create a task'
       );
+   }
+
+   showError() {
+      this.classList.add('error');
+
+      setTimeout(() => {
+         this.querySelector('input[name=title-input]').focus();
+         this.classList.remove('error');
+      }, 1400);
    }
 
    setupSelectProjectList(selectProject) {
@@ -163,14 +173,12 @@ class AddTaskForm extends HTMLFormElement {
          this.contract();
       });
 
-      this.querySelector('input[name=title-input]').addEventListener(
-         'focus',
-         () => {
-            this.expand();
-         }
-      );
-
       this.addEventListener('click', (ev) => {
+         if (document.querySelector(`[active]`)) {
+            document.querySelector(`[active]`).showError();
+            ev.preventDefault();
+            return;
+         }
          if (ev.target.name === 'open-form') {
             this.expand();
          } else if (ev.target.classList.contains('close-form')) {

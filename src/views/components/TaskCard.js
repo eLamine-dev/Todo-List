@@ -79,6 +79,7 @@ class TaskCard extends HTMLElement {
 
       const checkmark = createElement('div')
          .setAttributes({ class: 'checkmark' })
+         .appendIcon('fa-regular fa-calendar-check')
          .appendTo(checkboxContainer);
 
       checkbox.checked = this.state.completed;
@@ -114,23 +115,24 @@ class TaskCard extends HTMLElement {
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
-         if (
-            ev.target.classList.contains('delete') &&
-            !this.getAttribute('active')
-         ) {
+         if (document.querySelector(`[active]`)) {
+            document.querySelector(`[active]`).showError();
+            ev.preventDefault();
+            return;
+         }
+         if (ev.target.classList.contains('delete')) {
             this.remove();
             pubsub.publish('task:delete', this.state.id);
          } else if (ev.target.classList.contains('completed-checkbox')) {
             this.state.completed = this.querySelector(
                '.completed-checkbox'
             ).checked;
-
             pubsub.publish('task:update', this.state);
          } else if (
             ev.target.classList.contains('edit-btn') &&
             !document.querySelector('task-details')
          ) {
-            this.setAttribute('active', '');
+            this.setAttribute('editing', '');
             pubsub.publish('task:edit', this.getAttribute('task-id'));
          }
       });

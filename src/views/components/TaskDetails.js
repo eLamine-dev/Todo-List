@@ -1,3 +1,4 @@
+import { he } from 'date-fns/locale';
 import createElement from '../../utils/ElementBuilder';
 import pubsub from '../../utils/PubSub';
 import ExpandableList from './ExpandableList';
@@ -50,7 +51,13 @@ class TaskDetails extends HTMLElement {
             name: 'save-task',
          })
          .setContent('Save')
+         .prependIcon('fa-solid fa-floppy-disk')
          .appendTo(form);
+
+      const header = createElement('header')
+         .setContent('Edit task')
+         .setAttributes({ class: 'header' })
+         .prependTo(this);
 
       const closeBtn = createElement('button')
          .setAttributes({
@@ -58,27 +65,26 @@ class TaskDetails extends HTMLElement {
             type: 'button',
             name: 'cancel',
          })
-         .setContent('X')
-         .appendTo(form);
+         .appendIcon('fa-solid fa-circle-xmark')
+         .appendTo(header);
 
-      const header = createElement('header')
-         .setContent('ToDo')
-         .setAttributes({ class: 'header' })
-         .prependTo(this);
+      this.setAttribute('active', '');
    }
 
    addEventListeners() {
       this.querySelector('form').addEventListener('submit', (ev) => {
          ev.preventDefault();
-         if (this.querySelector('[edit="true"]')) return;
+         if (this.querySelector('[active]')) return;
 
          this.passData();
          this.remove();
-         document.querySelector(`task-card[active]`).removeAttribute('active');
+         document
+            .querySelector(`task-card[editing]`)
+            .removeAttribute('editing');
       });
 
       this.addEventListener('click', (ev) => {
-         if (this.querySelector('[edit="true"]')) return;
+         if (this.querySelector('[active]')) return;
          if (
             ev.target.closest('[data-type="checklist-item"]') &&
             !ev.target.closest('.item-buttons')
@@ -89,8 +95,8 @@ class TaskDetails extends HTMLElement {
 
          if (ev.target.closest('.close')) {
             document
-               .querySelector('task-card[active]')
-               .removeAttribute('active');
+               .querySelector('task-card[editing]')
+               .removeAttribute('editing');
             this.remove();
          }
       });

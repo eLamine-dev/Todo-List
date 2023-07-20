@@ -33,6 +33,23 @@ const elementMixin = {
    //    this.render();
    // },
 
+   checkForOtherActiveElm(ev) {
+      const activeElm = document.querySelector(`[active]`);
+
+      if (activeElm !== this && activeElm !== null) {
+         activeElm.showError();
+         ev.preventDefault();
+      }
+   },
+
+   showError() {
+      this.classList.add('error');
+      setTimeout(() => {
+         this.querySelector('input').focus();
+         this.classList.remove('error');
+      }, 1400);
+   },
+
    getState() {
       return this.state;
    },

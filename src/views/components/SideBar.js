@@ -49,6 +49,7 @@ class SideBar extends HTMLElement {
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
+         if (document.querySelector(`[active]`)) return;
          if (ev.target.classList.contains('default-filter')) {
             const data = {
                type: ev.target.getAttribute('filter-type'),

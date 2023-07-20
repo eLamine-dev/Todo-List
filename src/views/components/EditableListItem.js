@@ -46,37 +46,44 @@ class ListItem extends HTMLElement {
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
-         if (!document.querySelector('[edit="true"]')) {
-            if (ev.target.classList.contains('edit-item')) this.startEditItem();
-            else if (ev.target.classList.contains('delete-item'))
-               this.deleteItem();
+         if (
+            document.querySelector(`[active]`) &&
+            document.querySelector(`[active]`) !== this &&
+            !this.closest('exp-list').classList.contains('checklist')
+         ) {
+            document.querySelector(`[active]`).showError();
+            ev.preventDefault();
+            return;
          }
+         if (ev.target.classList.contains('edit-item')) this.startEditItem();
+         else if (ev.target.classList.contains('delete-item'))
+            this.deleteItem();
+
          if (ev.target.classList.contains('save-item')) this.saveItem();
          if (ev.target.classList.contains('cancel-editing'))
             this.cancelChanges();
       });
 
       document.addEventListener('mousedown', (ev) => {
-         if (this.getAttribute('edit') !== 'true') return;
+         if (!this.hasAttribute('active')) return;
          if (
-            this.getAttribute('edit') === 'true' &&
+            this.hasAttribute('active') &&
             ev.target.closest('editable-li') !== this
          ) {
-            this.showInputError();
+            this.showError();
          }
       });
    }
 
-   showInputError() {
-      this.classList.add('error');
-      setTimeout(() => {
-         this.querySelector('.editing-input').focus();
-         this.classList.remove('error');
-      }, 1000);
-   }
+   // showError() {
+   //    this.classList.add('error');
+   //    setTimeout(() => {
+   //       this.querySelector('input').focus();
+   //       this.classList.remove('error');
+   //    }, 1400);
+   // }
 
    startEditItem() {
-      this.setAttributes({ edit: true });
       const input = createElement('input')
          .setAttributes({
             minlength: '7',
@@ -89,11 +96,12 @@ class ListItem extends HTMLElement {
          .appendTo(this);
 
       input.focus();
+      this.setAttributes({ active: '' });
    }
 
    endEditItem() {
       const input = this.querySelector('input');
-      this.setAttributes({ edit: false });
+      this.removeAttribute('active');
       this.querySelector('.item-title').textContent = input.value;
       input.remove();
    }
@@ -103,7 +111,7 @@ class ListItem extends HTMLElement {
          this.remove();
          return;
       }
-      this.setAttributes({ edit: false });
+      this.removeAttribute('active');
       this.clear();
       this.render();
    }
@@ -117,7 +125,7 @@ class ListItem extends HTMLElement {
       const input = this.querySelector('input');
       const title = input.value;
       if (!title || title.length < 7 || title.length > 25) {
-         this.showInputError();
+         this.showError();
          return;
       }
       this.setAttribute(
