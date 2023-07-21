@@ -65,6 +65,18 @@ class ProjectController {
    }
 
    handleDeleteProject(projectLi) {
+      const projectCategoryLi = projectLi.closest('exp-list').firstChild;
+      console.log(projectCategoryLi);
+
+      if (projectLi.hasAttribute('current-filter')) {
+         pubsub.publish('filter:changed', {
+            type: projectCategoryLi.getAttribute('data-type'),
+            value: projectCategoryLi.getAttribute('id'),
+         });
+      }
+
+      this.view.highlightCurrentFilter(projectCategoryLi);
+
       this.model.deleteItem(projectLi.getAttribute('id'));
       pubsub.publish('projects:updated', {
          projects: this.model.getAllItems(),

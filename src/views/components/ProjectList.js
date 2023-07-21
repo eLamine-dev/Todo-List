@@ -40,11 +40,14 @@ class ProjectList extends HTMLElement {
       this.append(list);
    }
 
-   highlightCurrentFilter(filterElm) {
-      document
-         .querySelector('[current-filter]')
-         .removeAttribute('current-filter');
-      filterElm.setAttribute('current-filter', '');
+   highlightCurrentFilter(elm) {
+      if (document.querySelector(`[current-filter]`)) {
+         document
+            .querySelector(`[current-filter]`)
+            .removeAttribute('current-filter');
+      }
+
+      elm.setAttribute('current-filter', '');
    }
 
    addEventListeners() {
@@ -58,11 +61,13 @@ class ProjectList extends HTMLElement {
             !ev.target.parentNode.classList.contains('item-buttons') &&
             !ev.target.closest('editable-li').hasAttribute('active')
          ) {
+            const filterElm = ev.target.closest('editable-li');
             const data = {
-               type: ev.target.closest('editable-li').getAttribute('data-type'),
-               value: ev.target.closest('editable-li').getAttribute('id'),
+               type: filterElm.getAttribute('data-type'),
+               value: filterElm.getAttribute('id'),
             };
-            this.highlightCurrentFilter(ev.target.closest('editable-li'));
+
+            this.highlightCurrentFilter(filterElm);
             pubsub.publish('filter:changed', data);
          }
 
@@ -74,6 +79,7 @@ class ProjectList extends HTMLElement {
             !ev.target.closest('editable-li').hasAttribute('active')
          ) {
             ev.target.closest('exp-list').toggleList();
+            this.highlightCurrentFilter(ev.target.closest('editable-li'));
          }
       });
    }

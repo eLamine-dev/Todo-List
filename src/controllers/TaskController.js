@@ -7,12 +7,11 @@ class TaskController {
       this.filter = filter;
       this.model = taskModel;
       this.view = taskView;
-      this.viewState = {};
       this.currentFilter = {
          type: 'all',
          value: null,
       };
-
+      this.viewState = { tasks: this.getCurrentFilterTasks() };
       [
          {
             dataType: 'task',
@@ -97,12 +96,12 @@ class TaskController {
    }
 
    buildViewState(externalData) {
-      const internalData = {
-         tasks: this.getCurrentFilterTasks(),
-      };
-      Object.assign(this.viewState, internalData, externalData);
+      // const internalData = {
+      //    tasks: this.getCurrentFilterTasks(),
+      // };
+      Object.assign(this.viewState, externalData);
+      this.clearDeletedProjectsTasks();
       this.view.setState(this.viewState);
-      this.clearDeletedProjectsTasks(this.viewState);
    }
 
    clearDeletedProjectsTasks() {
@@ -128,7 +127,8 @@ class TaskController {
    handleFilterChange(filterData) {
       this.currentFilter = filterData;
       const tasks = this.getCurrentFilterTasks();
-      this.view.setState({ tasks });
+      Object.assign(this.viewState, { tasks });
+      this.view.setState(this.viewState);
    }
 }
 

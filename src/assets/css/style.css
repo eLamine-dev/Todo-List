@@ -656,6 +656,7 @@ task-details {
    border-radius: 0.5rem;
    align-content: start;
    overflow: auto;
+   position: relative;
 }
 
 task-details form {
@@ -718,6 +719,12 @@ task-details .close {
    right: 1.5rem;
    color: var(--light);
    background-color: rgba(255, 255, 255, 0);
+}
+
+task-details [name='save-task'] {
+   position: absolute;
+   bottom: 10%;
+   right: 10%;
 }
 
 @-webkit-keyframes shake {

@@ -87,7 +87,7 @@ class ListItem extends HTMLElement {
    startEditItem() {
       const input = createElement('input')
          .setAttributes({
-            minlength: '7',
+            minlength: '4',
             maxlength: '30',
             placeholder: `New ${this.getAttribute('data-type')}`,
             value: this.state.title || '',
@@ -103,7 +103,7 @@ class ListItem extends HTMLElement {
    endEditItem() {
       const input = this.querySelector('input');
       this.removeAttribute('active');
-      this.querySelector('.item-title').textContent = input.value;
+
       input.remove();
    }
 
@@ -112,13 +112,10 @@ class ListItem extends HTMLElement {
          this.remove();
          return;
       }
-      const attributes = this.getAttributeNames();
-
-      this.clear();
-      this.render();
-      attributes.forEach((attr) => {
-         this.setAttribute(attr, this.getAttribute(attr));
-      });
+      const title = this.querySelector('.item-title');
+      title.textContent = this.state.title;
+      title.capitalFirstLetter();
+      this.endEditItem();
       this.removeAttribute('active');
    }
 
@@ -129,16 +126,20 @@ class ListItem extends HTMLElement {
 
    saveItem() {
       const input = this.querySelector('input');
-      const title = input.value;
-      if (!title || title.length < 7 || title.length > 30) {
+      const title = this.querySelector('.item-title');
+
+      if (!input.value || input.value.length < 4 || input.value.length > 30) {
          this.showError();
          return;
       }
+
+      title.textContent = input.value;
+      title.capitalFirstLetter();
       this.setAttribute(
          'parent-list',
          this.parentElement.getAttribute('list-id')
       );
-      this.state.title = title;
+      this.state.title = input.value;
       this.endEditItem();
       if (this.getAttribute('id')) {
          pubsub.publish(`${this.getAttribute('data-type')}:update`, this);
