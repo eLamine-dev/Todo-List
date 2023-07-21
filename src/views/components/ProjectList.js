@@ -10,7 +10,10 @@ class ProjectList extends HTMLElement {
 
    render() {
       this.setAttribute('id', 'projects-list');
-      const header = createElement('h3').setContent('Projects');
+      const header = createElement('h3')
+         .setContent('Projects')
+         .prependIcon('fa-solid fa-bars-progress')
+         .setAttributes({ class: 'projects-list-header' });
       this.prepend(header);
 
       this.buildProjectsList();
@@ -40,19 +43,20 @@ class ProjectList extends HTMLElement {
       this.append(list);
    }
 
-   highlightCurrentFilter(elm) {
+   highlightCurrentFilter(filterElm) {
       if (document.querySelector(`[current-filter]`)) {
          document
             .querySelector(`[current-filter]`)
             .removeAttribute('current-filter');
       }
 
-      elm.setAttribute('current-filter', '');
+      filterElm.setAttribute('current-filter', '');
    }
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
          if (document.querySelector(`[active]`)) return;
+
          if (ev.target.classList.contains('add-category-btn')) {
             this.createCategoryList({ dataType: 'category' }, null);
             this.lastChild.firstChild.startEditItem();
@@ -67,19 +71,20 @@ class ProjectList extends HTMLElement {
                value: filterElm.getAttribute('id'),
             };
 
+            if (filterElm.classList.contains('list-header')) {
+               if (
+                  !filterElm.hasAttribute('current-filter') &&
+                  filterElm.closest('exp-list').hasAttribute('expanded')
+               ) {
+                  this.highlightCurrentFilter(filterElm);
+                  pubsub.publish('filter:changed', data);
+                  return;
+               }
+               filterElm.closest('exp-list').toggleList();
+            }
+
             this.highlightCurrentFilter(filterElm);
             pubsub.publish('filter:changed', data);
-         }
-
-         if (
-            ev.target
-               .closest('editable-li')
-               .classList.contains('list-header') &&
-            !ev.target.parentNode.classList.contains('item-buttons') &&
-            !ev.target.closest('editable-li').hasAttribute('active')
-         ) {
-            ev.target.closest('exp-list').toggleList();
-            this.highlightCurrentFilter(ev.target.closest('editable-li'));
          }
       });
    }

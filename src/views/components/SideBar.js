@@ -12,9 +12,19 @@ class SideBar extends HTMLElement {
       const today = new Date();
       const week = { start: startOfWeek(today), end: endOfWeek(today) };
       const defaultFilters = [
-         { id: 'all', type: 'all', value: 'all' },
-         { id: 'today', type: 'date', value: format(today, 'yyyy-MM-dd') },
-         { id: 'upcoming', type: 'date-range', value: week },
+         { id: 'all', type: 'all', value: 'all', icon: 'fa-solid fa-inbox' },
+         {
+            id: 'today',
+            type: 'date',
+            value: format(today, 'yyyy-MM-dd'),
+            icon: 'fa-solid fa-calendar-day',
+         },
+         {
+            id: 'upcoming',
+            type: 'date-range',
+            value: week,
+            icon: 'fa-solid fa-calendar-week',
+         },
       ];
 
       const defaultFiltersUl = createElement('ul').setAttributes({
@@ -23,7 +33,9 @@ class SideBar extends HTMLElement {
       defaultFilters.forEach((filter) => {
          const filterLi = createElement('li')
             .setState(filter)
-            .setContent(filter.id.charAt(0).toUpperCase() + filter.id.slice(1))
+            .setContent(filter.id)
+            .capitalFirstLetter()
+            .prependIcon(filter.icon)
             .setAttributes({
                'filter-type': filter.type,
                class: 'default-filter',
@@ -41,9 +53,11 @@ class SideBar extends HTMLElement {
    }
 
    highlightCurrentFilter(filterElm) {
-      document
-         .querySelector('[current-filter]')
-         .removeAttribute('current-filter');
+      if (document.querySelector(`[current-filter]`)) {
+         document
+            .querySelector(`[current-filter]`)
+            .removeAttribute('current-filter');
+      }
       filterElm.setAttribute('current-filter', '');
    }
 

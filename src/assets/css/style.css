@@ -409,6 +409,22 @@ side-bar .default-filters-ul {
    padding: 0 0.5rem;
 }
 
+side-bar .default-filter,
+side-bar .projects-list-header {
+   gap: 0.8rem;
+}
+
+side-bar .default-filter i,
+side-bar .projects-list-header i {
+   color: var(--lighter);
+   padding-bottom: 3px;
+}
+
+side-bar .default-filter:hover i,
+side-bar .default-filter[current-filter] i {
+   color: var(--lightest);
+}
+
 project-list {
    width: 100%;
    display: grid;
@@ -436,7 +452,8 @@ project-list exp-list ul {
 }
 
 project-list editable-li,
-.default-filter {
+.default-filter,
+.projects-list-header {
    font-size: 1rem;
    display: flex;
    align-items: center;

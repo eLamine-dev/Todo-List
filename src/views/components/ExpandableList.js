@@ -66,6 +66,8 @@ class ExpandableList extends HTMLElement {
    }
 
    addItem() {
+      if (!this.hasAttribute('expanded')) this.toggleList();
+
       const itemsList = this.querySelector('.items-list');
       const itemType = itemsList.getAttribute('items-type');
       const newItem = createElement('editable-li').setState({
