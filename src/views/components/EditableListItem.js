@@ -8,7 +8,7 @@ class ListItem extends HTMLElement {
    }
 
    render() {
-      const title = createElement('span')
+      const title = createElement('div')
          .setContent(this.state.title)
          .setAttributes({ class: 'item-title' })
          .capitalFirstLetter()
@@ -112,9 +112,14 @@ class ListItem extends HTMLElement {
          this.remove();
          return;
       }
-      this.removeAttribute('active');
+      const attributes = this.getAttributeNames();
+
       this.clear();
       this.render();
+      attributes.forEach((attr) => {
+         this.setAttribute(attr, this.getAttribute(attr));
+      });
+      this.removeAttribute('active');
    }
 
    deleteItem() {

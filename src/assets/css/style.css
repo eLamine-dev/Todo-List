@@ -440,6 +440,7 @@ project-list editable-li,
    font-size: 1rem;
    display: flex;
    align-items: center;
+
    position: relative;
    cursor: pointer;
    height: 2rem;
@@ -494,12 +495,20 @@ editable-li:hover .item-buttons {
    opacity: 1;
 }
 
-project-list [data-type='category'] i {
-   font-size: 0.8rem;
-   color: var(--lightest);
+project-list exp-list [data-type='category']::before {
+   border-color: var(--lighter);
+   border-style: solid;
+   border-width: 0.15em 0.15em 0 0;
+   content: '';
+   display: inline-block;
+   height: 0.4em;
+   transform: rotate(45deg);
+   width: 0.4em;
+   margin-right: 0.2rem;
 }
 
-project-list [data-type='project'] {
+project-list exp-list[expanded] [data-type='category']::before {
+   transform: rotate(135deg);
 }
 
 project-list exp-list {
@@ -525,6 +534,14 @@ project-list .add-category-btn {
 project-list .add-category-btn:hover {
    background-color: var(--medium);
    color: var(--lightest);
+}
+
+project-list exp-list[expanded] .items-list {
+   display: block;
+}
+
+project-list exp-list .items-list {
+   display: none;
 }
 
 editable-li .editing-input {

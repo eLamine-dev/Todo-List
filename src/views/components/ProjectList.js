@@ -54,8 +54,9 @@ class ProjectList extends HTMLElement {
             this.createCategoryList({ dataType: 'category' }, null);
             this.lastChild.firstChild.startEditItem();
          } else if (
-            ev.target.closest('editable-li') &&
-            !ev.target.closest('.item-buttons')
+            // ev.target.closest('editable-li') &&
+            !ev.target.parentNode.classList.contains('item-buttons') &&
+            !ev.target.closest('editable-li').hasAttribute('active')
          ) {
             const data = {
                type: ev.target.closest('editable-li').getAttribute('data-type'),
@@ -63,6 +64,16 @@ class ProjectList extends HTMLElement {
             };
             this.highlightCurrentFilter(ev.target.closest('editable-li'));
             pubsub.publish('filter:changed', data);
+         }
+
+         if (
+            ev.target
+               .closest('editable-li')
+               .classList.contains('list-header') &&
+            !ev.target.parentNode.classList.contains('item-buttons') &&
+            !ev.target.closest('editable-li').hasAttribute('active')
+         ) {
+            ev.target.closest('exp-list').toggleList();
          }
       });
    }

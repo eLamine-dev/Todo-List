@@ -11,7 +11,6 @@ class ExpandableList extends HTMLElement {
    render() {
       const listHeader = createElement('editable-li')
          .setState(this.state.header)
-         .appendIcon('fa-solid fa-chevron-down')
          .setAttributes({
             class: 'list-header',
          });
@@ -41,7 +40,9 @@ class ExpandableList extends HTMLElement {
       listHeader.querySelector('.item-buttons').prepend(addItemBtn);
    }
 
-   toggleList() {}
+   toggleList() {
+      this.toggleAttribute('expanded');
+   }
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
@@ -60,10 +61,6 @@ class ExpandableList extends HTMLElement {
             ev.target.classList.contains('add-item')
          ) {
             this.addItem();
-         }
-
-         if (ev.target.classList.contains('list-header')) {
-            this.toggleList();
          }
       });
    }
