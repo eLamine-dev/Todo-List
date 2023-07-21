@@ -32,6 +32,7 @@ class AddTaskForm extends HTMLFormElement {
             placeholder: 'Create a task',
             maxlength: '50',
             minlength: '5',
+            required: '',
          })
          .appendTo(this);
 
@@ -78,6 +79,7 @@ class AddTaskForm extends HTMLFormElement {
          .setAttributes({
             class: 'select-project',
             name: 'select-project',
+            // required: '',
          })
          .appendTo(selectionInputs);
 
@@ -140,6 +142,7 @@ class AddTaskForm extends HTMLFormElement {
          const categoryProjects = this.state.projects.filter(
             (project) => project.categoryId === category.id
          );
+
          categoryProjects.forEach((project) => {
             const option = createElement('option')
                .setAttributes({
@@ -150,6 +153,18 @@ class AddTaskForm extends HTMLFormElement {
          });
          selectProject.appendChild(optGrp);
       });
+
+      if (!selectProject.querySelector('option')) {
+         const option = createElement('option')
+            .setAttributes({
+               disabled: '',
+               selected: '',
+               hidden: '',
+               // value: '',
+            })
+            .setContent('No projects')
+            .prependTo(selectProject);
+      }
    }
 
    setUpPriorities(selectPriority) {

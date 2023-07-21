@@ -16,7 +16,6 @@ class TaskList extends HTMLElement {
       this.state.tasks.forEach((task) => {
          const taskCard = this.makeTaskCard(task);
          if (!taskCard) {
-            console.log(task, taskCard);
             return;
          }
          this.appendChild(taskCard);

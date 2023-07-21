@@ -47,8 +47,9 @@ class SideBar extends HTMLElement {
       this.prepend(defaultFiltersUl);
 
       const header = createElement('header')
-         .setContent('ToDo')
+         .setContent('ToBe.')
          .setAttributes({ class: 'header' })
+         .prependIcon('fa-solid fa-fire')
          .prependTo(this);
    }
 
