@@ -31,6 +31,7 @@ class TaskDetails extends HTMLElement {
             Placeholder: 'add task description...',
          })
          .setContent(this.state.task.description)
+         .capitalFirstLetter()
          .appendTo(form);
 
       const date = createElement('input')
