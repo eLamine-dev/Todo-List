@@ -463,13 +463,13 @@ project-list exp-list {
    flex-direction: row;
    align-items: stretch;
    overflow: hidden;
+   padding-bottom: 0.4rem;
 }
 
 project-list exp-list ul {
    border-top: var(--light) solid 1px;
-   min-height: 2rem;
    display: grid;
-   gap: 0.2rem;
+   gap: 0.4rem;
    overflow: hidden;
    padding-left: 1rem;
 }
@@ -483,7 +483,7 @@ project-list editable-li,
 
    position: relative;
    cursor: pointer;
-   height: 2rem;
+   height: 2.4rem;
    padding: 0 0.4rem;
    border-radius: 0.4rem;
    gap: 0.3rem;
@@ -494,6 +494,7 @@ editable-li .item-title {
    white-space: nowrap;
    overflow: hidden;
    text-overflow: ellipsis;
+   height: max-content;
 }
 
 editable-li[active] {

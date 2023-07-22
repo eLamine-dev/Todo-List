@@ -14,17 +14,19 @@ class TaskCard extends HTMLElement {
          .setAttributes({ class: 'tags' })
          .appendTo(this);
 
-      const category = createElement('div')
-         .setContent(this.state.projectCategory)
-         .capitalFirstLetter()
-         .setAttributes({ class: 'tag' })
-         .appendTo(tags);
+      if (this.state.taskProject) {
+         const category = createElement('div')
+            .setContent(this.state.projectCategory)
+            .capitalFirstLetter()
+            .setAttributes({ class: 'tag' })
+            .appendTo(tags);
 
-      const project = createElement('span')
-         .setContent(this.state.taskProject)
-         .capitalFirstLetter()
-         .setAttributes({ class: 'tag' })
-         .appendTo(tags);
+         const project = createElement('span')
+            .setContent(this.state.taskProject)
+            .capitalFirstLetter()
+            .setAttributes({ class: 'tag' })
+            .appendTo(tags);
+      }
 
       const date = createElement('div')
          .setContent(this.state.date)

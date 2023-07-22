@@ -38,23 +38,24 @@ class TaskList extends HTMLElement {
       const taskProject = this.state.projects.find(
          (project) => project.id === task.projectId
       );
+      if (taskProject) {
+         if (!taskProject) {
+            return;
+         }
 
-      if (!taskProject) {
-         return;
+         const projectCategory = this.state.categories.find(
+            (category) => category.id === taskProject.categoryId
+         );
+
+         if (!projectCategory) {
+            return;
+         }
+
+         Object.assign(task, {
+            taskProject: taskProject.title,
+            projectCategory: projectCategory.title,
+         });
       }
-
-      const projectCategory = this.state.categories.find(
-         (category) => category.id === taskProject.categoryId
-      );
-
-      if (!projectCategory) {
-         return;
-      }
-
-      Object.assign(task, {
-         taskProject: taskProject.title,
-         projectCategory: projectCategory.title,
-      });
       const newCard = createElement('task-card').setState(task);
 
       return newCard;

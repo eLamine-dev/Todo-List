@@ -154,17 +154,15 @@ class AddTaskForm extends HTMLFormElement {
          selectProject.appendChild(optGrp);
       });
 
-      if (!selectProject.querySelector('option')) {
-         const option = createElement('option')
-            .setAttributes({
-               disabled: '',
-               selected: '',
-               hidden: '',
-               // value: '',
-            })
-            .setContent('No projects')
-            .prependTo(selectProject);
-      }
+      const noProjecOption = createElement('option')
+         .setAttributes({
+            disabled: '',
+            selected: '',
+            hidden: '',
+            value: '',
+         })
+         .setContent('Select a project')
+         .prependTo(selectProject);
    }
 
    setUpPriorities(selectPriority) {

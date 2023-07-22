@@ -61,7 +61,7 @@ class ProjectList extends HTMLElement {
             this.createCategoryList({ dataType: 'category' }, null);
             this.lastChild.firstChild.startEditItem();
          } else if (
-            // ev.target.closest('editable-li') &&
+            ev.target.closest('editable-li') &&
             !ev.target.parentNode.classList.contains('item-buttons') &&
             !ev.target.closest('editable-li').hasAttribute('active')
          ) {

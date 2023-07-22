@@ -66,7 +66,6 @@ class ProjectController {
 
    handleDeleteProject(projectLi) {
       const projectCategoryLi = projectLi.closest('exp-list').firstChild;
-      console.log(projectCategoryLi);
 
       if (projectLi.hasAttribute('current-filter')) {
          pubsub.publish('filter:changed', {
