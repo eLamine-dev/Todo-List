@@ -333,6 +333,7 @@ task-details [name='save-task'] {
    font-family: 'gg sans Medium', sans-serif;
    font-size: 1rem;
    border-radius: 1.2rem;
+   white-space: nowrap;
 }
 
 #new-task-form select,
@@ -402,6 +403,7 @@ side-bar {
 .header {
    z-index: 1;
    position: sticky;
+   font-size: 1.1rem;
    top: 0;
    width: 100%;
    display: flex;
@@ -460,11 +462,12 @@ project-list {
    align-content: start;
    padding: 0 0.5rem;
    gap: 0.6rem;
+   overflow: hidden;
 }
 
 project-list exp-list {
-   display: flex;
-   flex-direction: row;
+   display: grid;
+
    align-items: stretch;
    overflow: hidden;
    padding-bottom: 0.4rem;
@@ -494,11 +497,10 @@ project-list editable-li,
 }
 
 editable-li .item-title {
-   display: flex;
-   align-items: center;
+   text-align: center;
+   line-height: normal;
    white-space: nowrap;
-   height: 1.8rem;
-   overflow-x: hidden;
+   overflow: hidden;
    text-overflow: ellipsis;
 }
 
@@ -573,7 +575,6 @@ project-list exp-list {
 project-list .add-category-btn {
    display: flex;
    justify-content: start;
-
    order: 1;
    color: var(--lighter);
    background-color: rgba(255, 255, 255, 0);
@@ -781,7 +782,6 @@ task-details form [name='description-input'] {
 
 task-details .header {
    position: relative;
-   font-size: 1.4rem;
 }
 
 task-details .close {

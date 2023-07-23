@@ -61,7 +61,7 @@ class TaskDetails extends HTMLElement {
          .appendTo(form);
 
       const header = createElement('header')
-         .setContent('Edit task')
+         .setContent('#Task-details')
          .setAttributes({ class: 'header' })
          .prependTo(this);
 

@@ -21,8 +21,11 @@ class TaskList extends HTMLElement {
          this.appendChild(taskCard);
       });
 
+      const currentFilter =
+         document.querySelector('[current-filter]').textContent;
+
       const header = createElement('header')
-         .setContent(this.state.currentFilter.type)
+         .setContent(`#${currentFilter}`)
          .setAttributes({ class: 'header' })
          .prependTo(this);
    }
