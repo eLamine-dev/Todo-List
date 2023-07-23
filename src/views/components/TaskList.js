@@ -22,7 +22,7 @@ class TaskList extends HTMLElement {
       });
 
       const header = createElement('header')
-         .setContent('ToDo')
+         .setContent(this.state.currentFilter.type)
          .setAttributes({ class: 'header' })
          .prependTo(this);
    }

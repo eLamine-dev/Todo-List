@@ -11,7 +11,10 @@ class TaskController {
          type: 'all',
          value: null,
       };
-      this.viewState = { tasks: this.getCurrentFilterTasks() };
+      this.viewState = {
+         tasks: this.getCurrentFilterTasks(),
+         currentFilter: this.currentFilter,
+      };
       [
          {
             dataType: 'task',
@@ -125,7 +128,7 @@ class TaskController {
    }
 
    handleFilterChange(filterData) {
-      this.currentFilter = filterData;
+      this.viewState.currentFilter = filterData;
       const tasks = this.getCurrentFilterTasks();
       Object.assign(this.viewState, { tasks });
       this.view.setState(this.viewState);

@@ -719,8 +719,15 @@ task-details {
    background-color: var(--dark);
    border-radius: 0.5rem;
    align-content: start;
+   justify-items: start;
    overflow: auto;
    position: relative;
+}
+
+task-details .icon {
+   font-size: 3rem;
+   opacity: 50%;
+   padding: 2rem;
 }
 
 task-details form {
@@ -730,7 +737,7 @@ task-details form {
    align-content: center;
    height: auto;
    background-color: var(--dark);
-   padding: 2rem;
+   padding: 0 2rem;
    gap: 1rem;
 }
 

@@ -12,6 +12,11 @@ class TaskDetails extends HTMLElement {
    render() {
       this.id = 'task-details';
 
+      const icon = createElement('div')
+         .appendIcon('fa-solid fa-file-pen')
+         .setAttributes({ class: 'icon' })
+         .appendTo(this);
+
       const form = createElement('form')
          .setAttributes({ id: 'edit-task-form' })
          .appendTo(this);
