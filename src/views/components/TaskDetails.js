@@ -1,4 +1,3 @@
-import { he } from 'date-fns/locale';
 import createElement from '../../utils/ElementBuilder';
 import pubsub from '../../utils/PubSub';
 import ExpandableList from './ExpandableList';
@@ -12,7 +11,7 @@ class TaskDetails extends HTMLElement {
    render() {
       this.id = 'task-details';
 
-      const icon = createElement('div')
+      const icon = createElement('span')
          .appendIcon('fa-solid fa-file-pen')
          .setAttributes({ class: 'icon' })
          .appendTo(this);

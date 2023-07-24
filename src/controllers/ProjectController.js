@@ -6,40 +6,40 @@ class ProjectController {
       this.model = projectModel;
       this.view = projectList;
       this.viewState = {};
-      [
-         {
-            dataType: 'project',
-            title: 'project01',
-            id: 'p001',
-            categoryId: 'c01',
-         },
-         {
-            dataType: 'project',
-            title: 'project02 oiurtouw reutouert eruor',
-            id: 'p002',
-            categoryId: 'c02',
-         },
-         {
-            dataType: 'project',
-            title: 'project03',
-            id: 'p003',
-            categoryId: 'c01',
-         },
-         {
-            dataType: 'project',
-            title: 'project04',
-            id: 'p004',
-            categoryId: 'c02',
-         },
-         {
-            dataType: 'project',
-            title: 'project05',
-            id: 'p005',
-            categoryId: 'c03',
-         },
-      ].forEach((project) => {
-         this.model.addItem(project);
-      });
+      // [
+      //    {
+      //       dataType: 'project',
+      //       title: 'project01',
+      //       id: 'p001',
+      //       categoryId: 'c01',
+      //    },
+      //    {
+      //       dataType: 'project',
+      //       title: 'project02 oiurtouw reutouert eruor',
+      //       id: 'p002',
+      //       categoryId: 'c02',
+      //    },
+      //    {
+      //       dataType: 'project',
+      //       title: 'project03',
+      //       id: 'p003',
+      //       categoryId: 'c01',
+      //    },
+      //    {
+      //       dataType: 'project',
+      //       title: 'project04',
+      //       id: 'p004',
+      //       categoryId: 'c02',
+      //    },
+      //    {
+      //       dataType: 'project',
+      //       title: 'project05',
+      //       id: 'p005',
+      //       categoryId: 'c03',
+      //    },
+      // ].forEach((project) => {
+      //    this.model.addItem(project);
+      // });
 
       this.initializeListeners();
    }
