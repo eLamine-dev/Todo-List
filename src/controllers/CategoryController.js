@@ -27,9 +27,9 @@ class CategoryController {
          items: { type: 'project', list: null },
       });
 
-      // pubsub.publish('categories:updated', {
-      //    categories: this.model.getAllItems(),
-      // });
+      pubsub.publish('categories:updated', {
+         categories: this.model.getAllItems(),
+      });
    }
 
    handleUpdateCategory(categoryLi) {
@@ -43,9 +43,9 @@ class CategoryController {
       );
       categoryLi.parentElement.setState({ header: editedCategory });
 
-      // pubsub.publish('categories:updated', {
-      //    categories: this.model.getAllItems(),
-      // });
+      pubsub.publish('categories:updated', {
+         categories: this.model.getAllItems(),
+      });
    }
 
    handleDeleteCategory(categoryLi) {

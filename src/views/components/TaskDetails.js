@@ -25,8 +25,12 @@ class TaskDetails extends HTMLElement {
          .setAttributes({
             type: 'text',
             name: 'title-input',
-            contenteditable: true,
-            value: this.state.task.title,
+            value:
+               this.state.task.title.charAt(0).toUpperCase() +
+               this.state.task.title.slice(1),
+            maxlength: '0',
+            minlength: '5',
+            required: '',
          })
          .appendTo(form);
 
@@ -34,6 +38,8 @@ class TaskDetails extends HTMLElement {
          .setAttributes({
             name: 'description-input',
             Placeholder: 'add task description...',
+            maxlength: '300',
+            rows: '3',
          })
          .setContent(this.state.task.description)
          .capitalFirstLetter()

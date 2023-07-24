@@ -48,7 +48,7 @@ class ProjectController {
       pubsub.subscribe('project:add', this.handleAddProject.bind(this));
       pubsub.subscribe('project:update', this.handleUpdateProject.bind(this));
       pubsub.subscribe('project:delete', this.handleDeleteProject.bind(this));
-      pubsub.subscribe('categories:updated', this.buildViewState.bind(this));
+      // pubsub.subscribe('categories:updated', this.buildViewState.bind(this));
    }
 
    handleAddProject(newProjectLi) {
@@ -69,12 +69,13 @@ class ProjectController {
 
       if (projectLi.hasAttribute('current-filter')) {
          pubsub.publish('filter:changed', {
+            id: projectCategoryLi.getAttribute('id'),
             type: projectCategoryLi.getAttribute('data-type'),
             value: projectCategoryLi.getAttribute('id'),
          });
       }
 
-      this.view.highlightCurrentFilter(projectCategoryLi);
+      // this.view.highlightCurrentFilter(projectCategoryLi);
 
       this.model.deleteItem(projectLi.getAttribute('id'));
       pubsub.publish('project:deleted', projectLi.getAttribute('id'));
