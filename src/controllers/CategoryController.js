@@ -4,9 +4,9 @@ class CategoryController {
    constructor(categoryModel) {
       this.model = categoryModel;
       [
-         { dataType: 'category', title: 'personal', id: '01' },
-         { dataType: 'category', title: 'education', id: '02' },
-         { dataType: 'category', title: 'work', id: '03' },
+         { dataType: 'category', title: 'personal', id: 'c01' },
+         { dataType: 'category', title: 'education', id: 'c02' },
+         { dataType: 'category', title: 'work', id: 'c03' },
       ].forEach((category) => {
          this.model.addItem(category);
       });
@@ -27,9 +27,9 @@ class CategoryController {
          items: { type: 'project', list: null },
       });
 
-      pubsub.publish('categories:updated', {
-         categories: this.model.getAllItems(),
-      });
+      // pubsub.publish('categories:updated', {
+      //    categories: this.model.getAllItems(),
+      // });
    }
 
    handleUpdateCategory(categoryLi) {
@@ -43,18 +43,23 @@ class CategoryController {
       );
       categoryLi.parentElement.setState({ header: editedCategory });
 
-      pubsub.publish('categories:updated', {
-         categories: this.model.getAllItems(),
-      });
+      // pubsub.publish('categories:updated', {
+      //    categories: this.model.getAllItems(),
+      // });
    }
 
    handleDeleteCategory(categoryLi) {
       this.model.deleteItem(categoryLi.getAttribute('id'));
       categoryLi.parentElement.remove();
 
-      pubsub.publish('categories:updated', {
-         categories: this.model.getAllItems(),
-      });
+      if (categoryLi.hasAttribute('current-filter')) {
+         pubsub.publish('filter:changed', {
+            type: 'all',
+            value: null,
+         });
+      }
+
+      pubsub.publish('category:deleted', categoryLi.getAttribute('id'));
    }
 }
 

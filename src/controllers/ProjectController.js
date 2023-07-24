@@ -10,32 +10,32 @@ class ProjectController {
          {
             dataType: 'project',
             title: 'project01',
-            id: '001',
-            categoryId: '01',
+            id: 'p001',
+            categoryId: 'c01',
          },
          {
             dataType: 'project',
             title: 'project02 oiurtouw reutouert eruor',
-            id: '002',
-            categoryId: '02',
+            id: 'p002',
+            categoryId: 'c02',
          },
          {
             dataType: 'project',
             title: 'project03',
-            id: '003',
-            categoryId: '01',
+            id: 'p003',
+            categoryId: 'c01',
          },
          {
             dataType: 'project',
             title: 'project04',
-            id: '004',
-            categoryId: '02',
+            id: 'p004',
+            categoryId: 'c02',
          },
          {
             dataType: 'project',
             title: 'project05',
-            id: '005',
-            categoryId: '03',
+            id: 'p005',
+            categoryId: 'c03',
          },
       ].forEach((project) => {
          this.model.addItem(project);
@@ -77,9 +77,7 @@ class ProjectController {
       this.view.highlightCurrentFilter(projectCategoryLi);
 
       this.model.deleteItem(projectLi.getAttribute('id'));
-      pubsub.publish('projects:updated', {
-         projects: this.model.getAllItems(),
-      });
+      pubsub.publish('project:deleted', projectLi.getAttribute('id'));
    }
 
    handleUpdateProject(projectLi) {
@@ -94,11 +92,19 @@ class ProjectController {
       });
    }
 
+   handleCategoryDelete(categoryId) {
+      this.model.getAllItems().forEach((project) => {
+         if (project.categoryId === categoryId) {
+            this.model.deleteItem(project.id);
+            pubsub.publish('project:deleted', project.id);
+         }
+      });
+   }
+
    buildViewState(externalData) {
-      const internalData = { projects: this.model.getAllItems() };
-      Object.assign(this.viewState, internalData, externalData);
+      this.viewState = { projects: this.model.getAllItems() };
+      Object.assign(this.viewState, externalData);
       this.view.setState(this.viewState);
-      this.clearNonCategorizedProjects();
    }
 
    clearNonCategorizedProjects() {

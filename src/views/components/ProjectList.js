@@ -43,15 +43,15 @@ class ProjectList extends HTMLElement {
       this.append(list);
    }
 
-   highlightCurrentFilter(filterElm) {
-      if (document.querySelector(`[current-filter]`)) {
-         document
-            .querySelector(`[current-filter]`)
-            .removeAttribute('current-filter');
-      }
+   // highlightCurrentFilter(filterElm) {
+   //    if (document.querySelector(`[current-filter]`)) {
+   //       document
+   //          .querySelector(`[current-filter]`)
+   //          .removeAttribute('current-filter');
+   //    }
 
-      filterElm.setAttribute('current-filter', '');
-   }
+   //    filterElm.setAttribute('current-filter', '');
+   // }
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
@@ -67,6 +67,7 @@ class ProjectList extends HTMLElement {
          ) {
             const filterElm = ev.target.closest('editable-li');
             const data = {
+               id: filterElm.getAttribute('id'),
                type: filterElm.getAttribute('data-type'),
                value: filterElm.getAttribute('id'),
             };
@@ -76,14 +77,14 @@ class ProjectList extends HTMLElement {
                   !filterElm.hasAttribute('current-filter') &&
                   filterElm.closest('exp-list').hasAttribute('expanded')
                ) {
-                  this.highlightCurrentFilter(filterElm);
+                  // this.highlightCurrentFilter(filterElm);
                   pubsub.publish('filter:changed', data);
                   return;
                }
                filterElm.closest('exp-list').toggleList();
             }
 
-            this.highlightCurrentFilter(filterElm);
+            // this.highlightCurrentFilter(filterElm);
             pubsub.publish('filter:changed', data);
          }
       });

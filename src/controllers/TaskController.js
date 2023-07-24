@@ -11,16 +11,14 @@ class TaskController {
          type: 'all',
          value: null,
       };
-      this.viewState = {
-         tasks: this.getCurrentFilterTasks(),
-      };
+
       [
          {
             dataType: 'task',
             title: 'dayhsdafja',
             date: '2023-07-03',
-            projectId: '001',
-            categoryId: '01',
+            projectId: 'p001',
+            categoryId: 'c01',
             priority: '1',
             description:
                'Lorem Applies a hue rotation on the image. The value defines the number of degrees around the color circle the image samples will be adjusted. 0deg is default, and represents the original image.',
@@ -43,7 +41,7 @@ class TaskController {
 
             title: 'asddfvmnbggf',
             date: '2023-06-01',
-            projectId: '002',
+            projectId: 'p002',
             completed: false,
             priority: '2',
          },
@@ -51,7 +49,7 @@ class TaskController {
             dataType: 'task',
             title: 'asdj;l;f',
             date: '2023-06-01',
-            projectId: '003',
+            projectId: 'p003',
             completed: false,
             priority: '3',
          },
@@ -60,7 +58,7 @@ class TaskController {
             dataType: 'task',
             title: 'asdj;xcvbvbl;f',
             date: '2023-06-01',
-            projectId: '003',
+            projectId: 'p003',
             completed: false,
             priority: '4',
          },
@@ -75,6 +73,7 @@ class TaskController {
       pubsub.subscribe('task:add', this.handleAddTask.bind(this));
       pubsub.subscribe('task:update', this.handleUpdateTask.bind(this));
       pubsub.subscribe('task:delete', this.handleDeleteTask.bind(this));
+      pubsub.subscribe('project:deleted', this.handleProjectDeleted.bind(this));
       pubsub.subscribe('projects:updated', this.buildViewState.bind(this));
       pubsub.subscribe('categories:updated', this.buildViewState.bind(this));
       pubsub.subscribe('filter:changed', this.handleFilterChange.bind(this));
@@ -89,32 +88,33 @@ class TaskController {
 
    handleDeleteTask(taskId) {
       this.model.deleteItem(taskId);
+      this.view.deleteCard(taskId);
    }
 
    handleUpdateTask(newTaskData) {
       this.model.updateItem(newTaskData.id, newTaskData);
       const editedTask = this.model.getItemById(newTaskData.id);
+
       this.view.updateCard(editedTask);
    }
 
    buildViewState(externalData) {
-      // const internalData = {
-      //    tasks: this.getCurrentFilterTasks(),
-      // };
+      this.viewState = {
+         currentFilter: this.currentFilter,
+         tasks: this.getCurrentFilterTasks(),
+      };
+
       Object.assign(this.viewState, externalData);
-      this.clearDeletedProjectsTasks();
+
       this.view.setState(this.viewState);
    }
 
-   clearDeletedProjectsTasks() {
+   handleProjectDeleted(projectId) {
+      this.viewState.projects = this.viewState.projects.filter(
+         (project) => project.id !== projectId
+      );
       this.model.getAllItems().forEach((task) => {
-         const taskProject = this.viewState.projects.find(
-            (project) => project.id === task.projectId
-         );
-
-         if (!taskProject) {
-            this.handleDeleteTask(task.id);
-         }
+         if (task.projectId === projectId) this.handleDeleteTask(task.id);
       });
    }
 
@@ -129,7 +129,10 @@ class TaskController {
    handleFilterChange(filterData) {
       this.currentFilter = filterData;
       const tasks = this.getCurrentFilterTasks();
-      Object.assign(this.viewState, { tasks });
+      Object.assign(this.viewState, {
+         currentFilter: this.currentFilter,
+         tasks,
+      });
       this.view.setState(this.viewState);
    }
 }

@@ -84,9 +84,6 @@ class TaskDetails extends HTMLElement {
 
          this.passData();
          this.remove();
-         document
-            .querySelector(`task-card[editing]`)
-            .removeAttribute('editing');
       });
 
       this.addEventListener('click', (ev) => {
@@ -124,7 +121,8 @@ class TaskDetails extends HTMLElement {
          projectId: selectProject.options[selectProject.selectedIndex].id,
          priority: selectPriority.options[selectPriority.selectedIndex].id,
          categoryId:
-            selectProject.options[selectProject.selectedIndex].parentElement.id,
+            selectProject.options[selectProject.selectedIndex].parentElement
+               .id || null,
          checklist: [],
       };
 
@@ -148,6 +146,14 @@ class TaskDetails extends HTMLElement {
          })
          .appendTo(form);
 
+      const noProjectOption = createElement('option')
+         .setAttributes({
+            value: '',
+            selected: '',
+         })
+         .setContent('Select a project')
+         .prependTo(selectProject);
+
       this.state.categories.forEach((category) => {
          const optGrp = createElement('optgroup').setAttributes({
             label: category.title,
@@ -167,6 +173,7 @@ class TaskDetails extends HTMLElement {
 
             if (project.id === this.state.task.projectId) {
                option.setAttribute('selected', true);
+               noProjectOption.removeAttribute('selected');
             }
          });
 

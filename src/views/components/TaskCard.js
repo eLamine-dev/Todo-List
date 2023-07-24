@@ -14,7 +14,7 @@ class TaskCard extends HTMLElement {
          .setAttributes({ class: 'tags' })
          .appendTo(this);
 
-      if (this.state.taskProject) {
+      if (this.state.taskProject !== '') {
          const category = createElement('div')
             .setContent(this.state.projectCategory)
             .capitalFirstLetter()

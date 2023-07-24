@@ -133,6 +133,16 @@ class AddTaskForm extends HTMLFormElement {
    }
 
    setupSelectProjectList(selectProject) {
+      const noProjectOption = createElement('option')
+         .setAttributes({
+            selected: '',
+            value: '',
+            // disabled: '',
+            // hidden: '',
+         })
+         .setContent('Select a project')
+         .prependTo(selectProject);
+
       this.state.categories.forEach((category) => {
          const optGrp = createElement('optgroup').setAttributes({
             label: category.title,
@@ -149,20 +159,17 @@ class AddTaskForm extends HTMLFormElement {
                   id: project.id,
                })
                .setContent(project.title);
+            if (
+               this.state.currentFilter.type === 'project' &&
+               project.id === this.state.currentFilter.value
+            ) {
+               option.setAttribute('selected', '');
+               noProjectOption.removeAttribute('selected');
+            }
             optGrp.appendChild(option);
          });
          selectProject.appendChild(optGrp);
       });
-
-      const noProjecOption = createElement('option')
-         .setAttributes({
-            disabled: '',
-            selected: '',
-            hidden: '',
-            value: '',
-         })
-         .setContent('Select a project')
-         .prependTo(selectProject);
    }
 
    setUpPriorities(selectPriority) {

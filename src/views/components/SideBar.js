@@ -1,6 +1,7 @@
 import { compareAsc, format, getWeek, startOfWeek, endOfWeek } from 'date-fns';
 import createElement from '../../utils/ElementBuilder';
 import pubsub from '../../utils/PubSub';
+import { th } from 'date-fns/locale';
 
 class SideBar extends HTMLElement {
    connectedCallback() {
@@ -53,13 +54,16 @@ class SideBar extends HTMLElement {
          .prependTo(this);
    }
 
-   highlightCurrentFilter(filterElm) {
+   highlightCurrentFilter(filterData) {
       if (document.querySelector(`[current-filter]`)) {
          document
             .querySelector(`[current-filter]`)
             .removeAttribute('current-filter');
       }
-      filterElm.setAttribute('current-filter', '');
+      this.querySelector(`[id=${filterData.id}]`).setAttribute(
+         'current-filter',
+         ''
+      );
    }
 
    addEventListeners() {
@@ -71,6 +75,7 @@ class SideBar extends HTMLElement {
                return;
             }
             const data = {
+               id: ev.target.getAttribute('id'),
                type: ev.target.getAttribute('filter-type'),
                value: ev.target.getState().value,
             };
@@ -78,6 +83,11 @@ class SideBar extends HTMLElement {
             pubsub.publish('filter:changed', data);
          }
       });
+
+      pubsub.subscribe(
+         'filter:changed',
+         this.highlightCurrentFilter.bind(this)
+      );
    }
 }
 

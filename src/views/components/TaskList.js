@@ -11,6 +11,7 @@ class TaskList extends HTMLElement {
       const addTaskForm = new AddTaskForm({
          projects: this.state.projects,
          categories: this.state.categories,
+         currentFilter: this.state.currentFilter,
       });
       this.prepend(addTaskForm);
       this.state.tasks.forEach((task) => {
@@ -42,26 +43,28 @@ class TaskList extends HTMLElement {
          (project) => project.id === task.projectId
       );
       if (taskProject) {
-         if (!taskProject) {
-            return;
-         }
-
          const projectCategory = this.state.categories.find(
             (category) => category.id === taskProject.categoryId
          );
-
-         if (!projectCategory) {
-            return;
-         }
 
          Object.assign(task, {
             taskProject: taskProject.title,
             projectCategory: projectCategory.title,
          });
+      } else {
+         Object.assign(task, {
+            taskProject: '',
+            projectCategory: '',
+         });
       }
       const newCard = createElement('task-card').setState(task);
 
       return newCard;
+   }
+
+   deleteCard(taskId) {
+      const card = this.querySelector(`task-card[task-id=${taskId}]`);
+      this.removeChild(card);
    }
 }
 
