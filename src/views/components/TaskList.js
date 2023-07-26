@@ -7,6 +7,7 @@ import { format } from 'date-fns';
 class TaskList extends HTMLElement {
    connectedCallback() {
       this.render();
+      this.addEventListeners();
    }
 
    render() {
@@ -39,6 +40,19 @@ class TaskList extends HTMLElement {
          .capitalFirstLetter()
          .setAttributes({ class: 'header' })
          .prependTo(this);
+
+      const sideBarToggle = createElement('button')
+         .setAttributes({ class: 'toggle-side-bar' })
+         .appendIcon('fa-solid fa-bars')
+         .prependTo(header);
+   }
+
+   addEventListeners() {
+      this.addEventListener('click', (ev) => {
+         if (ev.target.matches('.toggle-side-bar')) {
+            pubsub.publish('side-bar:toggle');
+         }
+      });
    }
 
    updateCard(task) {

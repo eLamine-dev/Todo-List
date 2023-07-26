@@ -43,15 +43,17 @@ class ProjectList extends HTMLElement {
       this.append(list);
    }
 
-   // highlightCurrentFilter(filterElm) {
-   //    if (document.querySelector(`[current-filter]`)) {
-   //       document
-   //          .querySelector(`[current-filter]`)
-   //          .removeAttribute('current-filter');
-   //    }
-
-   //    filterElm.setAttribute('current-filter', '');
-   // }
+   highlightCurrentFilter(filterData) {
+      if (document.querySelector(`[current-filter]`)) {
+         document
+            .querySelector(`[current-filter]`)
+            .removeAttribute('current-filter');
+      }
+      this.querySelector(`[id=${filterData.id}]`).setAttribute(
+         'current-filter',
+         ''
+      );
+   }
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
@@ -77,14 +79,14 @@ class ProjectList extends HTMLElement {
                   !filterElm.hasAttribute('current-filter') &&
                   filterElm.closest('exp-list').hasAttribute('expanded')
                ) {
-                  // this.highlightCurrentFilter(filterElm);
+                  this.highlightCurrentFilter(filterElm);
                   pubsub.publish('filter:changed', data);
                   return;
                }
                filterElm.closest('exp-list').toggleList();
             }
 
-            // this.highlightCurrentFilter(filterElm);
+            this.highlightCurrentFilter(filterElm);
             pubsub.publish('filter:changed', data);
          }
       });

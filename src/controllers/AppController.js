@@ -33,6 +33,7 @@ class AppController {
 
    initializeListeners() {
       pubsub.subscribe('task:edit', this.openTaskEdit.bind(this));
+      pubsub.subscribe('side-bar:toggle', this.toggleSideBar.bind(this));
    }
 
    openTaskEdit(taskId) {
@@ -41,6 +42,11 @@ class AppController {
       const task = this.taskController.model.getItemById(taskId);
 
       this.view.openTaskDetails({ task, categories, projects });
+   }
+
+   toggleSideBar() {
+      console.log('hello');
+      this.view.toggleSideBar();
    }
 }
 

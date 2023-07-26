@@ -12,6 +12,10 @@ class AppPage extends HTMLElement {
          .setState(taskEditState)
          .appendTo(this);
    }
+
+   toggleSideBar() {
+      this.toggleAttribute('sidebar-open');
+   }
 }
 
 customElements.define('app-page', AppPage);

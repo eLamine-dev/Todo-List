@@ -77,7 +77,6 @@ class TaskController {
    }
 
    handleFilterChange(filterData) {
-      console.log('folter');
       this.currentSort = '';
       this.currentFilter = filterData;
       const tasks = this.getCurrentFilterTasks();

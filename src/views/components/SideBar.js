@@ -11,7 +11,6 @@ class SideBar extends HTMLElement {
    render() {
       const today = new Date();
       const week = { start: startOfWeek(today), end: endOfWeek(today) };
-      console.log(week);
       const defaultFilters = [
          { title: 'all', type: 'all', value: 'all', icon: 'fa-solid fa-inbox' },
          {
@@ -85,11 +84,6 @@ class SideBar extends HTMLElement {
             pubsub.publish('filter:changed', data);
          }
       });
-
-      pubsub.subscribe(
-         'filter:changed',
-         this.highlightCurrentFilter.bind(this)
-      );
    }
 }
 
