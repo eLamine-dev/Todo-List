@@ -3,7 +3,8 @@ import pubsub from '../utils/PubSub';
 import TaskCard from '../views/components/TaskCard';
 
 class TaskController {
-   constructor(taskModel, taskView, filter) {
+   constructor(taskModel, taskView, filter, sorter) {
+      this.sorter = sorter;
       this.filter = filter;
       this.model = taskModel;
       this.view = taskView;
@@ -77,6 +78,7 @@ class TaskController {
       pubsub.subscribe('projects:updated', this.buildViewState.bind(this));
       pubsub.subscribe('categories:updated', this.buildViewState.bind(this));
       pubsub.subscribe('filter:changed', this.handleFilterChange.bind(this));
+      pubsub.subscribe('sorting-changed', this.handleSortingChanged.bind(this));
    }
 
    handleAddTask(data) {
@@ -133,6 +135,17 @@ class TaskController {
       Object.assign(this.viewState, {
          currentFilter: this.currentFilter,
          tasks,
+      });
+      this.view.setState(this.viewState);
+   }
+
+   handleSortingChanged(sortingType) {
+      this.currentSort = sortingType;
+      const tasks = this.getCurrentFilterTasks();
+      const sortedTasks = this.sorter.sortBy(sortingType, tasks);
+      Object.assign(this.viewState, {
+         currentSort: this.currentSort,
+         tasks: sortedTasks,
       });
       this.view.setState(this.viewState);
    }

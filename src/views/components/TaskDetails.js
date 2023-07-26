@@ -27,7 +27,7 @@ class TaskDetails extends HTMLElement {
             value:
                this.state.task.title.charAt(0).toUpperCase() +
                this.state.task.title.slice(1),
-            maxlength: '0',
+            maxlength: '50',
             minlength: '5',
             required: '',
          })

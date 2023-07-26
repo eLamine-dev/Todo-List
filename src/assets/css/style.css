@@ -5,10 +5,7 @@
    margin: 0;
    padding: 0;
    box-sizing: border-box;
-   /* font-family: 'gg sans', sans-serif; */
-   /* font-family: 'gg sans Normal', sans-serif; */
    font-family: 'gg sans Medium', sans-serif;
-   /* font-family: 'gg sans SemiBold', sans-serif; */
 }
 
 :root {
@@ -57,6 +54,47 @@ task-list {
    border-radius: 0 0.6rem 0.6rem 0;
    padding: 0 0.5rem;
    margin-right: 0.5rem;
+}
+
+.sorting-section {
+   display: flex;
+   width: min(100%, 900px);
+   gap: 2rem;
+   padding: 0 1rem;
+   align-items: center;
+}
+
+.sorting-option input {
+   display: block;
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+}
+
+.sorting-option input[type='radio'] {
+   opacity: 0.011;
+   z-index: 100;
+}
+
+.sorting-option input[type='radio']:checked + label {
+   background-color: var(--dark);
+   border: var(--blurple) solid 1px;
+   filter: brightness(2);
+}
+
+.sorting-option label {
+   cursor: pointer;
+   z-index: 90;
+   line-height: 1.8em;
+   height: 1.8rem;
+   display: flex;
+   align-items: center;
+   background-color: var(--dark);
+   padding: 0 0.6rem;
+   position: relative;
+   border-radius: 0.9rem;
 }
 
 task-card {
@@ -155,11 +193,6 @@ task-card .edit-btn {
    color: var(--light);
 }
 
-/* task-card .edit-btn:hover,
-task-card[editing] .edit-btn {
-   color: var(--blurple);
-} */
-
 task-card .delete {
    color: var(--light);
 }
@@ -185,35 +218,7 @@ task-card .checkbox-label input {
 
 .checkmark {
    color: var(--light);
-   /* position: relative;
-   box-shadow: rgba(255, 85, 0, 0.478) 0px 0px 0px 2px;
-   background-color: rgba(16, 16, 16, 0.5);
-   height: 1rem;
-   width: 1rem;
-   flex-shrink: 0;
-   transition: all 0.2s ease 0s;
-   cursor: pointer;
-   transform-origin: 0px 10px;
-   border-radius: 4px;
-   padding: 0px;
-   box-sizing: content-box; */
 }
-
-task-card .checkbox-label input:checked ~ .checkmark {
-   /* color: var(--green); */
-   /* box-shadow: rgb(255, 84, 0) 0px 0px 0px 2px;
-   background-color: rgba(245, 24, 24, 0.5); */
-}
-
-/* .checkmark:after {
-   content: '';
-   position: absolute;
-   opacity: 30%;
-} */
-
-/* task-card .checkbox-label input:checked ~ .checkmark:after {
-   opacity: 100%;
-} */
 
 task-card .checkbox-label .checkmark:after {
    left: 0.3em;
@@ -478,6 +483,7 @@ project-list exp-list ul {
    overflow: hidden;
    padding-left: 1rem;
    padding-top: 0.2rem;
+   transition: height 0.5s ease-out;
 }
 
 project-list editable-li,
@@ -655,6 +661,7 @@ editable-li[active] .item-title {
    align-content: start;
    border-radius: 0.4rem;
    padding: 1rem;
+   flex: 1;
 }
 
 .checklist editable-li {
@@ -701,14 +708,6 @@ editable-li[active] .item-title {
    text-decoration: line-through;
 }
 
-.checklist {
-   display: flex;
-   flex-direction: column;
-   gap: 1rem;
-
-   min-height: 6rem;
-}
-
 task-details {
    height: 100vh;
    z-index: 1;
@@ -736,7 +735,7 @@ task-details form {
    display: flex;
    flex-direction: column;
    gap: 1.2rem;
-   padding: 0 2rem;
+   padding: 2rem;
 }
 
 task-details form select,
@@ -747,15 +746,14 @@ task-details form [name='date-input'] {
    background-color: var(--darker);
    padding: 0 1rem;
    min-height: 2rem;
-   width: 12rem;
-   align-self: center;
+   width: 14rem;
+   align-self: flex-start;
    border-radius: 0.5rem;
    font-family: 'gg sans Medium', sans-serif;
    font-size: 1rem;
    white-space: nowrap;
    overflow: hidden;
    text-overflow: ellipsis;
-   max-width: 12rem;
 }
 
 task-details form [name='title-input'],

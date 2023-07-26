@@ -1,7 +1,13 @@
 const sortingStrategies = [
    {
       type: 'priority',
-      filter: (tasks) => tasks.sort((a, b) => b.priority - a.priority),
+      sort: (tasks) =>
+         tasks.sort((a, b) => Number(a.priority) - Number(b.priority)),
+   },
+
+   {
+      type: 'date',
+      sort: (tasks) => tasks.sort((a, b) => b.date - a.date),
    },
 ];
 
@@ -13,14 +19,15 @@ class Sorter {
 
    addStrategies(strategies) {
       strategies.forEach((strategy) => {
-         this.strategies.set(strategy.type, strategy.Filter);
+         this.strategies.set(strategy.type, strategy.sort);
       });
    }
 
-   SortBy(type, tasks) {
-      const strategy = this.strategies.get(type);
-      if (strategy) {
-         return strategy.sort(tasks);
+   sortBy(type, tasks) {
+      const sort = this.strategies.get(type);
+
+      if (sort) {
+         return sort(tasks);
       }
 
       return tasks;

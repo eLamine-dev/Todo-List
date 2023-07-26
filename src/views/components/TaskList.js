@@ -1,10 +1,12 @@
 import TaskCard from './TaskCard';
 import createElement from '../../utils/ElementBuilder';
 import AddTaskForm from './AddTaskForm';
+import pubsub from '../../utils/PubSub';
 
 class TaskList extends HTMLElement {
    connectedCallback() {
       this.render();
+      this.addEventListeners();
    }
 
    render() {
@@ -14,6 +16,13 @@ class TaskList extends HTMLElement {
          currentFilter: this.state.currentFilter,
       });
       this.prepend(addTaskForm);
+
+      const sortingSection = createElement('div')
+         .setAttributes({ class: 'sorting-section' })
+         .setContent('Sort by:')
+         .appendTo(this);
+      this.addSortingOptions(sortingSection);
+
       this.state.tasks.forEach((task) => {
          const taskCard = this.makeTaskCard(task);
          if (!taskCard) {
@@ -29,6 +38,19 @@ class TaskList extends HTMLElement {
          .setContent(`#${currentFilter}`)
          .setAttributes({ class: 'header' })
          .prependTo(this);
+   }
+
+   addEventListeners() {
+      const sortingOptions = this.querySelectorAll(
+         'input[name=sorting-option]'
+      );
+      sortingOptions.forEach((option) => {
+         option.addEventListener('change', (event) => {
+            if (event.target.checked) {
+               pubsub.publish('sorting-changed', event.target.value);
+            }
+         });
+      });
    }
 
    updateCard(task) {
@@ -66,8 +88,37 @@ class TaskList extends HTMLElement {
       const card = this.querySelector(`task-card[task-id=${taskId}]`);
       this.removeChild(card);
    }
-}
 
+   addSortingOptions(sortingSection) {
+      const sortingOptions = ['priority', 'date'];
+      sortingOptions.forEach((option) => {
+         const container = createElement('div').setAttributes({
+            class: 'sorting-option',
+         });
+
+         const choiceInput = createElement('input')
+            .setAttributes({
+               type: 'radio',
+               id: option,
+               name: 'sorting-option',
+               value: option,
+            })
+            .appendTo(container);
+
+         if (choiceInput.value === this.state.currentSort) {
+            choiceInput.checked = true;
+         }
+
+         createElement('label')
+            .setAttributes({ for: option })
+            .setContent(option)
+            .capitalFirstLetter()
+            .appendTo(container);
+
+         sortingSection.appendChild(container);
+      });
+   }
+}
 customElements.define('task-list', TaskList);
 
 export default TaskList;

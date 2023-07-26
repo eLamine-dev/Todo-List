@@ -10,18 +10,25 @@ import AppPage from './views/pages/AppPage';
 import createElement from './utils/ElementBuilder';
 import AppController from './controllers/AppController';
 import Filter from './strategies/Filter';
+import Sorter from './strategies/Sorter';
 
 export default function initializeApp() {
    const taskModel = new TaskModel();
    const projectModel = new ProjectModel();
    const categoryModel = new CategoryModel();
    const filter = new Filter();
+   const sorter = new Sorter();
 
    const taskList = createElement('task-list');
    const projectList = createElement('project-list');
    const appPage = createElement('app-page');
 
-   const taskController = new TaskController(taskModel, taskList, filter);
+   const taskController = new TaskController(
+      taskModel,
+      taskList,
+      filter,
+      sorter
+   );
    const projectController = new ProjectController(projectModel, projectList);
    const categoryController = new CategoryController(categoryModel);
 

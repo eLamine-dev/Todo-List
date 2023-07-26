@@ -3,9 +3,18 @@ import ObjectBuilder from '../utils/ObjectBuilder';
 class BaseModel {
    constructor(collectionName) {
       this.collectionName = collectionName;
-      this[collectionName] =
-         Array.from(JSON.parse(localStorage.getItem(this.collectionName))) ||
-         [];
+      this[collectionName] = [];
+      this.retrieveFromLocalStorage();
+   }
+
+   retrieveFromLocalStorage() {
+      const itemsData = Array.from(
+         JSON.parse(localStorage.getItem(this.collectionName))
+      );
+      itemsData.forEach((item) => {
+         const object = new ObjectBuilder(item);
+         this[this.collectionName].push(object);
+      });
    }
 
    saveToLocalStorage() {
