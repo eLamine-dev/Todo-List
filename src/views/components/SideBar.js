@@ -47,10 +47,19 @@ class SideBar extends HTMLElement {
       this.prepend(defaultFiltersUl);
 
       const header = createElement('header')
-         .setContent('ToBe.')
          .setAttributes({ class: 'header' })
-         .prependIcon('fa-solid fa-fire')
          .prependTo(this);
+
+      const icon = createElement('div')
+         .setContent('ToBe.')
+         .setAttributes({ class: 'icon' })
+         .prependIcon('fa-solid fa-fire')
+         .prependTo(header);
+
+      const closeSideBar = createElement('button')
+         .appendIcon('fa-solid fa-square-caret-left')
+         .setAttributes({ class: 'close-side-bar' })
+         .appendTo(header);
    }
 
    highlightCurrentFilter(filterData) {
@@ -83,10 +92,13 @@ class SideBar extends HTMLElement {
             this.highlightCurrentFilter(ev.target);
             pubsub.publish('filter:changed', data);
          }
+
+         if (ev.target.classList.contains('close-side-bar')) {
+            this.parentElement.removeAttribute('sidebar-open');
+         }
       });
    }
 }
-
 customElements.define('side-bar', SideBar);
 
 export default SideBar;

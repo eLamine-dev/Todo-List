@@ -45,7 +45,6 @@ class AppController {
    }
 
    toggleSideBar() {
-      console.log('hello');
       this.view.toggleSideBar();
    }
 }

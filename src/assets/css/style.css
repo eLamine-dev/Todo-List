@@ -75,7 +75,6 @@ task-list {
 
 .sorting-option input[type='radio'] {
    opacity: 0.011;
-   z-index: 100;
 }
 
 .sorting-option input[type='radio']:checked + label {
@@ -86,7 +85,7 @@ task-list {
 
 .sorting-option label {
    cursor: pointer;
-   z-index: 90;
+
    line-height: 1.8em;
    height: 1.8rem;
    display: flex;
@@ -430,6 +429,7 @@ side-bar {
    gap: 3rem;
    background-color: var(--dark);
    overflow: auto;
+   z-index: 1;
 }
 
 .header {
@@ -447,24 +447,23 @@ side-bar {
 }
 
 side-bar .header {
-   justify-content: start;
+   justify-content: space-between;
+
+   padding: 0 1rem;
+}
+
+side-bar .header .icon {
+   display: flex;
+   gap: 0.4rem;
    font-family: 'Lilita One', cursive;
-   gap: 0.6rem;
    font-size: 1.7rem;
-   background-size: 70%;
-   padding-left: 1rem;
+   background-size: 100%;
    background-repeat: no-repeat;
    -webkit-background-clip: text;
    -webkit-text-fill-color: transparent;
    -moz-background-clip: text;
    -moz-text-fill-color: transparent;
-
    background-image: linear-gradient(45deg, #f8f161, #af4242);
-}
-
-side-bar .header i {
-   color: var(--red);
-   font-size: 1.5rem;
 }
 
 side-bar .default-filters-ul {
@@ -842,13 +841,19 @@ task-details form [name='save-task'] {
    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }
 
-task-list .header .toggle-side-bar {
+task-list .header .toggle-side-bar,
+side-bar .header .close-side-bar {
    width: 2rem;
    height: 2rem;
    font-size: 1.1rem;
    border-radius: 0.2rem;
    color: var(--lightest);
    background-color: var(--dark);
+}
+
+side-bar .header .close-side-bar {
+   font-size: 1.2rem;
+   display: none;
 }
 
 @media only screen and (min-width: 700px) {
@@ -867,7 +872,21 @@ task-list .header .toggle-side-bar {
    }
 
    app-page[sidebar-open] {
-      grid-template-columns: minmax(250px, 1fr) 7fr;
+      grid-template-columns: 7fr;
+   }
+
+   app-page[sidebar-open] side-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 2;
+      box-shadow: 5px 0 5px -2px rgba(0, 0, 0, 0.5);
+   }
+
+   app-page[sidebar-open] .close-side-bar {
+      display: block;
+      z-index: 100;
    }
 
    task-list .header .toggle-side-bar {
