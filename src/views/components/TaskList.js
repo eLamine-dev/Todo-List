@@ -2,11 +2,11 @@ import TaskCard from './TaskCard';
 import createElement from '../../utils/ElementBuilder';
 import AddTaskForm from './AddTaskForm';
 import pubsub from '../../utils/PubSub';
+import { format } from 'date-fns';
 
 class TaskList extends HTMLElement {
    connectedCallback() {
       this.render();
-      this.addEventListeners();
    }
 
    render() {
@@ -17,11 +17,11 @@ class TaskList extends HTMLElement {
       });
       this.prepend(addTaskForm);
 
-      const sortingSection = createElement('div')
-         .setAttributes({ class: 'sorting-section' })
+      const controlSection = createElement('div')
+         .setAttributes({ class: 'control-section' })
          .setContent('Sort by:')
          .appendTo(this);
-      this.addSortingOptions(sortingSection);
+      this.setupControls(controlSection);
 
       this.state.tasks.forEach((task) => {
          const taskCard = this.makeTaskCard(task);
@@ -36,21 +36,9 @@ class TaskList extends HTMLElement {
 
       const header = createElement('header')
          .setContent(`#${currentFilter}`)
+         .capitalFirstLetter()
          .setAttributes({ class: 'header' })
          .prependTo(this);
-   }
-
-   addEventListeners() {
-      const sortingOptions = this.querySelectorAll(
-         'input[name=sorting-option]'
-      );
-      sortingOptions.forEach((option) => {
-         option.addEventListener('change', (event) => {
-            if (event.target.checked) {
-               pubsub.publish('sorting-changed', event.target.value);
-            }
-         });
-      });
    }
 
    updateCard(task) {
@@ -89,8 +77,8 @@ class TaskList extends HTMLElement {
       this.removeChild(card);
    }
 
-   addSortingOptions(sortingSection) {
-      const sortingOptions = ['priority', 'date'];
+   setupControls(controlSection) {
+      const sortingOptions = ['priority', 'due date'];
       sortingOptions.forEach((option) => {
          const container = createElement('div').setAttributes({
             class: 'sorting-option',
@@ -105,6 +93,12 @@ class TaskList extends HTMLElement {
             })
             .appendTo(container);
 
+         choiceInput.addEventListener('change', (event) => {
+            if (event.target.checked) {
+               pubsub.publish('sorting:changed', event.target.value);
+            }
+         });
+
          if (choiceInput.value === this.state.currentSort) {
             choiceInput.checked = true;
          }
@@ -115,8 +109,89 @@ class TaskList extends HTMLElement {
             .capitalFirstLetter()
             .appendTo(container);
 
-         sortingSection.appendChild(container);
+         controlSection.appendChild(container);
       });
+      if (
+         this.state.currentFilter.type === 'date' ||
+         this.state.currentFilter.type === 'date-range'
+      ) {
+         const nextPreviousBtns = createElement('div')
+            .setAttributes({ class: 'next-previous-btns' })
+            .appendTo(controlSection);
+
+         createElement('span')
+            .setContent('Next/Previous')
+            .appendTo(nextPreviousBtns);
+
+         createElement('button')
+            .setAttributes({ class: 'previous-btn' })
+            .appendIcon('fa-solid fa-angle-left')
+            .appendTo(nextPreviousBtns);
+
+         const label = createElement('div')
+            .setAttributes({ class: 'dates' })
+            .appendTo(nextPreviousBtns);
+         if (this.state.currentFilter.type === 'date-range') {
+            createElement('div')
+               .setContent(
+                  format(this.state.currentFilter.value.start, 'E, MMM dd yyyy')
+               )
+               .appendTo(label);
+            createElement('div')
+               .setContent(
+                  format(this.state.currentFilter.value.end, 'E, MMM dd yyyy')
+               )
+               .appendTo(label);
+         }
+         if (this.state.currentFilter.type === 'date') {
+            createElement('div')
+               .setContent(
+                  format(this.state.currentFilter.value, 'E, MMM dd yyyy')
+               )
+               .appendTo(label);
+         }
+
+         createElement('button')
+            .setAttributes({ class: 'next-btn' })
+            .appendIcon('fa-solid fa-angle-right')
+            .appendTo(nextPreviousBtns);
+
+         nextPreviousBtns.addEventListener('click', (event) => {
+            if (event.target.classList.contains('next-btn')) {
+               if (this.state.currentFilter.type === 'date-range') {
+                  this.state.currentFilter.value.start.setDate(
+                     this.state.currentFilter.value.start.getDate() + 7
+                  );
+                  this.state.currentFilter.value.end.setDate(
+                     this.state.currentFilter.value.end.getDate() + 7
+                  );
+               }
+               if (this.state.currentFilter.type === 'date') {
+                  this.state.currentFilter.value.setDate(
+                     this.state.currentFilter.value.getDate() + 1
+                  );
+               }
+            }
+
+            if (event.target.classList.contains('previous-btn')) {
+               if (this.state.currentFilter.type === 'date-range') {
+                  this.state.currentFilter.value.start.setDate(
+                     this.state.currentFilter.value.start.getDate() - 7
+                  );
+                  this.state.currentFilter.value.end.setDate(
+                     this.state.currentFilter.value.end.getDate() - 7
+                  );
+               }
+               if (this.state.currentFilter.type === 'date') {
+                  this.state.currentFilter.value.setDate(
+                     this.state.currentFilter.value.getDate() - 1
+                  );
+               }
+            }
+
+            pubsub.publish('filter:changed', this.state.currentFilter);
+         });
+      }
    }
 }
 customElements.define('task-list', TaskList);

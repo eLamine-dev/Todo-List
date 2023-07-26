@@ -1,7 +1,6 @@
 import { compareAsc, format, getWeek, startOfWeek, endOfWeek } from 'date-fns';
 import createElement from '../../utils/ElementBuilder';
 import pubsub from '../../utils/PubSub';
-import { th } from 'date-fns/locale';
 
 class SideBar extends HTMLElement {
    connectedCallback() {
@@ -12,16 +11,17 @@ class SideBar extends HTMLElement {
    render() {
       const today = new Date();
       const week = { start: startOfWeek(today), end: endOfWeek(today) };
+      console.log(week);
       const defaultFilters = [
-         { id: 'all', type: 'all', value: 'all', icon: 'fa-solid fa-inbox' },
+         { title: 'all', type: 'all', value: 'all', icon: 'fa-solid fa-inbox' },
          {
-            id: 'today',
+            title: 'today',
             type: 'date',
-            value: format(today, 'yyyy-MM-dd'),
+            value: today,
             icon: 'fa-solid fa-calendar-day',
          },
          {
-            id: 'upcoming',
+            title: 'week',
             type: 'date-range',
             value: week,
             icon: 'fa-solid fa-calendar-week',
@@ -34,13 +34,13 @@ class SideBar extends HTMLElement {
       defaultFilters.forEach((filter) => {
          const filterLi = createElement('li')
             .setState(filter)
-            .setContent(filter.id)
+            .setContent(filter.title)
             .capitalFirstLetter()
             .prependIcon(filter.icon)
             .setAttributes({
                'filter-type': filter.type,
                class: 'default-filter',
-               id: filter.id,
+               id: filter.title,
             });
          if (filter.type === 'all') filterLi.setAttribute('current-filter', '');
          defaultFiltersUl.appendChild(filterLi);
@@ -75,10 +75,12 @@ class SideBar extends HTMLElement {
                return;
             }
             const data = {
+               title: ev.target.state.title,
                id: ev.target.getAttribute('id'),
                type: ev.target.getAttribute('filter-type'),
                value: ev.target.getState().value,
             };
+
             this.highlightCurrentFilter(ev.target);
             pubsub.publish('filter:changed', data);
          }

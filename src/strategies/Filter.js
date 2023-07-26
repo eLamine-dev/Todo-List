@@ -1,4 +1,4 @@
-import { isEqual, isWithinInterval } from 'date-fns';
+import { isSameDay, isWithinInterval } from 'date-fns';
 
 const filteringStrategies = [
    {
@@ -11,9 +11,7 @@ const filteringStrategies = [
    {
       type: 'date',
       filter: function filter(tasks, date) {
-         return tasks.filter((task) =>
-            isEqual(new Date(task.date), new Date(date))
-         );
+         return tasks.filter((task) => isSameDay(new Date(task.date), date));
       },
    },
 

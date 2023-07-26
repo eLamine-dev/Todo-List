@@ -8,64 +8,12 @@ class TaskController {
       this.filter = filter;
       this.model = taskModel;
       this.view = taskView;
+      this.currentSort = '';
       this.currentFilter = {
          type: 'all',
+         title: 'all',
          value: null,
       };
-
-      // [
-      //    {
-      //       dataType: 'task',
-      //       title: 'dayhsdafja',
-      //       date: '2023-07-03',
-      //       projectId: 'p001',
-      //       categoryId: 'c01',
-      //       priority: '1',
-      //       description:
-      //          'Lorem Applies a hue rotation on the image. The value defines the number of degrees around the color circle the image samples will be adjusted. 0deg is default, and represents the original image.',
-      //       checklist: [
-      //          {
-      //             title: 'do something',
-      //             checked: false,
-      //             dataType: 'checklist-item',
-      //          },
-      //          {
-      //             title: 'do something2',
-      //             checked: true,
-      //             dataType: 'checklist-item',
-      //          },
-      //       ],
-      //       completed: true,
-      //    },
-      //    {
-      //       dataType: 'task',
-
-      //       title: 'asddfvmnbggf',
-      //       date: '2023-06-01',
-      //       projectId: 'p002',
-      //       completed: false,
-      //       priority: '2',
-      //    },
-      //    {
-      //       dataType: 'task',
-      //       title: 'asdj;l;f',
-      //       date: '2023-06-01',
-      //       projectId: 'p003',
-      //       completed: false,
-      //       priority: '3',
-      //    },
-
-      //    {
-      //       dataType: 'task',
-      //       title: 'asdj;xcvbvbl;f',
-      //       date: '2023-06-01',
-      //       projectId: 'p003',
-      //       completed: false,
-      //       priority: '4',
-      //    },
-      // ].forEach((task) => {
-      //    this.model.addItem(task);
-      // });
 
       this.initializeListeners();
    }
@@ -78,7 +26,7 @@ class TaskController {
       pubsub.subscribe('projects:updated', this.buildViewState.bind(this));
       pubsub.subscribe('categories:updated', this.buildViewState.bind(this));
       pubsub.subscribe('filter:changed', this.handleFilterChange.bind(this));
-      pubsub.subscribe('sorting-changed', this.handleSortingChanged.bind(this));
+      pubsub.subscribe('sorting:changed', this.handleSortingChanged.bind(this));
    }
 
    handleAddTask(data) {
@@ -105,7 +53,6 @@ class TaskController {
          currentFilter: this.currentFilter,
          tasks: this.getCurrentFilterTasks(),
       };
-      console.log(this.viewState);
 
       Object.assign(this.viewState, externalData);
 
@@ -130,9 +77,12 @@ class TaskController {
    }
 
    handleFilterChange(filterData) {
+      console.log('folter');
+      this.currentSort = '';
       this.currentFilter = filterData;
       const tasks = this.getCurrentFilterTasks();
       Object.assign(this.viewState, {
+         currentSort: this.currentSort,
          currentFilter: this.currentFilter,
          tasks,
       });

@@ -2,12 +2,13 @@ const sortingStrategies = [
    {
       type: 'priority',
       sort: (tasks) =>
-         tasks.sort((a, b) => Number(a.priority) - Number(b.priority)),
+         [...tasks].sort((a, b) => Number(a.priority) - Number(b.priority)),
    },
 
    {
-      type: 'date',
-      sort: (tasks) => tasks.sort((a, b) => b.date - a.date),
+      type: 'due date',
+      sort: (tasks) =>
+         [...tasks].sort((a, b) => new Date(a.date) - new Date(b.date)),
    },
 ];
 
