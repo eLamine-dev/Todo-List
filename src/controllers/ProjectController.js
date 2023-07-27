@@ -6,41 +6,6 @@ class ProjectController {
       this.model = projectModel;
       this.view = projectList;
       this.viewState = {};
-      // [
-      //    {
-      //       dataType: 'project',
-      //       title: 'project01',
-      //       id: 'p001',
-      //       categoryId: 'c01',
-      //    },
-      //    {
-      //       dataType: 'project',
-      //       title: 'project02 oiurtouw reutouert eruor',
-      //       id: 'p002',
-      //       categoryId: 'c02',
-      //    },
-      //    {
-      //       dataType: 'project',
-      //       title: 'project03',
-      //       id: 'p003',
-      //       categoryId: 'c01',
-      //    },
-      //    {
-      //       dataType: 'project',
-      //       title: 'project04',
-      //       id: 'p004',
-      //       categoryId: 'c02',
-      //    },
-      //    {
-      //       dataType: 'project',
-      //       title: 'project05',
-      //       id: 'p005',
-      //       categoryId: 'c03',
-      //    },
-      // ].forEach((project) => {
-      //    this.model.addItem(project);
-      // });
-
       this.initializeListeners();
    }
 
@@ -48,7 +13,10 @@ class ProjectController {
       pubsub.subscribe('project:add', this.handleAddProject.bind(this));
       pubsub.subscribe('project:update', this.handleUpdateProject.bind(this));
       pubsub.subscribe('project:delete', this.handleDeleteProject.bind(this));
-      // pubsub.subscribe('categories:updated', this.buildViewState.bind(this));
+      pubsub.subscribe(
+         'category:deleted',
+         this.handleCategoryDelete.bind(this)
+      );
    }
 
    handleAddProject(newProjectLi) {
@@ -75,8 +43,6 @@ class ProjectController {
          });
       }
 
-      // this.view.highlightCurrentFilter(projectCategoryLi);
-
       this.model.deleteItem(projectLi.getAttribute('id'));
       pubsub.publish('project:deleted', projectLi.getAttribute('id'));
    }
@@ -100,6 +66,8 @@ class ProjectController {
             pubsub.publish('project:deleted', project.id);
          }
       });
+
+      this.clearNonCategorizedProjects();
    }
 
    buildViewState(externalData) {

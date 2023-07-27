@@ -1,9 +1,11 @@
+import autoAnimate from '@formkit/auto-animate';
 import pubsub from '../../utils/PubSub';
 import createElement from '../../utils/ElementBuilder';
 import TaskDetails from '../components/TaskDetails';
 
 class AppPage extends HTMLElement {
    connectedCallback() {
+      autoAnimate(this);
       this.addEventListeners();
    }
 

@@ -3,13 +3,6 @@ import pubsub from '../utils/PubSub';
 class CategoryController {
    constructor(categoryModel) {
       this.model = categoryModel;
-      // [
-      //    { dataType: 'category', title: 'personal', id: 'c01' },
-      //    { dataType: 'category', title: 'education', id: 'c02' },
-      //    { dataType: 'category', title: 'work', id: 'c03' },
-      // ].forEach((category) => {
-      //    this.model.addItem(category);
-      // });
       this.initializeListeners();
    }
 
@@ -55,6 +48,7 @@ class CategoryController {
       if (categoryLi.hasAttribute('current-filter')) {
          pubsub.publish('filter:changed', {
             type: 'all',
+            title: 'all',
             value: null,
          });
       }

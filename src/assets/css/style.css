@@ -31,7 +31,7 @@ body {
 
 app-page {
    display: grid;
-   grid-template-columns: minmax(250px, 1fr) 7fr;
+   grid-template-columns: 250px 7fr;
    grid-auto-flow: column;
    grid-auto-columns: 3fr;
    justify-items: stretch;
@@ -58,7 +58,7 @@ task-list {
 }
 
 .fixed-add-task-btn {
-   color: var(--white);
+   color: var(--lightest);
    background-color: var(--blurple);
    display: none;
    height: 3rem;
@@ -66,6 +66,7 @@ task-list {
    font-family: 'gg sans Medium', sans-serif;
    font-size: 1rem;
    border-radius: 1.5rem;
+   font-size: 1.4rem;
 }
 
 .fixed-btn-container {
@@ -448,8 +449,9 @@ task-details [name='save-task'] {
 side-bar {
    height: 100vh;
    display: grid;
-   grid-template-rows: 3rem 1fr 7fr;
-   gap: 3rem;
+   grid-template-rows: 3rem auto auto;
+   gap: 2.5rem;
+   align-content: start;
    background-color: var(--dark);
    overflow: auto;
    z-index: 1;
@@ -715,7 +717,6 @@ editable-li[active] .item-title {
    align-content: start;
    border-radius: 0.4rem;
    padding: 1rem;
-   flex: 1;
 }
 
 .checklist editable-li {
@@ -848,7 +849,13 @@ task-details .close {
 }
 
 task-details form [name='save-task'] {
-   align-self: start;
+   align-self: end;
+   justify-self: end;
+}
+
+task-details form .submit-btn-container {
+   display: flex;
+   flex: 1;
 }
 
 @-webkit-keyframes shake {
@@ -885,7 +892,7 @@ side-bar .header .close-side-bar {
 
 @media only screen and (min-width: 700px) {
    app-page {
-      grid-template-columns: minmax(250px, 1fr) 7fr;
+      grid-template-columns: 250px 7fr;
    }
 
    task-list .header .toggle-side-bar {

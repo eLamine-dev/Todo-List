@@ -1,16 +1,18 @@
 import ObjectBuilder from '../utils/ObjectBuilder';
+import dummyData from '../utils/DummyContent';
 
 class BaseModel {
    constructor(collectionName) {
       this.collectionName = collectionName;
       this[collectionName] = [];
-      this.retrieveFromLocalStorage();
+      // this.retrieveFromLocalStorage();
    }
 
    retrieveFromLocalStorage() {
       const itemsData = Array.from(
          JSON.parse(localStorage.getItem(this.collectionName))
       );
+
       itemsData.forEach((item) => {
          const object = new ObjectBuilder(item);
          this[this.collectionName].push(object);
@@ -58,6 +60,19 @@ class BaseModel {
          this[this.collectionName].splice(index, 1);
       }
       this.saveToLocalStorage();
+   }
+
+   deleteItemsByProperty(property, value) {
+      this[this.collectionName] = this[this.collectionName].filter(
+         (item) => item[property] !== value
+      );
+      this.saveToLocalStorage();
+   }
+
+   setDummyContent() {
+      if (!JSON.parse(localStorage.getItem('top-todo-dummy-content'))) {
+         this[this.collectionName] = dummyData.collectionName;
+      }
    }
 }
 

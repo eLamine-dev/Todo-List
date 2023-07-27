@@ -60,12 +60,13 @@ class TaskController {
    }
 
    handleProjectDeleted(projectId) {
-      this.viewState.projects = this.viewState.projects.filter(
+      this.model.deleteItemsByProperty('projectId', projectId);
+      const projects = this.viewState.projects.filter(
          (project) => project.id !== projectId
       );
-      this.model.getAllItems().forEach((task) => {
-         if (task.projectId === projectId) this.handleDeleteTask(task.id);
-      });
+      const tasks = this.getCurrentFilterTasks();
+      Object.assign(this.viewState, { projects, tasks });
+      this.view.setState(this.viewState);
    }
 
    getCurrentFilterTasks() {

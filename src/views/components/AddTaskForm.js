@@ -1,6 +1,5 @@
 import pubsub from '../../utils/PubSub';
 import createElement from '../../utils/ElementBuilder';
-import { th } from 'date-fns/locale';
 
 class AddTaskForm extends HTMLFormElement {
    constructor(state) {

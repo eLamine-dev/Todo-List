@@ -13,9 +13,9 @@ import Filter from './strategies/Filter';
 import Sorter from './strategies/Sorter';
 
 export default function initializeApp() {
-   const taskModel = new TaskModel();
-   const projectModel = new ProjectModel();
    const categoryModel = new CategoryModel();
+   const projectModel = new ProjectModel();
+   const taskModel = new TaskModel();
    const filter = new Filter();
    const sorter = new Sorter();
 

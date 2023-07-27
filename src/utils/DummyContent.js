@@ -1,0 +1,157 @@
+const dummyData = {
+   categories: [
+      {
+         id: 'category-176fce0b-00cd-45f0-8f2c-e08f6016665e',
+         dataType: 'category',
+         title: 'Personal',
+      },
+      {
+         id: 'category-e99a4e45-a4ed-48f2-9329-6046497f04ed',
+         dataType: 'category',
+         title: 'Work',
+      },
+      {
+         id: 'category-0706088e-328c-49cf-9f02-0afa007f127e',
+         dataType: 'category',
+         title: 'Education',
+      },
+   ],
+
+   projects: [
+      {
+         id: 'project-faa384ac-85c8-408f-be37-1c9cf1c30506',
+         dataType: 'project',
+         title: 'Summer vacation',
+         categoryId: 'category-176fce0b-00cd-45f0-8f2c-e08f6016665e',
+      },
+      {
+         id: 'project-e54bea0c-a5c6-4e7b-8b09-f0a88267f6e3',
+         dataType: 'project',
+         title: 'e-commerce project ',
+         categoryId: 'category-e99a4e45-a4ed-48f2-9329-6046497f04ed',
+      },
+      {
+         id: 'project-d6f0c5f2-1a5e-4cef-9370-d69365c0a8a9',
+         dataType: 'project',
+         title: 'TOP Todo list',
+         categoryId: 'category-0706088e-328c-49cf-9f02-0afa007f127e',
+      },
+   ],
+   tasks: [
+      {
+         id: 'task-d0b45d0e-c0fb-49e1-b238-196bca740948',
+         dataType: 'task',
+         completed: false,
+         title: 'Check the car maintanance',
+         description: '',
+         date: '2023-09-01',
+         projectId: 'project-faa384ac-85c8-408f-be37-1c9cf1c30506',
+         priority: '2',
+         categoryId: 'category-176fce0b-00cd-45f0-8f2c-e08f6016665e',
+         taskProject: 'Summer vacation',
+         projectCategory: 'Personal',
+         checklist: [
+            {
+               dataType: 'checklist-item',
+               title: 'Check engin oil',
+               checked: false,
+            },
+            {
+               dataType: 'checklist-item',
+               title: 'Check The Engine Coolant',
+               checked: false,
+            },
+            {
+               dataType: 'checklist-item',
+               title: 'Test  Brakes',
+               checked: false,
+            },
+         ],
+      },
+      {
+         id: 'task-153587f8-6792-4620-8568-88183e2b3e02',
+         dataType: 'task',
+         completed: false,
+         title: 'Make hotel reservations',
+         description: '',
+         date: '2023-07-28',
+         projectId: 'project-faa384ac-85c8-408f-be37-1c9cf1c30506',
+         priority: '2',
+         categoryId: 'category-176fce0b-00cd-45f0-8f2c-e08f6016665e',
+         taskProject: 'Summer vacation',
+         projectCategory: 'Personal',
+         checklist: [],
+      },
+      {
+         id: 'task-abe3371d-5648-4aa3-b0c8-606a1a3e7d39',
+         dataType: 'task',
+         completed: false,
+         title: 'Go on vacation',
+         description: '',
+         date: '2023-08-05',
+         projectId: 'project-faa384ac-85c8-408f-be37-1c9cf1c30506',
+         priority: '1',
+         categoryId: 'category-176fce0b-00cd-45f0-8f2c-e08f6016665e',
+         taskProject: 'Summer vacation',
+         projectCategory: 'Personal',
+         checklist: [],
+      },
+      {
+         id: 'task-ccf60179-dca1-472a-9fa4-75a41076f49e',
+         dataType: 'task',
+         completed: false,
+         title: 'Kick off meeting',
+         description: '',
+         date: '2023-07-31',
+         projectId: 'project-e54bea0c-a5c6-4e7b-8b09-f0a88267f6e3',
+         priority: '1',
+         categoryId: 'category-e99a4e45-a4ed-48f2-9329-6046497f04ed',
+         taskProject: 'e-commerce project ',
+         projectCategory: 'Work',
+         checklist: [
+            {
+               dataType: 'checklist-item',
+               title: 'Take client specifications',
+               checked: false,
+            },
+            {
+               dataType: 'checklist-item',
+               title: 'Discus reasonable deadline',
+               checked: false,
+            },
+         ],
+      },
+      {
+         id: 'task-9ccd1b42-aa7a-4788-bab3-863b7bf039bc',
+         dataType: 'task',
+         completed: false,
+         title: 'Finshing last touches',
+         description: '',
+         date: '2023-07-27',
+         projectId: 'project-d6f0c5f2-1a5e-4cef-9370-d69365c0a8a9',
+         priority: '1',
+         categoryId: 'category-0706088e-328c-49cf-9f02-0afa007f127e',
+         taskProject: 'TOP Todo list',
+         projectCategory: 'Education',
+         checklist: [
+            {
+               dataType: 'checklist-item',
+               title: 'Try to add some animations',
+               checked: false,
+            },
+            {
+               dataType: 'checklist-item',
+               title: 'Make website mockup images',
+               checked: false,
+            },
+            {
+               dataType: 'checklist-item',
+               title: 'Publish on discord server',
+               checked: false,
+            },
+         ],
+      },
+   ],
+};
+
+export default dummyData;

@@ -97,6 +97,14 @@ class SideBar extends HTMLElement {
             this.parentElement.removeAttribute('sidebar-open');
          }
       });
+
+      pubsub.subscribe('filter:changed', (data) => {
+         if (this.querySelector(`.default-filter[id=${data.title}]`)) {
+            this.highlightCurrentFilter(
+               this.querySelector(`.default-filter[id=${data.title}]`)
+            );
+         }
+      });
    }
 }
 customElements.define('side-bar', SideBar);

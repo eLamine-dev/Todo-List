@@ -1,3 +1,4 @@
+import autoAnimate from '@formkit/auto-animate';
 import createElement from '../../utils/ElementBuilder';
 import pubsub from '../../utils/PubSub';
 import ListItem from './EditableListItem';
@@ -20,6 +21,8 @@ class ExpandableList extends HTMLElement {
          class: 'items-list',
          'items-type': this.state.items.type,
       });
+
+      autoAnimate(listUl);
 
       if (this.state.items.list) {
          this.state.items.list.forEach((item) => {

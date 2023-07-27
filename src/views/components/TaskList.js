@@ -1,3 +1,4 @@
+import autoAnimate from '@formkit/auto-animate';
 import TaskCard from './TaskCard';
 import createElement from '../../utils/ElementBuilder';
 import AddTaskForm from './AddTaskForm';
@@ -32,14 +33,17 @@ class TaskList extends HTMLElement {
          this.appendChild(taskCard);
       });
 
-      const currentFilter =
-         document.querySelector('[current-filter]').textContent;
-
       const header = createElement('header')
-         .setContent(`#${currentFilter}`)
+         .setContent(`#Tasks-list`)
          .capitalFirstLetter()
          .setAttributes({ class: 'header' })
          .prependTo(this);
+
+      if (document.querySelector('[current-filter]')) {
+         header.setContent(
+            `#${document.querySelector('[current-filter]').textContent}`
+         );
+      }
 
       const sideBarToggle = createElement('button')
          .setAttributes({ class: 'toggle-side-bar' })

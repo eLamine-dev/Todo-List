@@ -56,6 +56,10 @@ class TaskDetails extends HTMLElement {
       this.setUpPriorities(form);
       this.setupChecklist(form);
 
+      const submitBtnContainer = createElement('div')
+         .setAttributes({ class: 'submit-btn-container' })
+         .appendTo(form);
+
       const submitBtn = createElement('button')
          .setAttributes({
             type: 'submit',
@@ -63,7 +67,7 @@ class TaskDetails extends HTMLElement {
          })
          .setContent('Save')
          .prependIcon('fa-solid fa-floppy-disk')
-         .appendTo(form);
+         .appendTo(submitBtnContainer);
 
       const header = createElement('header')
          .setContent('#Task-details')
