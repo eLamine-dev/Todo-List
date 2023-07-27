@@ -44,16 +44,8 @@ class CategoryController {
    handleDeleteCategory(categoryLi) {
       this.model.deleteItem(categoryLi.getAttribute('id'));
       categoryLi.parentElement.remove();
-
-      if (categoryLi.hasAttribute('current-filter')) {
-         pubsub.publish('filter:changed', {
-            type: 'all',
-            title: 'all',
-            value: null,
-         });
-      }
-
       pubsub.publish('category:deleted', categoryLi.getAttribute('id'));
+      document.querySelector(`.default-filter[id=all]`).click();
    }
 }
 

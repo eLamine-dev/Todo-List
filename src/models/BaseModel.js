@@ -1,11 +1,13 @@
 import ObjectBuilder from '../utils/ObjectBuilder';
 import dummyData from '../utils/DummyContent';
+import { th } from 'date-fns/locale';
 
 class BaseModel {
    constructor(collectionName) {
       this.collectionName = collectionName;
       this[collectionName] = [];
-      // this.retrieveFromLocalStorage();
+      this.setDummyContent();
+      this.retrieveFromLocalStorage();
    }
 
    retrieveFromLocalStorage() {
@@ -70,8 +72,19 @@ class BaseModel {
    }
 
    setDummyContent() {
-      if (!JSON.parse(localStorage.getItem('top-todo-dummy-content'))) {
-         this[this.collectionName] = dummyData.collectionName;
+      if (
+         JSON.parse(
+            localStorage.getItem(`${this.collectionName}-dummy-content`)
+         ) === null
+      ) {
+         localStorage.setItem(
+            this.collectionName,
+            JSON.stringify(dummyData[this.collectionName])
+         );
+         localStorage.setItem(
+            `${this.collectionName}-dummy-content`,
+            JSON.stringify(true)
+         );
       }
    }
 }

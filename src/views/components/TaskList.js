@@ -114,7 +114,7 @@ class TaskList extends HTMLElement {
 
    deleteCard(taskId) {
       const card = this.querySelector(`task-card[task-id=${taskId}]`);
-      this.removeChild(card);
+      if (card) this.removeChild(card);
    }
 
    setupControls(controlSection) {

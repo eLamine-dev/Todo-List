@@ -34,13 +34,15 @@ class ProjectController {
 
    handleDeleteProject(projectLi) {
       const projectCategoryLi = projectLi.closest('exp-list').firstChild;
-
       if (projectLi.hasAttribute('current-filter')) {
-         pubsub.publish('filter:changed', {
+         const newFilterData = {
+            title: projectCategoryLi.getAttribute('data-title'),
             id: projectCategoryLi.getAttribute('id'),
             type: projectCategoryLi.getAttribute('data-type'),
             value: projectCategoryLi.getAttribute('id'),
-         });
+         };
+         pubsub.publish('filter:changed', newFilterData);
+         this.view.highlightCurrentFilter(newFilterData);
       }
 
       this.model.deleteItem(projectLi.getAttribute('id'));
