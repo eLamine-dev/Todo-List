@@ -45,12 +45,34 @@ class TaskList extends HTMLElement {
          .setAttributes({ class: 'toggle-side-bar' })
          .appendIcon('fa-solid fa-bars')
          .prependTo(header);
+
+      const fixedBtnContainer = createElement('div')
+         .setAttributes({ class: 'fixed-btn-container' })
+         .appendTo(this);
+
+      const fixedAddTaskBtn = createElement('button')
+         .setAttributes({ class: 'fixed-add-task-btn' })
+         .appendIcon('fa-solid fa-plus')
+         .appendTo(fixedBtnContainer);
    }
 
    addEventListeners() {
       this.addEventListener('click', (ev) => {
          if (ev.target.matches('.toggle-side-bar')) {
             pubsub.publish('side-bar:toggle');
+         }
+         if (ev.target.matches('.fixed-add-task-btn')) {
+            this.querySelector('.open-form').click();
+            this.scrollTo(0, 0);
+         }
+      });
+
+      this.addEventListener('scroll', () => {
+         const fixedBtn = this.querySelector('.fixed-add-task-btn');
+         if (this.scrollTop > 30) {
+            fixedBtn.style.display = 'block';
+         } else {
+            fixedBtn.style.display = 'none';
          }
       });
    }
