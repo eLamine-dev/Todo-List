@@ -1,9 +1,9 @@
 import autoAnimate from '@formkit/auto-animate';
+import { format } from 'date-fns';
 import TaskCard from './TaskCard';
 import createElement from '../../utils/ElementBuilder';
 import AddTaskForm from './AddTaskForm';
 import pubsub from '../../utils/PubSub';
-import { format } from 'date-fns';
 
 class TaskList extends HTMLElement {
    connectedCallback() {
@@ -29,8 +29,6 @@ class TaskList extends HTMLElement {
          .setAttributes({ class: 'tasks-container' })
          .appendTo(this);
 
-      autoAnimate(tasksContainer);
-
       this.state.tasks.forEach((task) => {
          const taskCard = this.makeTaskCard(task);
          if (!taskCard) {
@@ -38,6 +36,8 @@ class TaskList extends HTMLElement {
          }
          tasksContainer.appendChild(taskCard);
       });
+
+      autoAnimate(tasksContainer);
 
       const header = createElement('header')
          .setContent(`#Tasks-list`)
