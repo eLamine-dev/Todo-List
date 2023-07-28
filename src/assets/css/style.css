@@ -147,6 +147,12 @@ task-list {
    justify-content: center;
 }
 
+.tasks-container {
+   width: min(100%, 900px);
+   display: grid;
+   gap: 0.5rem;
+}
+
 task-card {
    width: min(100%, 900px);
    display: grid;

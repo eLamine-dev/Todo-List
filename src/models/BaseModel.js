@@ -1,6 +1,5 @@
 import ObjectBuilder from '../utils/ObjectBuilder';
 import dummyData from '../utils/DummyContent';
-import { th } from 'date-fns/locale';
 
 class BaseModel {
    constructor(collectionName) {

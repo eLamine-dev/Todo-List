@@ -1,6 +1,4 @@
-import { compareAsc, format } from 'date-fns';
 import pubsub from '../utils/PubSub';
-import TaskCard from '../views/components/TaskCard';
 
 class TaskController {
    constructor(taskModel, taskView, filter, sorter) {

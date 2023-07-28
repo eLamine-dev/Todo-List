@@ -1,4 +1,4 @@
-import { compareAsc, format, getWeek, startOfWeek, endOfWeek } from 'date-fns';
+import { startOfWeek, endOfWeek } from 'date-fns';
 import createElement from '../../utils/ElementBuilder';
 import pubsub from '../../utils/PubSub';
 

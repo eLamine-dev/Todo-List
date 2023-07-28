@@ -25,12 +25,18 @@ class TaskList extends HTMLElement {
          .appendTo(this);
       this.setupControls(controlSection);
 
+      const tasksContainer = createElement('div')
+         .setAttributes({ class: 'tasks-container' })
+         .appendTo(this);
+
+      autoAnimate(tasksContainer);
+
       this.state.tasks.forEach((task) => {
          const taskCard = this.makeTaskCard(task);
          if (!taskCard) {
             return;
          }
-         this.appendChild(taskCard);
+         tasksContainer.appendChild(taskCard);
       });
 
       const header = createElement('header')
