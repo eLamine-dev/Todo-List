@@ -21,7 +21,6 @@ class TaskList extends HTMLElement {
 
       const controlSection = createElement('div')
          .setAttributes({ class: 'control-section' })
-         .setContent('Sort by:')
          .appendTo(this);
       this.setupControls(controlSection);
 
@@ -125,6 +124,11 @@ class TaskList extends HTMLElement {
 
    setupControls(controlSection) {
       const sortingOptions = ['priority', 'due date'];
+      const sortingCtrl = createElement('div')
+         .setContent('Sort by:')
+         .setAttributes({ class: 'sorting-controls' })
+         .appendTo(controlSection);
+
       sortingOptions.forEach((option) => {
          const container = createElement('div').setAttributes({
             class: 'sorting-option',
@@ -155,8 +159,9 @@ class TaskList extends HTMLElement {
             .capitalFirstLetter()
             .appendTo(container);
 
-         controlSection.appendChild(container);
+         sortingCtrl.appendChild(container);
       });
+
       if (
          this.state.currentFilter.type === 'date' ||
          this.state.currentFilter.type === 'date-range'
