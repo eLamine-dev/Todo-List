@@ -82,9 +82,10 @@ task-list {
 .control-section {
    display: flex;
    width: min(100%, 900px);
-   gap: 2rem;
+   gap: 1rem;
    padding: 0 1rem;
    align-items: center;
+   white-space: nowrap;
 }
 
 .sorting-option input {
@@ -108,7 +109,7 @@ task-list {
 
 .sorting-option label {
    cursor: pointer;
-
+   white-space: nowrap;
    line-height: 1.8em;
    height: 1.8rem;
    display: flex;
@@ -904,6 +905,10 @@ side-bar .header .close-side-bar {
    task-list .header .toggle-side-bar {
       display: none;
    }
+
+   .next-previous-btns-label {
+      display: block;
+   }
 }
 
 @media only screen and (max-width: 700px) {
@@ -931,6 +936,10 @@ side-bar .header .close-side-bar {
 
    task-list .header .toggle-side-bar {
       display: block;
+   }
+
+   .next-previous-btns-label {
+      display: none;
    }
 }
 

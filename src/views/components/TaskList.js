@@ -166,7 +166,8 @@ class TaskList extends HTMLElement {
             .appendTo(controlSection);
 
          createElement('span')
-            .setContent('Next/Previous')
+            .setContent('Previous/Next')
+            .setAttributes({ class: 'next-previous-btns-label' })
             .appendTo(nextPreviousBtns);
 
          createElement('button')
