@@ -51,10 +51,10 @@ task-list {
    justify-items: center;
    align-content: start;
    overflow: auto;
-   /* border-radius: 0 0.6rem 0.6rem 0; */
    padding: 0 0.5rem;
    position: relative;
-   /* margin-right: 0.5rem; */
+   overflow-y: scroll;
+   -webkit-overflow-scrolling: touch;
 }
 
 .fixed-add-task-btn {
