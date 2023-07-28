@@ -104,6 +104,10 @@ class SideBar extends HTMLElement {
                this.querySelector(`.default-filter[id=${data.title}]`)
             );
          }
+
+         if (this.querySelector('.close-side-bar')) {
+            this.querySelector('.close-side-bar').click();
+         }
       });
    }
 }
