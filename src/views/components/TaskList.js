@@ -90,7 +90,10 @@ class TaskList extends HTMLElement {
       const updatedCard = this.makeTaskCard(task);
       const existingCard = this.querySelector(`task-card[task-id=${task.id}]`);
 
-      this.replaceChild(updatedCard, existingCard);
+      this.querySelector('.tasks-container').replaceChild(
+         updatedCard,
+         existingCard
+      );
    }
 
    makeTaskCard(task) {
