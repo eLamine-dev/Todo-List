@@ -36,8 +36,6 @@ class TaskList extends HTMLElement {
          tasksContainer.appendChild(taskCard);
       });
 
-      autoAnimate(tasksContainer);
-
       const header = createElement('header')
          .setContent(`#Tasks-list`)
          .capitalFirstLetter()
