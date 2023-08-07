@@ -109,7 +109,9 @@ class ListItem extends HTMLElement {
 
    cancelChanges() {
       if (!this.getAttribute('id')) {
-         this.remove();
+         if (this.classList.contains('list-header'))
+            this.parentElement.remove();
+         else this.remove();
          return;
       }
       const title = this.querySelector('.item-title');
